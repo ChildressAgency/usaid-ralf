@@ -1,0 +1,33 @@
+    @font-face{
+        font-family:"Avenir Next W01_n4";
+        src:url("Fonts/e9167238-3b3f-4813-a04a-a384394eed42.eot?#iefix") format("eot")
+    }
+    @font-face{
+        font-family:"Avenir Next W01";
+        src:url("Fonts/e9167238-3b3f-4813-a04a-a384394eed42.eot?#iefix");
+        src:url("Fonts/e9167238-3b3f-4813-a04a-a384394eed42.eot?#iefix") format("eot"),url("Fonts/2cd55546-ec00-4af9-aeca-4a3cd186da53.woff2") format("woff2"),url("Fonts/1e9892c0-6927-4412-9874-1b82801ba47a.woff") format("woff"),url("Fonts/46cf1067-688d-4aab-b0f7-bd942af6efd8.ttf") format("truetype"),url("Fonts/52a192b1-bea5-4b48-879f-107f009b666f.svg#52a192b1-bea5-4b48-879f-107f009b666f") format("svg");
+font-weight: 400;
+font-style: normal;
+    }
+    @font-face{
+        font-family:"Avenir Next W01_n8";
+        src:url("Fonts/dccb10af-07a2-404c-bfc7-7750e2716bc1.eot?#iefix") format("eot")
+    }
+    @font-face{
+        font-family:"Avenir Next W01";
+        src:url("Fonts/dccb10af-07a2-404c-bfc7-7750e2716bc1.eot?#iefix");
+        src:url("Fonts/dccb10af-07a2-404c-bfc7-7750e2716bc1.eot?#iefix") format("eot"),url("Fonts/14c73713-e4df-4dba-933b-057feeac8dd1.woff2") format("woff2"),url("Fonts/b8e906a1-f5e8-4bf1-8e80-82c646ca4d5f.woff") format("woff"),url("Fonts/890bd988-5306-43ff-bd4b-922bc5ebdeb4.ttf") format("truetype"),url("Fonts/ed104d8c-7f39-4e8b-90a9-4076be06b857.svg#ed104d8c-7f39-4e8b-90a9-4076be06b857") format("svg");
+font-weight: 800;
+font-style: normal;
+    }
+    @font-face{
+        font-family:"Avenir Next W01_n9";
+        src:url("Fonts/3418f6be-70a5-4c26-af1d-c09a8642ca20.eot?#iefix") format("eot")
+    }
+    @font-face{
+        font-family:"Avenir Next W01";
+        src:url("Fonts/3418f6be-70a5-4c26-af1d-c09a8642ca20.eot?#iefix");
+        src:url("Fonts/3418f6be-70a5-4c26-af1d-c09a8642ca20.eot?#iefix") format("eot"),url("Fonts/5c57b2e2-f641-421e-a95f-65fcb47e409a.woff2") format("woff2"),url("Fonts/181c847e-cdbc-43d5-ae14-03a81c8953b4.woff") format("woff"),url("Fonts/045d1654-97f2-4ff0-9d24-21ba9dfee219.ttf") format("truetype"),url("Fonts/3c111f4f-c9f7-45d4-b35f-4f4ed018842f.svg#3c111f4f-c9f7-45d4-b35f-4f4ed018842f") format("svg");
+font-weight: 900;
+font-style: normal;
+    }
