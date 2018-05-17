@@ -42,6 +42,7 @@
 
 body{
   font-family:"Lato", sans-serif;
+  font-size:18px;
 }
 
 a{
@@ -54,7 +55,7 @@ a{
   color:#000;
   font-style:italic;
   padding:2px 20px;
-  border-radius:12px;
+  border-radius:20px;
   border:1px solid #c4d82e;
 }
 .btn-main:hover,
@@ -63,6 +64,32 @@ a{
   color:#fff;
   border-color:#fff;
   text-decoration:none;
+}
+.btn-alt{
+  display:inline-block;
+  background-color:transparent;
+  color:#000;
+  font-style:italic;
+  padding:2px 20px;
+  border-radius:20px;
+  border:1px solid #000;
+}
+.btn-alt:hover,
+.btn-alt:focus{
+  background-color:#b3b3b3;
+  color:#000;
+  text-decoration:none;
+  border-color:#b3b3b3;
+}
+.btns-inline{
+  margin-top:40px;
+  text-align:center;
+}
+.btns-inline a+a,
+.btns-inline a+input,
+.btns-inline input+a,
+.btns-inline input+input{
+  margin-left:25px;
 }
 
 #header-nav{
@@ -128,7 +155,7 @@ a{
 
 .search-bar{
   background-color:#999;
-  padding-top:40px;
+  padding-top:20px;
   padding-bottom:40px;
   text-align:center;
 }
@@ -180,6 +207,9 @@ a{
   border-radius:50px;
 }
 
+section{
+  padding-bottom:40px;
+}
 .section-header{
   text-align:center;
   padding-top:25px;
@@ -225,6 +255,57 @@ a{
   transform:scale(1.1);
 }
 
+#quick-select{
+  background-color:#f2f2f2;
+}
+#quick-select .section-header p{
+  max-width:980px;
+}
+.factor-grid{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:space-between;
+  text-align:center;
+}
+.factor-grid .grid-item{
+  margin:3px;
+  width:auto;
+  flex-grow:1;
+  flex-shrink:1;
+  flex-basis:auto;
+}
+.factor-grid .grid-item label{
+  font-size:22px;
+  font-family:"AvenirNext", sans-serif;
+  font-weight:400;
+  margin-bottom:0;
+  width:100%;
+  padding:1px 20px;
+  background-color:#b3b3b3;
+  border-radius:4px;
+}
+.factor-grid .grid-item label>input[type="checkbox"]{
+  position:absolute;
+  opacity:0;
+}
+.factor-grid .grid-item:hover label,
+.factor-grid .grid-item label.active{
+  background-color:#d9e021;
+}
+#quick-select .btn-main:hover,
+#quick-select .btn-main:focus{
+  color:#000;
+  border-color:#000;
+}
+#quick-select .btn-main,
+#quick-select .btn-alt{
+  padding:7px 40px;
+}
+
+#footer{
+  background-color:#333;
+}
+
 
 @media (max-width:767px){
   .search-bar .form-group{
@@ -232,5 +313,17 @@ a{
   }
   .search-bar input.btn-main{
     width:200px;
+  }
+  .btns-inline .btn-main,
+  .btns-inline .btn-alt{
+    display:block;
+    width:100%;
+  }
+  .btns-inline a+a,
+  .btns-inline a+input,
+  .btns-inline input+a,
+  .btns-inline input+input{
+    margin-left:0px;
+    margin-top:25px;
   }
 }
