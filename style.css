@@ -194,7 +194,8 @@ a{
   height:44px;
   width:44px;
   display:block;
-  background-image:url(images/search.png);
+  background-image:url(images/sprites.png);
+  background-position:0 0;
   background-repeat:no-repeat;
   margin-right:10px;
 }
