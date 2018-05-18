@@ -91,6 +91,24 @@ a{
 .btns-inline input+input{
   margin-left:25px;
 }
+.btn-main.btn-report{
+  font-size:16px;
+  font-family:"AvenirNext", sans-serif;
+  font-style:normal;
+  font-weight:800;
+  color:#fff;
+  padding:10px 30px;
+}
+.btn-main.btn-report:hover,
+.btn-main.btn-report:focus{
+  background-color:#b3b3b3;
+}
+.sidebar-section .save-to-report{
+  color:#c4d82e;
+  font-family:"AvenirNext", sans-serif;
+  font-weight:800;
+  font-style:italic;
+}
 
 #header-nav{
   padding-top:15px;
@@ -429,6 +447,10 @@ main.results-list{
   position:absolute;
 }
 
+main.result{
+  padding-top:40px;
+  padding-bottom:40px;
+}
 .result-header .result-type-icon{
   display:inline-block;
   margin-right:25px;
@@ -466,6 +488,51 @@ main.results-list{
   color:#000;
   display:block;
   line-height:1.2em;
+}
+.activity-description{
+  font-family:"AvenirNext", sans-serif;
+  font-size:16px;
+}
+.activity-conditions{
+  font-family:"AvenirNext", sans-serif;
+  font-size:16px;
+}
+.activity-conditions>h2{
+  font-size:22px;
+  font-weight:800;
+  letter-spacing: 2px;
+}
+.activity-conditions h4{
+  font-weight:800;
+}
+.impact-by-sector{
+  font-family:"AvenirNext", sans-serif;
+  font-size:16px;
+}
+.impact-by-sector>h2{
+  font-size:22px;
+  font-weight:800;
+  letter-spacing:2px;
+}
+.impact-by-sector .panel-default{
+  border:none;
+  box-shadow: none;
+}
+.impact-by-sector .panel-heading{
+  background-color:transparent;
+  border:none;
+  padding:0;
+}
+.impact-by-sector .panel-title>a{
+  font-weight:800;
+}
+.impact-by-sector .panel-group .panel-heading+.panel-collapse>.panel-body{
+  border:none;
+}
+.go-back>a{
+  color:#808080;
+  font-family:"AvenirNext", sans-serif;
+  font-size:16px;
 }
 
 #footer{
