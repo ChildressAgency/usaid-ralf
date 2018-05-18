@@ -471,3 +471,25 @@ class usaidralf_view_report_widget extends WP_Widget{
 		return $instance;
 	}
 }
+
+function usaidralf_get_impacts_by_sector($impact_ids){
+  global $wpdb;
+  $impact_ids_placeholder = implode(', ', array_fill(0, count($impact_ids), '%d'));
+  $impacts_with_sector = $wpdb->get_results($wpdb->prepare("
+    SELECT $wpdb->posts.ID AS impact_id, $wpdb->posts.post_title AS impact_title, $wpdb->posts.guid AS impact_link, $wpdb->terms.name AS sector, $wpdb->terms.term_id as sector_id
+    FROM $wpdb->posts
+      JOIN $wpdb->term_relationships ON $wpdb->posts.ID = $wpdb->term_relationships.object_id
+      JOIN $wpdb->terms ON $wpdb->term_relationships.term_taxonomy_id = $wpdb->terms.term_id
+      JOIN $wpdb->term_taxonomy ON $wpdb->terms.term_id = $wpdb->term_taxonomy.term_id
+    WHERE $wpdb->term_taxonomy.taxonomy = 'sectors
+      AND $wpdb->posts.ID IN($impact_ids_placeholder)
+      AND post_type = 'impacts'", $impact_ids));
+
+  $impacts_by_sector = array();
+  foreach($impacts_with_sector as $sector){
+    $impacts_by_sector[$sector->sector]['sector_id'] = $sector->sector_id;
+    $impacts_by_sector[$sector->sector]['impacts'][] = $sector;
+  }
+
+  return ksort($impacts_by_sector);
+}
