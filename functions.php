@@ -472,11 +472,24 @@ class usaidralf_view_report_widget extends WP_Widget{
 	}
 }
 
+add_action('widgets_init', 'usaidralf_widgets_init');
+function usaidralf_widgets_init(){
+  register_sidebar(array(
+    'name' => __('RALF Sidebar', 'usaidralf_widget_domain'),
+    'id' => 'ralf-sidebar',
+    'description' => __('Sidebar for the RALF results pages.', 'usaidralf_widget_domain'),
+    'before_widget' => '<div class="sidebar-section">',
+    'after_widget' => '</div>',
+    'before_title' => '<h4>',
+    'after_title' => '</h4>'
+  ));
+}
+
 function usaidralf_get_impacts_by_sector($impact_ids){
   global $wpdb;
   $impact_ids_placeholder = implode(', ', array_fill(0, count($impact_ids), '%d'));
   $impacts_with_sector = $wpdb->get_results($wpdb->prepare("
-    SELECT $wpdb->posts.ID AS impact_id, $wpdb->posts.post_title AS impact_title, $wpdb->posts.guid AS impact_link, $wpdb->terms.name AS sector, $wpdb->terms.term_id as sector_id
+    SELECT $wpdb->posts.ID AS impact_id, $wpdb->posts.post_title AS impact_title, $wpdb->posts.guid AS impact_link, $wpdb->terms.name AS sector, $wpdb->terms.term_id as sector_id, $wpdb->posts.post_content AS impact_description
     FROM $wpdb->posts
       JOIN $wpdb->term_relationships ON $wpdb->posts.ID = $wpdb->term_relationships.object_id
       JOIN $wpdb->terms ON $wpdb->term_relationships.term_taxonomy_id = $wpdb->terms.term_id
