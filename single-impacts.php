@@ -34,7 +34,7 @@
                             <?php endwhile; wp_reset_postdata(); ?>
                           </ul>
                       <?php else: ?>
-                        <p>No related Actvities</p>
+                        <p>No related Activities</p>
                       <?php endif; ?>
                     </section>
                   </article>
