@@ -17,8 +17,8 @@
           </div>
           <div class="col-sm-8 col-md-9">
             <div class="number-activities">
-              <?php $num_activities = usaidralf_get_activities_count_by_impact($impact_id); ?>
-              <a href="<?php the_permalink(); ?>"><span><?php echo $num_activities; ?></span>Activities</a>
+              <?php $num_activities = usaidralf_get_related_activities($impact_id); ?>
+              <a href="<?php the_permalink(); ?>"><span><?php echo $num_activities->post_count; ?></span>Activities</a>
             </div>
           </div>
         </div>

@@ -494,3 +494,20 @@ function usaidralf_get_impacts_by_sector($impact_ids){
 
   return ksort($impacts_by_sector);
 }
+
+function usaidralf_get_related_activities($impact_id){
+  $activities = new WP_Query(array(
+    'post_type' => 'activities',
+    'posts_per_page' => -1,
+    'post_status' => 'publish',
+    'meta_query' => array(
+      array(
+        'key' => 'related_impacts',
+        'value' => '"' . $impact_id . '"',
+        'compare' => 'LIKE'
+      )
+    )
+  ));
+
+  return $activities;
+}
