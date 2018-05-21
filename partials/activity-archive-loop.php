@@ -15,47 +15,18 @@
           <div class="col-sm-4 col-md-3">
             <div class="sector-icon">
               <?php $acf_sector_id = 'sector_' . $sector->sector_id; ?>
-              <img src="<?php the_field('sector_icon', $acf_sector_id); ?>" class="img-circle img-responsive" alt="<?php echo $sector->sector; ?>" style="background-color:<?php the_field('sector_color', $acf_sector_id); ?>;" />
+              <img src="<?php the_field('sector_icon', $acf_sector_id); ?>" class="img-circle img-responsive" alt="<?php echo $sector->sector_name; ?>" style="background-color:<?php the_field('sector_color', $acf_sector_id); ?>;" />
             </div>
           </div>
           <div class="col-sm-8 col-md-9">
             <div class="factor-grid">
-              <div class="grid-item">
-                <a href="#" class="factor-name">Forest</a>
-              </div>
-              <div class="grid-item">
-                <a href="#" class="factor-name">Climate Risk</a>
-              </div>
-              <div class="grid-item">
-                <a href="#" class="factor-name">Deforestation</a>
-              </div>
-              <div class="grid-item">
-                <a href="#" class="factor-name">Exotic Species</a>
-              </div>
-              <div class="grid-item">
-                <a href="#" class="factor-name">Poor Extension Policies</a>
-              </div>
-              <div class="grid-item">
-                <a href="#" class="factor-name">School</a>
-              </div>
-              <div class="grid-item">
-                <a href="#" class="factor-name">Vet Pharma</a>
-              </div>
-              <div class="grid-item">
-                <a href="#" class="factor-name">Water Pollution</a>
-              </div>
-              <div class="grid-item">
-                <a href="#" class="factor-name">Road</a>
-              </div>
-              <div class="grid-item">
-                <a href="#" class="factor-name">Food Storage</a>
-              </div>
-              <div class="grid-item">
-                <a href="#" class="factor-name">Pest Management</a>
-              </div>
-              <div class="grid-item">
-                <a href="#" class="factor-name">Partnership</a>
-              </div>
+            
+              <?php foreach($sector->impacts as $impact): ?>
+                <div class="grid-item">
+                  <a href="<?php echo $impact->impact_link; ?>" class="factor-name"><?php echo $impact->impact_title; ?></a>
+                </div>
+              <?php endforeach; ?>
+
             </div>
           </div>
         </div>

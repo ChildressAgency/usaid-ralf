@@ -487,6 +487,7 @@ function usaidralf_get_impacts_by_sector($impact_ids){
 
   $impacts_by_sector = array();
   foreach($impacts_with_sector as $sector){
+    $impacts_by_sector[$sector->sector]['sector_name'] = $sector->sector;
     $impacts_by_sector[$sector->sector]['sector_id'] = $sector->sector_id;
     $impacts_by_sector[$sector->sector]['impacts'][] = $sector;
   }
