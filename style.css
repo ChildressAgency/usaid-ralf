@@ -535,6 +535,10 @@ main.result{
   font-size:16px;
 }
 
+.report-button>span{
+  display:block;
+}
+
 #footer{
   background-color:#333;
   padding-top:40px;
