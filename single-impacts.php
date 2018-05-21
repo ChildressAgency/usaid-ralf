@@ -44,7 +44,6 @@
           </main>
         </div>
         <div class="col-sm-4 col-md-3">
-          <?php //get_template_part('partials/results', 'sidebar'); ?>
           <?php get_sidebar(); ?>
         </div>
       </div>
