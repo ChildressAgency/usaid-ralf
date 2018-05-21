@@ -372,6 +372,19 @@ function get_field_excerpt($field_name){
   return apply_filters('the_excerpt', $text);
 }
 
+add_action('widgets_init', 'usaidralf_widgets_init');
+function usaidralf_widgets_init(){
+  register_sidebar(array(
+    'name' => __('RALF Sidebar', 'usaidralf_widget_domain'),
+    'id' => 'ralf-sidebar',
+    'description' => __('Sidebar for the RALF results pages.', 'usaidralf_widget_domain'),
+    'before_widget' => '<div class="sidebar-section">',
+    'after_widget' => '</div>',
+    'before_title' => '<h4>',
+    'after_title' => '</h4>'
+  ));
+}
+
 add_action('widgets_init', 'usaidralf_load_widget');
 function usaidralf_load_widget(){
   register_widget('ralf_sector_selector_widget');
@@ -470,19 +483,6 @@ class usaidralf_view_report_widget extends WP_Widget{
 		$instance['title'] = (!empty($new_instance['title'])) ? strip_tags($new_instance['title']) : '';
 		return $instance;
 	}
-}
-
-add_action('widgets_init', 'usaidralf_widgets_init');
-function usaidralf_widgets_init(){
-  register_sidebar(array(
-    'name' => __('RALF Sidebar', 'usaidralf_widget_domain'),
-    'id' => 'ralf-sidebar',
-    'description' => __('Sidebar for the RALF results pages.', 'usaidralf_widget_domain'),
-    'before_widget' => '<div class="sidebar-section">',
-    'after_widget' => '</div>',
-    'before_title' => '<h4>',
-    'after_title' => '</h4>'
-  ));
 }
 
 function usaidralf_get_impacts_by_sector($impact_ids){
