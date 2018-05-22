@@ -6,7 +6,7 @@
           <main class="results-list">
             <?php 
               if(have_posts()){
-                while(have_posts()):{
+                while(have_posts()){
                   the_post();
                   if(get_post_type(get_the_ID()) == 'activities'){
                     get_template_part('partials/activity', 'archive-loop');

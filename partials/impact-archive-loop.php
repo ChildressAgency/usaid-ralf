@@ -8,11 +8,11 @@
       $impact_id = get_the_ID();
       $sectors = get_the_terms($impact_id, 'sectors');
       foreach($sectors as $sector): ?>
-        <?php $acf_sector_id = 'sector_' . $sector->term_id; ?>
+        <?php $acf_sector_id = 'sectors_' . $sector->term_id; ?>
         <div class="row">
           <div class="col-sm-4 col-md-3">
             <div class="sector-icon">
-              <img src="<?php the_field('sector_icon', $sector_id); ?>" class="img-circle img-responsive" alt="<?php echo $sector->name; ?> Sector" style="background-color:<?php the_field('sector_color', $sector_id); ?>;" />
+              <img src="<?php the_field('sector_icon', $acf_sector_id); ?>" class="img-circle img-responsive" alt="<?php echo $sector->name; ?> Sector" style="background-color:<?php the_field('sector_color', $acf_sector_id); ?>;" />
             </div>
           </div>
           <div class="col-sm-8 col-md-9">
