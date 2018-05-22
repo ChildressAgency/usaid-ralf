@@ -5,13 +5,13 @@
         <div class="carousel-inner" role="listbox">
           <?php $i=0; while(have_rows('hero_carousel')): the_row(); ?>
 
-            <?php if(get_field('slide_image')): ?>
+            <?php if(get_sub_field('slide_image')): ?>
               <div class="item<?php if($i==0){ echo ' active'; } ?>" style="background-image:url(<?php the_sub_field('slide_image'); ?>);">
                 <div class="slide-caption-wrapper">
                   <div class="slide-caption">
                     <h1><?php the_sub_field('slide_title'); ?></h1>
                     <?php the_sub_field('slide_caption'); ?>
-                    <a href="<?php esc_url(get_term_link(get_sub_field('sector_link'))); ?>" class="btn-main">View Impacts</a>
+                    <a href="<?php echo esc_url(get_term_link(get_sub_field('sector_link'))); ?>" class="btn-main">View Impacts</a>
                   </div>
                 </div>
               </div>
@@ -57,8 +57,9 @@
         <?php
           $sc = 0;
           $sectors = get_terms(array('taxonomy' => 'sectors', 'parent' => 0, 'orderby' => 'name'));
+          
           foreach($sectors as $sector):
-            $acf_sector_id = 'sector_' . $sector->id;
+            $acf_sector_id = 'sectors_' . $sector->term_id;
             $sector_icon_url = get_field('sector_icon', $acf_sector_id);
             $sector_color = get_field('sector_color', $acf_sector_id);
 
@@ -66,7 +67,7 @@
             if($sc%4==0){ echo '<div class="clearfix hidden-xs hidden-sm"></div>'; } ?>
 
             <div class="col-sm-6 col-md-3">
-              <a href="<?php echo esc_url(get_term_link($sector->id)); ?>" class="sector-icon">
+              <a href="<?php echo esc_url(get_term_link($sector->term_id), 'sectors'); ?>" class="sector-icon">
                 <img src="<?php echo $sector_icon_url; ?>" class="img-circle img-responsive center-block" alt="Agriculture Sector" style="background-color:<?php echo $sector_color; ?>;" />
                 <h3><?php echo $sector->name; ?></h3>
               </a>
