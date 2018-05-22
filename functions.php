@@ -387,8 +387,8 @@ function usaidralf_widgets_init(){
 
 add_action('widgets_init', 'usaidralf_load_widget');
 function usaidralf_load_widget(){
-  register_widget('ralf_sector_selector_widget');
-  register_widget('ralf_view_report_widget');
+  register_widget('usaidralf_sector_selector_widget');
+  register_widget('usaidralf_view_report_widget');
 }
 
 class usaidralf_sector_selector_widget extends WP_Widget{
