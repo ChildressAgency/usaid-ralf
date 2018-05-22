@@ -26,6 +26,14 @@ function usaidralf_scripts(){
   );
 
   wp_register_script(
+    'js-cookie',
+    get_template_directory_uri() . '/js/js-cookie.js',
+    array('jquery'),
+    '',
+    true
+  );
+
+  wp_register_script(
     'usaidralf-scripts', 
     get_template_directory_uri() . '/js/usaidralf-scripts.js', 
     array('jquery'), 
@@ -34,6 +42,7 @@ function usaidralf_scripts(){
   ); 
   
   wp_enqueue_script('bootstrap-script');
+  wp_enqueue_script('js-cookie');
   wp_enqueue_script('usaidralf-scripts');  
 }
 
@@ -310,6 +319,7 @@ function usaidralf_create_post_type(){
     array(
       'hierarchical' => true,
       'show_admin_column' => true,
+      'public' => true,
       'labels' => array(
         'name' => 'Sectors',
         'singular_name' => 'Sector'
@@ -321,6 +331,7 @@ function usaidralf_create_post_type(){
     array(
       'hierarchical' => false,
       'show_admin_column' => true,
+      'public' => true,
       'labels' => array(
         'name' => 'Impact Tags',
         'singular_name' => 'Impact Tag'
