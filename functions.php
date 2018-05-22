@@ -259,7 +259,7 @@ class wp_bootstrap_navwalker extends Walker_Nav_Menu {
 	}
 }
 
-function usaidralf_fallback_header_menu(){ ?>
+function usaidralf_header_fallback_menu(){ ?>
       
   <div id="navbar" class="collapse navbar-collapse">
     <ul class="nav navbar-nav navbar-right">
