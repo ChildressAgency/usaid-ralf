@@ -24,12 +24,12 @@
         <div class="panel-group" role="tablist">
           <?php
             foreach($impacts_by_sector as $sector):
-              $acf_sector_id = 'sector_' . $sector->sector_id;
-              foreach($sector->impacts as $impact): ?>
+              $acf_sector_id = 'sectors_' . $sector['sector_id'];
+              foreach($sector['impacts'] as $impact): ?>
 
                 <div class="panel panel-default">
                   <div class="panel-heading" role="tab">
-                    <h3 class="panel-title"><a href="#"><?php echo $impact->name; ?></a></h3>
+                    <h3 class="panel-title"><a href="#"><?php echo $impact->impact_title; ?></a></h3>
                   </div>
                   <div class="panel-body">
                     <?php echo $impact->impact_description; ?>

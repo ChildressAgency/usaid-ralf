@@ -319,7 +319,8 @@ a.sector-icon>img:hover{
   opacity:0;
 }
 .factor-grid .grid-item:hover .factor-name,
-.factor-grid .grid-item .factor-name.active{
+.factor-grid .grid-item .factor-name.active,
+.factor-grid .grid-item .factor-name>input[type="checkbox"]:checked{
   background-color:#d9e021;
 }
 #quick-select .btn-main:hover,
@@ -365,6 +366,9 @@ main.results-list{
 }
 .results-list .media-left{
   padding-right:20px;
+}
+main.results-list article+article{
+  margin-top:40px;
 }
 .number-activities{
   margin-top:15px;
@@ -563,6 +567,11 @@ main.result{
 .report-button>span{
   display:block;
 }
+.wp-pagenavi{
+  margin-top:40px;
+  text-align:center;
+}
+
 
 #footer{
   background-color:#333;
@@ -605,5 +614,14 @@ main.result{
   .number-activities>a{
     height:136px;
     width:136px;
+  }
+}
+@media print{
+  main.results-list{
+    padding-top:0;
+    padding-bottom:0;
+  }
+  main.results-list article{
+    page-break-after:always;
   }
 }

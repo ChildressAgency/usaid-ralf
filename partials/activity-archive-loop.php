@@ -13,14 +13,14 @@
           <div class="row">
             <div class="col-sm-4 col-md-3">
               <div class="sector-icon">
-                <?php $acf_sector_id = 'sector_' . $sector->sector_id; ?>
+                <?php $acf_sector_id = 'sectors_' . $sector['sector_id']; ?>
                 <img src="<?php the_field('sector_icon', $acf_sector_id); ?>" class="img-circle img-responsive" alt="<?php echo $sector->sector_name; ?>" style="background-color:<?php the_field('sector_color', $acf_sector_id); ?>;" />
               </div>
             </div>
             <div class="col-sm-8 col-md-9">
               <div class="factor-grid">
               
-                <?php foreach($sector->impacts as $impact): ?>
+                <?php foreach($sector['impacts'] as $impact): ?>
                   <div class="grid-item">
                     <a href="<?php echo $impact->impact_link; ?>" class="factor-name"><?php echo $impact->impact_title; ?></a>
                   </div>

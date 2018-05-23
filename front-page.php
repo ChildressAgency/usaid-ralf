@@ -32,7 +32,7 @@
   <div class="search-bar">
     <div class="container">
       <p><?php the_field('search_bar_text'); ?></p>
-      <form class="form-inline" action="/" method="get">
+      <form class="form-inline" action="<?php echo home_url(); ?>" method="get">
         <div class="form-group">
           <label for="search-field" class="sr-only">Search</label>
           <div class="input-group">
@@ -85,13 +85,14 @@
         <?php the_field('quick_select_section_intro'); ?>
       </header>
 
-      <form action="" method="get">
+      <form action="<?php echo home_url('quick-select-results'); ?>" method="post">
         <div class="factor-grid">
           <?php 
             $impact_tags = get_terms(array(
               'taxonomy' => 'impact_tags',
               'count' => true,
               'number' => 40,
+              'hide_empty' => true,
               'orderby' => 'count',
               'order' => 'DESC'
             ));
@@ -99,7 +100,7 @@
             foreach($impact_tags as $impact_tag): ?>
               <div class="grid-item">
                 <label class="factor-name">
-                  <input type="checkbox" name="factor[]" value="<?php echo $impact_tag->slug; ?>" />
+                  <input type="checkbox" name="factor[]" value="<?php echo $impact_tag->term_id; ?>" />
                   <span><?php echo $impact_tag->name; ?></span>
                 </label>
               </div>
