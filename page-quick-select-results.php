@@ -10,6 +10,16 @@
                 //$impact_tag_ids = implode(', ', $impact_tag_ids);
                 $impact_tag_ids = array_map('intval', $impact_tag_ids);
                 //var_dump($impact_tag_ids);
+
+                echo '<p>Showing results for the following tags: ';
+                $len = count($impact_tag_ids);
+                foreach($impact_tag_ids as $index => $impact_tag){
+                  $term = get_term_by('id', $impact_tag, 'impact_tags');
+                  echo $term->name;
+                  if($index < $len - 1){ echo ', '; }
+                }
+                echo '</p>';
+
                 $factors = new WP_Query(array(
                   'post_type' => array('impacts', 'activities'),
                   'post_status' => 'publish',
