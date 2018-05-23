@@ -270,8 +270,18 @@ section{
   -webkit-transition:all .3s ease;
   transition:all .3s ease;
 }
-.sector-icon>img:hover{
+a.sector-icon>img:hover{
   transform:scale(1.1);
+}
+.sector-icon.sector-icon-small{
+  display:inline-block;
+  width:44px;
+}
+.panel-title .sector-icon.sector-icon-small{
+  float:left;
+  margin-top:0;
+  margin-right:10px;
+  vertical-align:middle;
 }
 
 #quick-select{
@@ -455,10 +465,6 @@ main.result{
   display:inline-block;
   margin-right:25px;
 }
-.result-header .sector-icon-small{
-  display:inline-block;
-  width:44px;
-}
 .result-header h1{
   font-size:32px;
   font-weight:300;
@@ -528,6 +534,25 @@ main.result{
 }
 .impact-by-sector .panel-group .panel-heading+.panel-collapse>.panel-body{
   border:none;
+}
+.impact-by-sector .panel-title>a{
+  display:table;
+}
+.impact-by-sector .panel-title>a>img{
+  display:table-cell;
+  vertical-align:middle;
+  width:44px;
+}
+.impact-by-sector .panel-title>a>span{
+  display:table-cell;
+  vertical-align:middle;
+  padding-left:15px;
+}
+.impact-by-sector .panel-group .panel+.panel{
+  margin-top:20px;
+}
+.go-back{
+  margin-bottom:40px;
 }
 .go-back>a{
   color:#808080;

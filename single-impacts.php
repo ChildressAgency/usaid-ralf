@@ -10,13 +10,13 @@
                 $sectors = get_the_terms($impact_id, 'sectors');
                 
                 foreach($sectors as $sector):
-                  $acf_sector_id = 'sector_' . $sector->term_id; ?>
+                  $acf_sector_id = 'sectors_' . $sector->term_id; ?>
 
                   <article>
                     <header class="result-header">
                       <span class="result-type-icon impact"></span>
                       <div class="sector-icon sector-icon-small">
-                        <img src="<?php the_field('sector_icon', $sector_id); ?>" class="img-circle img-responsive" alt="<?php echo $sector->name; ?> Sector" style="background-color:<?php the_field('sector_color', $sector_id); ?>;" />
+                        <img src="<?php the_field('sector_icon', $acf_sector_id); ?>" class="img-circle img-responsive" alt="<?php echo $sector->name; ?> Sector" style="background-color:<?php the_field('sector_color', $acf_sector_id); ?>;" />
                       </div>
                       <h1><?php the_title(); ?></h1>
                     </header>
@@ -40,7 +40,7 @@
                   </article>
               
               <?php endforeach; ?>
-            <?php endwhile endif; ?>
+            <?php endwhile; endif; ?>
           </main>
         </div>
         <div class="col-sm-4 col-md-3">

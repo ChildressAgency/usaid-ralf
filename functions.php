@@ -505,7 +505,7 @@ function usaidralf_get_impacts_by_sector($impact_ids){
       JOIN $wpdb->term_relationships ON $wpdb->posts.ID = $wpdb->term_relationships.object_id
       JOIN $wpdb->terms ON $wpdb->term_relationships.term_taxonomy_id = $wpdb->terms.term_id
       JOIN $wpdb->term_taxonomy ON $wpdb->terms.term_id = $wpdb->term_taxonomy.term_id
-    WHERE $wpdb->term_taxonomy.taxonomy = 'sectors
+    WHERE $wpdb->term_taxonomy.taxonomy = 'sectors'
       AND $wpdb->posts.ID IN($impact_ids_placeholder)
       AND post_type = 'impacts'", $impact_ids));
 
@@ -516,7 +516,8 @@ function usaidralf_get_impacts_by_sector($impact_ids){
     $impacts_by_sector[$sector->sector]['impacts'][] = $sector;
   }
 
-  return ksort($impacts_by_sector);
+  ksort($impacts_by_sector);
+  return $impacts_by_sector;
 }
 
 function usaidralf_get_related_activities($impact_id){

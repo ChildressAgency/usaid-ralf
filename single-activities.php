@@ -36,16 +36,21 @@
                       <div class="panel-group" id="impacts-accordion" role="tablist" aria-multiselectable="true">
                         <?php 
                           foreach($impacts_by_sector as $sector):
-                            $acf_sector_id = 'sector_' . $sector->sector_id;
+                            $acf_sector_id = 'sectors_' . $sector['sector_id'];
                             $i = 0;
-                            foreach($sector->impacts as $impact): ?>
+                            foreach($sector['impacts'] as $impact): ?>
 
                               <div class="panel panel-default">
                                 <div class="panel-heading" role="tab" id="impact-title<?php echo $i; ?>">
                                   <h3 class="panel-title">
-                                    <a role="button" data-toggle="collapse" data-parent="#impacts-accordion" href="#impact<?php echo $i; ?>" aria-expanded="false" aria-controls="impact<?php echo $i; ?>"><img src="<?php the_field('sector_icon', $acf_sector_id); ?>" class="img-circle img-responsive" alt="<?php echo $sector->sector_name; ?>" style="background-color:<?php the_field('sector_color', $acf_sector_id); ?>;" /> <?php echo $impact->name; ?></a>
+                                    <a href="#impact<?php echo $i; ?>" role="button" data-toggle="collapse" data-parent="#impacts-accordion"  aria-expanded="false" aria-controls="impact<?php echo $i; ?>">
+                                      
+                                        <img src="<?php the_field('sector_icon', $acf_sector_id); ?>" class="img-circle img-responsive" alt="<?php echo $sector['sector_name']; ?>" style="background-color:<?php the_field('sector_color', $acf_sector_id); ?>;" />
+                                        <span> <?php echo $impact->impact_title; ?></span>
+                                    </a>
                                   </h3>
                                 </div>
+                                <div class="clearfix"></div>
                                 <div id="impact<?php echo $i; ?>" class="panel-collapse collapse" role="tabpanel" aria-labelledby="impact-title<?php echo $i; ?>">
                                   <div class="panel-body">
                                     <?php echo $impact->impact_description; ?>
