@@ -389,16 +389,20 @@ main.results-list article+article{
 }
 .number-activities>a{
   display:table-cell;
-  width:173.5px;
-  height:173.5px;
   text-align:center;
   vertical-align:middle;
   border-radius:50%;
   background-color:#c4d82e;
   color:#000;
+  font-size:16px;
+}
+.media-body .sector-icon,
+.media-body .number-activities>a{
+  height:95px;
+  width:95px;
 }
 .number-activities>a>span{
-  font-size:60px;
+  font-size:40px;
   font-weight:700;
   display:block;
   line-height:1em;
@@ -612,22 +616,6 @@ main.result{
   .btns-inline input+input{
     margin-left:0px;
     margin-top:25px;
-  }
-  .number-activities>a{
-    height:203px;
-    width:203px;
-  }
-}
-@media (min-width:768px) and (max-width:991px){
-  .number-activities>a{
-    height:115.7px;
-    width:115.7px;
-  }
-}
-@media (min-width:992px) and (max-width:1199px){
-  .number-activities>a{
-    height:136px;
-    width:136px;
   }
 }
 @media print{
