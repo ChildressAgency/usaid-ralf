@@ -590,4 +590,116 @@ add_filter('acf/update_value/name=related_impacts', 'bidirectional_acf_update_va
 		
 		return $value;
 		
-	} // end function acf_reciprocal_relationship
+  } // end function acf_reciprocal_relationship
+  
+
+  ///////////////////////////
+
+string(6) "11, 12" WP_Query Object ( 
+  [query] => Array ( 
+    [post_type] => Array ( 
+      [0] => impacts 
+      [1] => activities 
+    ) 
+    [post_status] => publish 
+    [tax_query] => Array ( 
+      [0] => Array ( 
+        [taxonomy] => impact_tags 
+        [field] => term_id 
+        [operator] => AND [terms] => Array ( [0] => 11, 12 ) 
+      ) 
+    ) 
+  ) 
+  [query_vars] => Array ( 
+    [post_type] => Array ( 
+      [0] => impacts 
+      [1] => activities 
+    ) 
+    [post_status] => publish 
+    [tax_query] => Array ( 
+      [0] => Array ( 
+        [taxonomy] => impact_tags 
+        [field] => term_id 
+        [operator] => AND 
+        [terms] => Array ( [0] => 11, 12 ) 
+      ) 
+    ) 
+    [error] => 
+    [m] => 
+    [p] => 0 
+    [post_parent] => 
+    [subpost] => 
+    [subpost_id] => 
+    [attachment] => 
+    [attachment_id] => 0 
+    [name] => 
+    [static] => 
+    [pagename] => 
+    [page_id] => 0 
+    [second] => [minute] => [hour] => [day] => 0 
+    [monthnum] => 0 
+    [year] => 0 
+    [w] => 0 
+    [category_name] => 
+    [tag] => 
+    [cat] => 
+    [tag_id] => 
+    [author] => 
+    [author_name] => 
+    [feed] => 
+    [tb] => 
+    [paged] => 0 
+    [meta_key] => 
+    [meta_value] => 
+    [preview] => 
+    [s] => 
+    [sentence] => 
+    [title] => 
+    [fields] => 
+    [menu_order] => 
+    [embed] => 
+    [category__in] => Array ( ) 
+    [category__not_in] => Array ( ) 
+    [category__and] => Array ( ) 
+    [post__in] => Array ( )
+    [post__not_in] => Array ( ) 
+    [post_name__in] => Array ( ) 
+    [tag__in] => Array ( ) 
+    [tag__not_in] => Array ( ) 
+    [tag__and] => Array ( ) 
+    [tag_slug__in] => Array ( ) 
+    [tag_slug__and] => Array ( ) 
+    [post_parent__in] => Array ( ) 
+    [post_parent__not_in] => Array ( ) 
+    [author__in] => Array ( ) 
+    [author__not_in] => Array ( ) 
+    [ignore_sticky_posts] => 
+    [suppress_filters] => 
+    [cache_results] => 1
+    [update_post_term_cache] => 1 
+    [lazy_load_term_meta] => 1 
+    [update_post_meta_cache] => 1 
+    [posts_per_page] => 10 
+    [nopaging] => 
+    [comments_per_page] => 50 
+    [no_found_rows] => 
+    [taxonomy] => impact_tags 
+    [term_id] => 11, 12 
+    [order] => DESC 
+  ) 
+  [tax_query] => WP_Tax_Query Object ( 
+    [queries] => Array ( 
+      [0] => Array ( 
+        [taxonomy] => impact_tags 
+        [terms] => Array ( [0] => 11, 12 )
+        [field] => term_id 
+        [operator] => AND 
+        [include_children] => 1 
+      ) 
+    ) 
+    [relation] => AND 
+    [table_aliases:protected] => Array ( ) 
+    [queried_terms] => Array ( 
+      [impact_tags] => Array ( 
+        [terms] => Array ( [0] => 11, 12 ) 
+        [field] => term_id ) ) [primary_table] => wp_posts [primary_id_column] => ID ) [meta_query] => WP_Meta_Query Object ( [queries] => Array ( ) [relation] => [meta_table] => [meta_id_column] => [primary_table] => [primary_id_column] => [table_aliases:protected] => Array ( ) [clauses:protected] => Array ( ) [has_or_relation:protected] => ) [date_query] => [request] => SELECT SQL_CALC_FOUND_ROWS wp_posts.ID FROM wp_posts WHERE 1=1 AND ( ( SELECT COUNT(1) FROM wp_term_relationships WHERE term_taxonomy_id IN (11) AND object_id = wp_posts.ID ) = 1 ) AND wp_posts.post_type IN ('impacts', 'activities') AND ((wp_posts.post_status = 'publish')) GROUP BY wp_posts.ID ORDER BY wp_posts.post_date DESC LIMIT 0, 10 [posts] => Array ( [0] => WP_Post Object ( [ID] => 114 [post_author] => 1 [post_date] => 2018-03-01 15:00:39 [post_date_gmt] => 2018-03-01 15:00:39 [post_content] => Biohazardous waste is waste that the attending veterinarian suspects is contaminated with infectious agents that are known to be contagious to humans. Animal parts, tissues, fluids, carcasses, vaccines or cultures could be biohazardous waste. Biohazardous waste also includes tissues that are contaminated with small (non-pourable) amounts of toxic chemicals like formaldehyde or chemotherapeutic agents and pharmaceutical waste that is toxic or ignitable. [post_title] => Carcass waste [post_excerpt] => [post_status] => publish [comment_status] => closed [ping_status] => closed [post_password] => [post_name] => carcass-waste [to_ping] => [pinged] => [post_modified] => 2018-05-18 21:09:11 [post_modified_gmt] => 2018-05-18 21:09:11 [post_content_filtered] => [post_parent] => 0 [guid] => http://dev.childressagency.com/ralf/?post_type=impacts&p=114 [menu_order] => 0 [post_type] => impacts [post_mime_type] => [comment_count] => 0 [filter] => raw ) ) [post_count] => 1 [current_post] => -1 [in_the_loop] => [post] => WP_Post Object ( [ID] => 114 [post_author] => 1 [post_date] => 2018-03-01 15:00:39 [post_date_gmt] => 2018-03-01 15:00:39 [post_content] => Biohazardous waste is waste that the attending veterinarian suspects is contaminated with infectious agents that are known to be contagious to humans. Animal parts, tissues, fluids, carcasses, vaccines or cultures could be biohazardous waste. Biohazardous waste also includes tissues that are contaminated with small (non-pourable) amounts of toxic chemicals like formaldehyde or chemotherapeutic agents and pharmaceutical waste that is toxic or ignitable. [post_title] => Carcass waste [post_excerpt] => [post_status] => publish [comment_status] => closed [ping_status] => closed [post_password] => [post_name] => carcass-waste [to_ping] => [pinged] => [post_modified] => 2018-05-18 21:09:11 [post_modified_gmt] => 2018-05-18 21:09:11 [post_content_filtered] => [post_parent] => 0 [guid] => http://dev.childressagency.com/ralf/?post_type=impacts&p=114 [menu_order] => 0 [post_type] => impacts [post_mime_type] => [comment_count] => 0 [filter] => raw ) [comment_count] => 0 [current_comment] => -1 [found_posts] => 1 [max_num_pages] => 1 [max_num_comment_pages] => 0 [is_single] => [is_preview] => [is_page] => [is_archive] => 1 [is_date] => [is_year] => [is_month] => [is_day] => [is_time] => [is_author] => [is_category] => [is_tag] => [is_tax] => 1 [is_search] => [is_feed] => [is_comment_feed] => [is_trackback] => [is_home] => [is_404] => [is_embed] => [is_paged] => [is_admin] => [is_attachment] => [is_singular] => [is_robots] => [is_posts_page] => [is_post_type_archive] => [query_vars_hash:WP_Query:private] => dd7f75daa0575fa4ea2a9f6e0536c21e [query_vars_changed:WP_Query:private] => [thumbnails_cached] => [stopwords:WP_Query:private] => [compat_fields:WP_Query:private] => Array ( [0] => query_vars_hash [1] => query_vars_changed ) [compat_methods:WP_Query:private] => Array ( [0] => init_query_flags [1] => parse_tax_query ) )
