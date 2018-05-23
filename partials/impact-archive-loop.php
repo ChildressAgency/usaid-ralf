@@ -34,7 +34,7 @@
 <?php else: 
   if(is_page('quick-select-results')){
     if(isset($_POST['factor']) && !empty($_POST['factor'])){
-      echo '<p>No Activities have been associated with the <span style="text-transform:capitalize;">' . get_the_title() . '</span> impact.</p>';
+      echo '<div class="media-body" style="padding-top:40px;"><p>No Activities have been associated with the <span style="text-transform:capitalize;">' . get_the_title() . '</span> impact.</p></div>';
     }
     else{
       echo '<p>No factors have been selected.</p>';
