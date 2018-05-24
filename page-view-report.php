@@ -6,8 +6,8 @@
         <h1>Report of Activities and Associated Impacts</h1>
       </header>
         <?php
-          if(isset($_COOKIE['report_ids'])){
-            $report_ids_cookie = $_COOKIE['report_ids'];
+          if(isset($_COOKIE['STYXKEY_report_ids'])){
+            $report_ids_cookie = $_COOKIE['STYXKEY_report_ids'];
 
             $report_ids = explode(',', $report_ids_cookie);
 

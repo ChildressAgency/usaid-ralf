@@ -134,6 +134,12 @@ a{
   color:#666;
   font-weight:800;
 }
+.navbar-toggle{
+  border-color:#000;
+}
+.navbar-toggle .icon-bar{
+  background-color:#000;
+}
 
 #hp-hero-carousel .item{
   background-repeat:no-repeat;
@@ -367,6 +373,13 @@ main.results-list{
 .result-type-icon.impact{
   background-position:-100px 0px;
 }
+.tooltip>.tooltip-inner{
+  background-color:#c4d82e;
+  color:#000;
+}
+.tooltip.top>.tooltip-arrow{
+  border-top-color:#c4d82e;
+}
 .results-list .sector-icon{
   margin-top:15px;
 }
@@ -496,6 +509,9 @@ main.result{
   border-bottom:1px solid #000;
   padding-bottom:20px;
 }
+.results-content table{
+  width:100%;
+}
 .related-activities>h3{
   font-size:24px;
   color:#d9e021;
@@ -573,6 +589,9 @@ main.result{
 .impact-by-sector .panel-group .panel+.panel{
   margin-top:20px;
 }
+.impact-by-sector>h2>.dashicons{
+  margin-left:15px;
+}
 .go-back{
   margin-bottom:40px;
 }
@@ -583,13 +602,13 @@ main.result{
 }
 
 .report-button>span{
-  display:block;
+  display:inline-block;
+  margin-left:15px;
 }
 .wp-pagenavi{
   margin-top:40px;
   text-align:center;
 }
-
 
 #footer{
   background-color:#333;

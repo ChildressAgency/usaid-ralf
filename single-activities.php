@@ -10,7 +10,7 @@
             <article>
               <?php if(have_posts()): while(have_posts()): the_post(); ?>
                 <header class="result-header">
-                  <span class="result-type-icon activity"></span>
+                  <span class="result-type-icon activity" data-toggle="tooltip" data-placement="top" title="Activity"></span>
                   <div class="sector-icon sector-icon-small"></div>
                   <h1><?php the_title(); ?></h1>
                 </header>
@@ -32,12 +32,12 @@
                     $impacts_by_sector = usaidralf_get_impacts_by_sector($impact_ids); ?>
 
                     <section class="impact-by-sector">
-                      <h2>IMPACT BY SECTOR</h2>
+                      <h2>IMPACT BY SECTOR<span class="dashicons dashicons-excerpt-view" data-toggle="tooltip" data-position="top" title="Expand All"></span></h2>
                       <div class="panel-group" id="impacts-accordion" role="tablist" aria-multiselectable="true">
                         <?php 
+                            $i = 0;
                           foreach($impacts_by_sector as $sector):
                             $acf_sector_id = 'sectors_' . $sector['sector_id'];
-                            $i = 0;
                             foreach($sector['impacts'] as $impact): ?>
 
                               <div class="panel panel-default">
@@ -45,7 +45,7 @@
                                   <h3 class="panel-title">
                                     <a href="#impact<?php echo $i; ?>" role="button" data-toggle="collapse" data-parent="#impacts-accordion"  aria-expanded="false" aria-controls="impact<?php echo $i; ?>">
                                       
-                                        <img src="<?php the_field('sector_icon', $acf_sector_id); ?>" class="img-circle img-responsive" alt="<?php echo $sector['sector_name']; ?>" style="background-color:<?php the_field('sector_color', $acf_sector_id); ?>;" />
+                                        <img src="<?php the_field('sector_icon', $acf_sector_id); ?>" class="img-circle" alt="<?php echo $sector['sector_name']; ?>" style="background-color:<?php the_field('sector_color', $acf_sector_id); ?>;" data-toggle="tooltip" data-placement="top" title="<?php echo $sector['sector_name']; ?>" />
                                         <span> <?php echo $impact->impact_title; ?></span>
                                     </a>
                                   </h3>

@@ -54,6 +54,7 @@ function usaidralf_styles(){
   
   wp_enqueue_style('bootstrap-css');
   wp_enqueue_style('google-fonts');
+  wp_enqueue_style('dashicons');
   wp_enqueue_style('usaidralf');
 }
 

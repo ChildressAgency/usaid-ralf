@@ -65,9 +65,9 @@ jQuery(document).ready(function($){
       reportIds = articleId;
     }
 
-    Cookies.set('report_ids', reportIds, { expires: 30 });
+    Cookies.set('STYXKEY_report_ids', reportIds, { expires: 30 });
     $('.report-button').each(function () {
-      $(this).html('<span><em>Added to report</em></span><a href="#" id="removeFromReport" class="btn-main btn-report">Remove From Report</a>');
+      $(this).html('<a href="#" id="removeFromReport" class="btn-main btn-report">Remove From Report</a><span><em>Added to report!</em></span>');
     });
   });
 
@@ -80,9 +80,24 @@ jQuery(document).ready(function($){
     }
 
     reportIds = reportIdArr.toString();
-    Cookies.set('report_ids', reportIds, { expires: 30 });
+    Cookies.set('STYXKEY_report_ids', reportIds, { expires: 30 });
     $('.report-button').each(function () {
-      $(this).html('<span><em>Removed from report</em></span><a href="#" id="saveToReport" class="btn-main btn-report">Save To Report</a>');
+      $(this).html('<a href="#" id="saveToReport" class="btn-main btn-report">Save To Report</a><span><em>Removed from report</em></span>');
     });
   });  
+
+  $(function () {
+    $('[data-toggle="tooltip"]').tooltip();
+  });
+
+  $('.impact-by-sector>h2').on('click', '.dashicons-excerpt-view', function(){
+    $(this).removeClass('dashicons-excerpt-view').addClass('dashicons-list-view');
+    $(this).attr('data-original-title', 'Contract All');
+    $('#impacts-accordion .collapse').collapse('show');
+  });
+  $('.impact-by-sector>h2').on('click', '.dashicons-list-view', function(){
+    $(this).removeClass('dashicons-list-view').addClass('dashicons-excerpt-view');
+    $(this).attr('data-original-title', 'Expand All');
+    $('#impacts-accordion .collapse').collapse('hide');
+  });
 });
