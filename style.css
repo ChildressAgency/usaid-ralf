@@ -304,6 +304,22 @@ a.sector-icon>img:hover{
   margin-right:10px;
   vertical-align:middle;
 }
+.impact-by-sector .panel-title{
+  display:inline-block;
+  vertical-align:middle;
+}
+.impact-by-sector .sector-popout{
+  display:inline-block;
+  vertical-align:top;
+  margin-left:15px;
+  height:25px;
+  width:25px;
+  margin-top:5px;
+  color:#000;
+}
+.impact-by-sector .sector-popout>span{
+  font-size:30px;
+}
 
 #quick-select{
   background-color:#f2f2f2;

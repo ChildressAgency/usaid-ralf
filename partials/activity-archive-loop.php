@@ -12,10 +12,10 @@
         foreach($impacts_by_sector as $sector): ?>
           <div class="row">
             <div class="col-sm-4 col-md-3">
-              <div class="sector-icon" data-toggle="tooltip" data-placement="top" title="<?php echo $sector['sector_name']; ?>">
+              <a href="<?php echo esc_url(get_term_link($sector->term_id), 'sectors'); ?>" class="sector-icon" data-toggle="tooltip" data-placement="top" title="<?php echo $sector['sector_name']; ?>">
                 <?php $acf_sector_id = 'sectors_' . $sector['sector_id']; ?>
                 <img src="<?php the_field('sector_icon', $acf_sector_id); ?>" class="img-circle img-responsive" alt="<?php echo $sector['sector_name']; ?>" style="background-color:<?php the_field('sector_color', $acf_sector_id); ?>;" />
-              </div>
+              </a>
             </div>
             <div class="col-sm-8 col-md-9">
               <div class="factor-grid">

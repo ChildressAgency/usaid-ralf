@@ -67,7 +67,7 @@
             if($sc%4==0){ echo '<div class="clearfix hidden-xs hidden-sm"></div>'; } ?>
 
             <div class="col-sm-6 col-md-3">
-              <a href="<?php echo esc_url(get_term_link($sector->term_id), 'sectors'); ?>" class="sector-icon">
+              <a href="<?php echo esc_url(get_term_link($sector->term_id, 'sectors')); ?>" class="sector-icon">
                 <img src="<?php echo $sector_icon_url; ?>" class="img-circle img-responsive center-block" alt="Agriculture Sector" style="background-color:<?php echo $sector_color; ?>;" />
                 <h3><?php echo $sector->name; ?></h3>
               </a>

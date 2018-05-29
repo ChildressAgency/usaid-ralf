@@ -20,7 +20,7 @@
                   </div>
                   <?php if(get_field('conditions')): ?>
                     <div class="activity-conditions">
-                      <h2>CONDITIONS</h2>
+                      <h2>POTENTIAL CONDITIONS</h2>
                       <?php the_field('conditions'); ?>
                     </div>
                   <?php endif; ?>
@@ -49,6 +49,9 @@
                                         <span> <?php echo $impact->impact_title; ?></span>
                                     </a>
                                   </h3>
+                                  <a href="<?php echo esc_url(get_term_link($sector['sector_id'], 'sectors')); ?>" class="sector-popout">
+                                    <span class="dashicons dashicons-external" data-toggle="tooltip" data-position="top" title="<?php echo $sector['sector_name']; ?>"></span>
+                                  </a>
                                 </div>
                                 <div class="clearfix"></div>
                                 <div id="impact<?php echo $i; ?>" class="panel-collapse collapse" role="tabpanel" aria-labelledby="impact-title<?php echo $i; ?>">

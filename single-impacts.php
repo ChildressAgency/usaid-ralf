@@ -15,9 +15,9 @@
                   <article>
                     <header class="result-header">
                       <span class="result-type-icon impact" data-toggle="tooltip" data-placement="top" title="Impact"></span>
-                      <div class="sector-icon sector-icon-small" data-toggle="tooltip" data-placement="top" title="<?php echo $sector->name; ?>">
+                      <a href="<?php echo esc_url(get_term_link($sector->term_id), 'sectors'); ?>" class="sector-icon sector-icon-small" data-toggle="tooltip" data-placement="top" title="<?php echo $sector->name; ?>">
                         <img src="<?php the_field('sector_icon', $acf_sector_id); ?>" class="img-circle img-responsive" alt="<?php echo $sector->name; ?> Sector" style="background-color:<?php the_field('sector_color', $acf_sector_id); ?>;" />
-                      </div>
+                      </a>
                       <h1><?php the_title(); ?></h1>
                     </header>
                     <section class="result-content">
