@@ -12,8 +12,7 @@
         <h3 class="media-heading"><?php the_title(); ?></h3>
         <?php
           $sectors = get_the_terms($impact_id, 'sectors');
-          foreach($sectors as $sector): ?>
-            <?php 
+          foreach($sectors as $sector): 
               $acf_sector_id = '';
               $acf_sub_sector_id = '';
               $sector_name = '';
