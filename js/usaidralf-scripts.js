@@ -33,7 +33,7 @@ jQuery(document).ready(function($){
 
   //add to report
   if(typeof articleId !== 'undefined'){
-    var reportIds = Cookies.get('report_ids');
+    var reportIds = Cookies.get('STYXKEY_report_ids');
     var reportIdArr;
     //var report_button = '<a href="#" id="saveToReport" class="save-to-report">Save To Report</a>';
     $('.report-button').each(function () {
