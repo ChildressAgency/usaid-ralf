@@ -13,13 +13,38 @@
         <?php
           $sectors = get_the_terms($impact_id, 'sectors');
           foreach($sectors as $sector): ?>
-            <?php $acf_sector_id = 'sectors_' . $sector->term_id; ?> 
+            <?php 
+              $acf_sector_id = '';
+              $acf_sub_sector_id = '';
+              $sector_name = '';
+              $sector_url = '';
 
+              if($sector->parent == 0){ //top level sector
+                $acf_sector_id = 'sectors_' . $sector->term_id;
+                $sector_name = $sector->name;
+                $sector_url = esc_url(get_term_link($sector->term_id), 'sectors');
+              }
+              else{ //sub-sector
+                $acf_sector_id = 'sectors_' . $sector->parent;
+                $acf_sub_sector_id = 'sectors_' . $sector->term_id;
+                
+                $sector_parent = get_term($sector->parent, 'sectors');
+                $sector_name = $sector_parent->name;
+                $sector_url = esc_url(get_term_link($sector_parent->term_id), 'sectors');
+              }
+            ?>
                 <div class="row">
                   <div class="col-sm-4 col-md-3">
-                    <a href="<?php echo esc_url(get_term_link($sector->term_id), 'sectors'); ?>" class="sector-icon" data-toggle="tooltip" data-placement="top" title="<?php echo $sector->name; ?>">
-                      <img src="<?php the_field('sector_icon', $acf_sector_id); ?>" class="img-circle img-responsive" alt="<?php echo $sector->name; ?> Sector" style="background-color:<?php the_field('sector_color', $acf_sector_id); ?>;" />
-                    </a>
+                    <div class="sector-icon">
+                      <a href="<?php echo $sector_url; ?>" class="parent-sector" data-toggle="tooltip" data-placement="top" title="<?php echo $sector_name; ?>">
+                        <img src="<?php the_field('sector_icon', $acf_sector_id); ?>" class="img-circle img-responsive" alt="<?php echo $sector_name; ?> Sector" style="background-color:<?php the_field('sector_color', $acf_sector_id); ?>;" />
+                      </a>
+                      <?php if($sector->parent > 0): ?>
+                        <a href="<?php echo esc_url(get_term_link($sector->term_id, 'sectors')); ?>" class="sub-sector" data-toggle="tooltip" data-placement="top" title="<?php echo $sector->name; ?>">
+                          <img src="<?php the_field('sector_icon', $acf_sub_sector_id); ?>" class="img-circle img-responsive" alt="<?php echo $sector->name; ?> Sector" style="background-color:<?php the_field('sector_color', $acf_sub_sector_id); ?>" />
+                        </a>
+                      <?php endif; ?>
+                    </div>
                   </div>
                   <div class="col-sm-8 col-md-9">
                     <div class="number-activities">

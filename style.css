@@ -273,6 +273,7 @@ section{
   display:block;
   text-align:center;
   margin-top:40px;
+  position:relative;
 }
 .sector-icon h3{
   font-size:20px;
@@ -286,17 +287,26 @@ section{
   text-decoration:none;
   color:#666;
 }
-.sector-icon>img{
+.sector-icon img{
   -webkit-transition:all .3s ease;
   transition:all .3s ease;
 	max-width:150px;
 }
-a.sector-icon>img:hover{
+.sector-icon img:hover{
   transform:scale(1.1);
 }
 .sector-icon.sector-icon-small{
   display:inline-block;
   width:44px;
+}
+.sector-icon .sub-sector{
+  position:absolute;
+  right:0;
+  bottom:-5px;
+  display:block;
+  height:40%;
+  width:40%;
+  border-radius:50%;
 }
 .panel-title .sector-icon.sector-icon-small{
   float:left;
