@@ -49,7 +49,7 @@
                                         <span> <?php echo $impact->impact_title; ?></span>
                                     </a>
                                   </h3>
-                                  <a href="<?php echo esc_url(get_term_link($sector['sector_id'], 'sectors')); ?>" class="sector-popout">
+                                  <a href="<?php echo esc_url(get_term_link((int)$sector['sector_id'], 'sectors')); ?>" class="sector-popout" target="_blank">
                                     <span class="dashicons dashicons-external" data-toggle="tooltip" data-position="top" title="<?php echo $sector['sector_name']; ?>"></span>
                                   </a>
                                 </div>

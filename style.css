@@ -321,14 +321,17 @@ section{
 .impact-by-sector .sector-popout{
   display:inline-block;
   vertical-align:top;
-  margin-left:15px;
   height:25px;
   width:25px;
   margin-top:5px;
   color:#000;
 }
+.impact-by-sector .sector-popout:hover,
+.impact-by-sector .sector-popout:focus{
+  text-decoration:none;
+}
 .impact-by-sector .sector-popout>span{
-  font-size:30px;
+  font-size:20px;
 }
 
 #quick-select{
