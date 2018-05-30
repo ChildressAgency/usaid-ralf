@@ -420,11 +420,17 @@ class usaidralf_sector_selector_widget extends WP_Widget{
 			echo $args['before_title'] . $title . $args['after_title'];
 		}
 
-    $sectors = get_terms(array('taxonomy' => 'sectors', 'orderby' => 'name'));
+    $sectors = get_terms(array('taxonomy' => 'sectors', 'orderby' => 'term_group', 'parent' => 0));
     if($sectors){
       echo '<ul>';
       foreach($sectors as $sector){
         echo '<li><a href="' . esc_url(get_term_link($sector)) . '">' . $sector->name . '</a></li>';
+        $sub_sectors = get_terms(array('taxonomy' => 'sectors', 'orderby' => 'name', 'parent' => $sector->term_id));
+        if(!empty($sub_sectors) && !is_wp_error($sub_sectors)){
+          foreach($sub_sectors as $sub_sector){
+            echo '<li><a href="' . esc_url(get_term_link($sub_sector)) . '"> - ' . $sub_sector->name . '</a></li>';
+          }
+        }
       }
     }
     echo '</ul>';
