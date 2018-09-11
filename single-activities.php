@@ -7,8 +7,8 @@
             <div class="go-back">
               <a href="javascript:history.back(-1);">BACK</a>
             </div>
-            <article>
-              <?php if(have_posts()): while(have_posts()): the_post(); ?>
+            <?php if(have_posts()): while(have_posts()): the_post(); ?>
+              <article class="ralf-article" data-article_id="<?php echo get_the_ID(); ?>">
                 <header class="result-header">
                   <span class="result-type-icon activity" data-toggle="tooltip" data-placement="top" title="Activity"></span>
                   <div class="sector-icon sector-icon-small"></div>
@@ -66,13 +66,11 @@
                       </div>
                     </section>
                   <?php endif; ?>
-                <?php $article_id = get_the_ID(); ?>
-                <script>var articleId = "<?php echo $article_id; ?>";</script>
                 <div class="report-button">
                   
                 </div>
-              <?php endwhile; endif; ?>
-            </article>
+              </article>
+            <?php endwhile; endif; ?>
 
           </main>
         </div>

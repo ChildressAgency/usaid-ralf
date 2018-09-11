@@ -2,36 +2,14 @@
 <div class="page-content">
   <div class="container">
     <main class="results-list">
-      <header class="page-header">
-        <h1>Report of Activities and Associated Impacts</h1>
-      </header>
-        <?php
-          if(isset($_COOKIE['STYXKEY_report_ids'])){
-            $report_ids_cookie = $_COOKIE['STYXKEY_report_ids'];
-
-            $report_ids = explode(',', $report_ids_cookie);
-
-            $activities_ids = array_map(
-              function($value){ return (int)$value; },
-              $report_ids
-            );
-
-            $activities_report = new WP_Query(array(
-              'post_type' => 'activities',
-              'posts_per_page' => -1,
-              'post__in' => $activities_ids
-            ));
-
-            if($activities_report->have_posts()): while($activities_report->have_posts()): $activities_report->the_post();
-
-              get_template_part('partials/report', 'loop');
-
-            endwhile; endif; wp_reset_postdata(); 
+      <?php 
+        if(have_posts()){
+          while(have_posts()){
+            the_post(); 
+            the_content(); 
           }
-          else{
-            echo '<p>You haven\'t saved any Activities to report.</p>';
-          }
-        ?>
+        }
+      ?>
     </main>
   </div>
 </div>
