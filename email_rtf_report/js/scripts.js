@@ -1,10 +1,10 @@
 $(document).ready(function($){
   $('.email-report').on('click', '.send-email', function( e ){
-    console.log('clicked');
     var $button = $(this);
+    var emailAddresses = $('#email-addresses').val();
 
-    if($('.test-email-message').val().length === 0){
-      $('.test-email-message').css('border', '2px solid red');
+    if(emailAddresses.length === 0){
+      $('#email-addresses').css('border', '2px solid red');
       return false;
     }
     else{
@@ -17,13 +17,14 @@ $(document).ready(function($){
       'action' : 'send_rtf_report',
       'post_id' : $button.data('post_id'),
       'nonce' : $button.data('nonce'),
-      'report' : $('.test-email-message').val()
+      //'report' : $('.test-email-message').val()
+      'email-addresses' : emailAddresses
     };
 
     $.post(ralf_settings.ralf_ajaxurl, data, function(response){
       if(response.success == true){
         $button.remove();
-        $('test-email-message').remove();
+        $('#email-addresses').remove();
 
         $('.email-response').html(response.data);
       }
@@ -31,7 +32,7 @@ $(document).ready(function($){
         $('.email-response').html(ralf_settings.error);
       }
 
-      $button.width($button.width()).text('Send Email').prop('disabled', false);
+      //$button.width($button.width()).text('Send Email').prop('disabled', false);
     });
   });
 });

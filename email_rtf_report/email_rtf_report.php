@@ -10,7 +10,8 @@
 
 class Email_rtf_report{
   public function __construct(){
-    add_filter('the_content', array($this, 'email_button'), 10, 1);
+    //add_filter('the_content', array($this, 'email_button'), 10, 1);
+    add_shortcode('email_form', array($this, 'email_rtf_form'));
 
     add_action('wp_enqueue_scripts', array($this, 'scripts'));
 
@@ -18,20 +19,21 @@ class Email_rtf_report{
     add_action('wp_ajax_send_rtf_report', array($this, 'send_rtf_report'));
   }
 
-  public function email_button($content){
-    if(!is_page('view-report')){ return $content; }
+  public function email_rtf_form(){
+    //if(!is_page('view-report')){ return $content; }
 
     $nonce = wp_create_nonce('email_rtf_report_' . get_the_ID());
 
-    $content .= '<div class="email-report">
-                  <div class="form-group">
-                    <input type="text" id="email-addresses" name="email-addresses" class="form-control" placeholder="' . __('Enter a comma-separated list of email addresses.', 'emailrtfreport') . '" />
-                  </div>
-                  <button class="btn-main btn-report send-email" data-nonce="' . $nonce . '" data-post_id="' . get_the_ID() . '">' . __('Send Email', 'emailrtfreport') . '</button>
-                  <p class="email-response"></p>
-                </div>';
+    $form_content = '<div class="email-report">
+                      <h3>Email this report</h3>
+                      <div class="form-group">
+                        <input type="text" id="email-addresses" name="email-addresses" class="form-control" placeholder="' . __('Enter a comma-separated list of email addresses.', 'emailrtfreport') . '" />
+                      </div>
+                      <button class="btn-main btn-report send-email" data-nonce="' . $nonce . '" data-post_id="' . get_the_ID() . '">' . __('Send Email', 'emailrtfreport') . '</button>
+                      <p class="email-response"></p>
+                    </div>';
     
-    return $content;
+    return $form_content;
   }
 
   function scripts(){
@@ -52,9 +54,13 @@ class Email_rtf_report{
       wp_send_json_error();
     }
 
-    $post_title = get_the_title(intval($data['post_id']));
+    //$post_title = get_the_title(intval($data['post_id']));
 
-    $result = wp_mail('jcampbell@childressagency.com', 'Test rtf report email.' . $post_title, sanitize_text_field($data['report']));
+    $to = $data['email-addresses'];
+    $subject = 'Your RALF Impact Report';
+    $message = 'Please find your RALF Impact Report attached';
+
+    $result = wp_mail($to, $subject, $message);
 
     if($result == true){
       wp_send_json_success(__('Report sent!', 'emailrtfreport'));

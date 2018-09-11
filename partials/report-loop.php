@@ -48,4 +48,5 @@
   <div class="report-button hidden-print">
 
   </div>
+  <?php echo do_shortcode('[email_form]'); ?>
 </article>
