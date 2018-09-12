@@ -2,7 +2,7 @@ $(document).ready(function($){
   //define the save/remove buttons
   var saveToReportButton = '<a href="#" class="btn-main btn-report save-to-report">Save To Report</a>';
   var removeFromReportButton = '<a href="#" class="btn-main btn-report remove-from-report">Remove From Report</a>';
-  var reportIdsCookieName = 'STYXKEY_report_ids'; //STYXKEY is required by pantheon for some reason
+  var reportIdsCookieName = 'STYXKEY_report_ids'; //STYXKEY is required by pantheon.io for some reason
 
   //get the report ids saved so far from the cookie
   var savedReportIds_cookie = Cookies.get(reportIdsCookieName);
@@ -62,7 +62,7 @@ $(document).ready(function($){
     //put the report ids into the cookie
     Cookies.set(reportIdsCookieName, reportIds, { expires:30 });
     //change the save button to remove
-    $(this).html(removeFromReportButton . '<span><em>Added to report!</em></span>');
+    $(this).parent('.report-button').html(removeFromReportButton + '<span><em>Added to report!</em></span>');
   });
 
   //remove report button clicked
@@ -73,13 +73,14 @@ $(document).ready(function($){
     var reportIds = '';
     //get the article id for the button
     var articleId = $(this).parents('.ralf-article').data('article_id');
+    
     //get fresh cookie
     var savedReportIds_cookie = Cookies.get(reportIdsCookieName);
 
     if(savedReportIds_cookie){
       //save the report ids from the cookie into an array
-      var savedReportIds = savedReportIds_cookie.split(',');
-
+      var savedReportIds = savedReportIds_cookie.split(',').map(parseInt);
+      
       //find the index of the article id in the cookie array
       var articleIdIndex = savedReportIds.indexOf(articleId);
 
@@ -87,13 +88,14 @@ $(document).ready(function($){
         //the article id is in the cookie so remove it
         savedReportIds.splice(articleIdIndex, 1);
         reportIds = savedReportIds.toString();
+        //console.log(reportIds);
         //save cookie here, because if there wasn't a cookie before it doesn't matter
         Cookies.set(reportIdsCookieName, reportIds, { expires:30 });
       }
     }
 
     //change the button save, even there was no cookie
-    $(this).html(saveToReportButton . '<span><em>Removed from report</em></span>');
+    $(this).parent('.report-button').html(saveToReportButton + '<span><em>Removed from report</em></span>');
   });
   
   //email report functions
