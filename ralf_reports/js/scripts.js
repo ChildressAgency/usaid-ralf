@@ -16,7 +16,7 @@ $(document).ready(function($){
       var $article = $(this);
       var articleId = $article.data('article_id');
 
-      if(savedReportIds.indexOf(articleId) > -1){
+      if(savedReportIds.indexOf(articleId) < 0){
         //this article id has not been saved
         $article.find('.report-button').html(saveToReportButton);
       }
@@ -115,7 +115,7 @@ $(document).ready(function($){
 
     var data = {
       'action' : 'send_rtf_report',
-      'post_id' : $button.data('post_id'),
+      'report_ids' : $button.data('report_ids'),
       'nonce' : $button.data('nonce'),
       //'report' : $('.test-email-message').val()
       'email-addresses' : emailAddresses
@@ -132,7 +132,8 @@ $(document).ready(function($){
       }
       else{
         //there was an error, button and email field are still there for them to try again
-        $('.email-response').html(ralf_settings.error);
+        //console.log(response);
+        $('.email-response').html();
       }
 
       //$button.width($button.width()).text('Send Email').prop('disabled', false);
