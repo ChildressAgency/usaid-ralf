@@ -64,8 +64,6 @@ class ralf_report{
 
     $html_report = $this->get_report($report_ids_array);
 
-    //$rtf_report = $this->create_rtf_report($html_report);
-
     require_once 'vsWord/VsWord.php';
     VsWord::autoLoad();
 
