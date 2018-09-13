@@ -78,17 +78,6 @@ class ralf_report{
 
     $doc->saveAs($ralf_report_name);
 
-    //file_put_contents($ralf_report_name, print_r($htmlToRtfConverter, true));
-
-    //$ralf_report_file = fopen($ralf_report_name, 'w');
-    //$ralf_report_contents = print_r($htmlToRtfConverter, true);
-    //$ralf_report_contents = $rtf;
-    //fwrite($ralf_report_file, $ralf_report_contents);
-    //fwrite($ralf_report_file, $rtf);
-    //fclose($ralf_report_file);
-
-//$rtf = $this->get_report($report_ids_array);
-
     $to = $email_addresses;
     $subject = 'Your RALF Impact Report';
     //$headers = 'From: USAID RALF <jcampbell@childressagency.com>';
