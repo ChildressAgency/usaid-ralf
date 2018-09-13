@@ -56,14 +56,18 @@ class ralf_report{
   function send_rtf_report(){
     $report_ids = $_POST['report_ids'];
     $email_addresses = $_POST['email-addresses'];
+    //put report_ids string into array
     $report_ids_array = explode(',', $report_ids);
+
     //verify nonce
     if(check_ajax_referer('email_rtf_report_' . $report_ids, 'nonce', false) == false){
       wp_send_json_error();
     }
 
+    //generate the html for the report 
     $html_report = $this->get_report($report_ids_array);
 
+    //using vsword to convert the html into a docx
     require_once 'vsWord/VsWord.php';
     VsWord::autoLoad();
 
@@ -71,6 +75,8 @@ class ralf_report{
     $parser = new HtmlParser($doc);
     $parser->parse($html_report);
 
+    //create the filename and path to save to, and where mailer will find the attachment
+    //todo: delete the file after emailing? -check with client
     $upload_dir = wp_upload_dir();
     $upload_dir_base = $upload_dir['basedir'];
     $ralf_reports_folder = $upload_dir_base . '/ralf_reports/';
@@ -78,22 +84,26 @@ class ralf_report{
 
     $doc->saveAs($ralf_report_name);
 
+    //create the email variables
     $to = $email_addresses;
     $subject = 'Your RALF Impact Report';
     //$headers = 'From: USAID RALF <jcampbell@childressagency.com>';
     $headers = '';
     $message = 'Your RALF Impact Report is attached to this email. Your chosen Activities are listed below:' . "\r\n\r\n";
 
+    //show the title of each article in the message body
     foreach($report_ids_array as $report_id){
       $message .= ' - ' . get_the_title($report_id) . "\r\n";
     }
 
+    //link to the report using querystrings with the ids
     $message .= "\r\n" . 'Here is a link back to your report: ' . esc_url(add_query_arg('report_ids', $report_ids, home_url('view-report')));
-    $message .= "\r\n" . $ralf_report_name;
+    //$message .= "\r\n" . $ralf_report_name;
 
+    //send the email with attachment
     $result = wp_mail($to, $subject, $message, $headers, $ralf_report_name);
-    //$result = wp_mail($to, $subject, $message, $headers);
 
+    //reply to the webpage
     if($result == true){
       wp_send_json_success(__('Report email sent!', 'ralfreports'));
     }
@@ -139,10 +149,6 @@ class ralf_report{
 
     return $rtf_report;
   }  
-
-  function create_rtf_report($html_report){
-
-  }
 }
 
 new ralf_report;
