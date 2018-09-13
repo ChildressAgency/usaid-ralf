@@ -9,7 +9,7 @@ $(document).ready(function($){
 
   if(savedReportIds_cookie){
     //save the report ids from the cookie into an array
-    var savedReportIds = savedReportIds_cookie.split(',');
+    var savedReportIds = savedReportIds_cookie.split(',').map(Number);
   
     //loop through each article and see if its already been saved, then update the button
     $('.ralf-article').each(function(){
@@ -46,7 +46,7 @@ $(document).ready(function($){
 
     if(savedReportIds_cookie){
       //save the report ids from the cookie into an array
-      var savedReportIds = savedReportIds_cookie.split(',');
+      var savedReportIds = savedReportIds_cookie.split(',').map(Number);
 
       if(savedReportIds.indexOf(articleId) < 0){
         //this article id is not already in the cookie
@@ -79,7 +79,7 @@ $(document).ready(function($){
 
     if(savedReportIds_cookie){
       //save the report ids from the cookie into an array
-      var savedReportIds = savedReportIds_cookie.split(',').map(parseInt);
+      var savedReportIds = savedReportIds_cookie.split(',').map(Number);
       
       //find the index of the article id in the cookie array
       var articleIdIndex = savedReportIds.indexOf(articleId);

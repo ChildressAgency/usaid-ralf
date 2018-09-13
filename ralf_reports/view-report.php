@@ -7,6 +7,7 @@ if ( ! defined( 'ABSPATH' ) ) exit; ?>
 </header>
 
 <?php
+$activities_ids = [];
 if(isset($_GET['report_ids'])){
   $report_ids = explode(',', $_GET['report_ids']);
 

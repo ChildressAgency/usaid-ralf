@@ -62,28 +62,13 @@ class ralf_report{
       wp_send_json_error();
     }
 
-    //include('class_rtf.php');
-    //include('generate_rtf_report.php');
+    $html_report = $this->get_report($report_ids_array);
 
-    $rtf_report = $this->get_report($report_ids_array);
-/*
-    $rtf = new rtf('rtf_config.php');
-    $rtf->setPaperSize(5);
-    $rtf->setPaperOrientation(1);
-    $rtf->setDefaultFontFace(0);
-    $rtf->setDefaultFontSize(24);
-    $rtf->setAuthor("jcampbell");
-    $rtf->setOperator("jcampbell@childressagency.com");
-    $rtf->setTitle("RALF Impact Report");
-    $rtf->addColour("#000000");
-    //$rtf->addText($_POST['text']);
-    $rtf->addText($rtf_report);
-    $rtf->getDocument();
-*/
+    //$rtf_report = $this->create_rtf_report($html_report);
 
     include('HtmlToRtf.php');
-    //$htmlToRtfConverter = new HtmlToRtf\HtmlToRtf($rtf_report);
-    //$htmlToRtfConverter->getRTFFile();
+    $htmlToRtfConverter = new HtmlToRtf\HtmlToRtf($html_report);
+    $htmlToRtfConverter->getRTFFile();
 
     $upload_dir = wp_upload_dir();
     $upload_dir_base = $upload_dir['basedir'];
@@ -92,12 +77,12 @@ class ralf_report{
 
     //file_put_contents($ralf_report_name, print_r($htmlToRtfConverter, true));
 
-    //$ralf_report_file = fopen($ralf_report_name, 'w');
-    //$ralf_report_contents = print_r($rtf, true);
+    $ralf_report_file = fopen($ralf_report_name, 'w');
+    $ralf_report_contents = print_r($htmlToRtfConverter, true);
     //$ralf_report_contents = $rtf;
-    //fwrite($ralf_report_file, $ralf_report_contents);
+    fwrite($ralf_report_file, $ralf_report_contents);
     //fwrite($ralf_report_file, $rtf);
-    //fclose($ralf_report_file);
+    fclose($ralf_report_file);
 
 //$rtf = $this->get_report($report_ids_array);
 
@@ -114,7 +99,7 @@ class ralf_report{
     $message .= "\r\n" . 'Here is a link back to your report: ' . esc_url(add_query_arg('report_ids', $report_ids, home_url('view-report')));
     $message .= "\r\n" . $ralf_report_name;
 
-    //$result = wp_mail($to, $subject, $message, $headers, $ralf_report_name);
+    $result = wp_mail($to, $subject, $message, $headers, $ralf_report_name);
     //$result = wp_mail($to, $subject, $rtf, $headers);
 
     if($result == true){
@@ -140,7 +125,7 @@ class ralf_report{
         $activities_report->the_post();
 
         $rtf_report .= '<h2>' . get_the_title() . '</h2>';
-        $rtf_report .= get_the_content();
+        $rtf_report .= '<p>' . get_the_content() . '</p>';
         $rtf_report .= '<h3>CONDITIONS</h3>';
         $rtf_report .= get_field('conditions');
 
@@ -152,7 +137,7 @@ class ralf_report{
           foreach($impacts_by_sector as $sector){
             foreach($sector['impacts'] as $impact){
               $rtf_report .= '<h4>' . $impact->impact_title . '</h4>';
-              $rtf_report .= $impact->impact_description;
+              $rtf_report .= '<p>' . $impact->impact_description . '</p>';
             }
           }
         }
@@ -162,6 +147,10 @@ class ralf_report{
 
     return $rtf_report;
   }  
+
+  function create_rtf_report($html_report){
+
+  }
 }
 
 new ralf_report;
