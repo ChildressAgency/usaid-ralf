@@ -66,23 +66,28 @@ class ralf_report{
 
     //$rtf_report = $this->create_rtf_report($html_report);
 
-    include('HtmlToRtf.php');
-    $htmlToRtfConverter = new HtmlToRtf\HtmlToRtf($html_report);
-    $htmlToRtfConverter->getRTFFile();
+    require_once 'vsWord/VsWord.php';
+    VsWord::autoLoad();
+
+    $doc = new VsWord();
+    $parser = new HtmlParser($doc);
+    $parser->parse($html_report);
 
     $upload_dir = wp_upload_dir();
     $upload_dir_base = $upload_dir['basedir'];
     $ralf_reports_folder = $upload_dir_base . '/ralf_reports/';
-    $ralf_report_name = $ralf_reports_folder . 'ralf_report_' . date("mdY-His") . '.rtf';
+    $ralf_report_name = $ralf_reports_folder . 'ralf_report_' . date("mdY-His") . '.docx';
+
+    $doc->saveAs($ralf_report_name);
 
     //file_put_contents($ralf_report_name, print_r($htmlToRtfConverter, true));
 
-    $ralf_report_file = fopen($ralf_report_name, 'w');
-    $ralf_report_contents = print_r($htmlToRtfConverter, true);
+    //$ralf_report_file = fopen($ralf_report_name, 'w');
+    //$ralf_report_contents = print_r($htmlToRtfConverter, true);
     //$ralf_report_contents = $rtf;
-    fwrite($ralf_report_file, $ralf_report_contents);
+    //fwrite($ralf_report_file, $ralf_report_contents);
     //fwrite($ralf_report_file, $rtf);
-    fclose($ralf_report_file);
+    //fclose($ralf_report_file);
 
 //$rtf = $this->get_report($report_ids_array);
 
@@ -100,7 +105,7 @@ class ralf_report{
     $message .= "\r\n" . $ralf_report_name;
 
     $result = wp_mail($to, $subject, $message, $headers, $ralf_report_name);
-    //$result = wp_mail($to, $subject, $rtf, $headers);
+    //$result = wp_mail($to, $subject, $message, $headers);
 
     if($result == true){
       wp_send_json_success(__('Report email sent!', 'ralfreports'));
