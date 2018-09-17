@@ -19,10 +19,18 @@ $(document).ready(function($){
       if(savedReportIds.indexOf(articleId) < 0){
         //this article id has not been saved
         $article.find('.report-button').html(saveToReportButton);
+        //setup sidebar report button
+        if($('#sidebar-report-button')){
+          $('#sidebar-report-button').removeClass('remove-from-report').addClass('save-to-report').text('Save To Report');
+        }
       }
       else{
         //this article id has been saved
         $article.find('.report-button').html(removeFromReportButton);
+        //setup sidebar report button
+        if($('#sidebar-report-button')){
+          $('#sidebar-report-button').removeClass('save-to-report').addClass('remove-from-report').text('Remove From Report');
+        }
       }
     });
   }
@@ -31,6 +39,10 @@ $(document).ready(function($){
     $('.report-button').each(function(){
       $(this).html(saveToReportButton);
     });
+    //setup sidebar report button
+    if($('#sidebar-report-button')){
+      $('#sidebar-report-button').removeClass('remove-from-report').addClass('save-to-report').text('Save To Report');
+    }
   }
   
   //save report button clicked
@@ -63,6 +75,10 @@ $(document).ready(function($){
     Cookies.set(reportIdsCookieName, reportIds, { expires:30 });
     //change the save button to remove
     $(this).parent('.report-button').html(removeFromReportButton + '<span><em>Added to report!</em></span>');
+    //change the sidebar button to remove
+    if($('#sidebar-report-button')){
+      $('#sidebar-report-button').removeClass('save-to-report').addClass('remove-from-report').text('Remove From Report');
+    }
   });
 
   //remove report button clicked
@@ -96,6 +112,10 @@ $(document).ready(function($){
 
     //change the button save, even there was no cookie
     $(this).parent('.report-button').html(saveToReportButton + '<span><em>Removed from report</em></span>');
+    //change sidebar button to save
+    if($('#sidebar-report-button')){
+      $('#sidebar-report-button').removeClass('remove-from-report').addClass('save-to-report').text('Save To Report');
+    }
   });
   
   //email report functions

@@ -103,7 +103,8 @@ a{
 .btn-main.btn-report:focus{
   background-color:#b3b3b3;
 }
-.sidebar-section .save-to-report{
+.sidebar-section .save-to-report,
+.sidebar-section .remove-from-report{
   color:#c4d82e;
   font-family:"AvenirNext", sans-serif;
   font-weight:800;
