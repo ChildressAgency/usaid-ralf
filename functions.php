@@ -687,4 +687,62 @@ function usaidralf_get_related_activities($impact_id){
 		
 		return $value;
 		
-	} // end function acf_reciprocal_relationship
+  } // end function acf_reciprocal_relationship
+
+  if(function_exists('acf_add_options_page')){
+    acf_add_options_page(array(
+      'page_title' => 'General Settings',
+      'menu_title' => 'General Settings',
+      'menu_slug' => 'general-settings',
+      'capability' => 'edit_posts',
+      'redirect' => false
+    ));
+  }
+  
+
+/*********************
+* searchWP functions *
+*********************/
+
+add_action('init', 'usaidralf_update_search_history');
+function usaidralf_update_search_history(){
+  $new_search_terms_list = usaidralf_get_search_history();
+  
+  if($new_search_terms_list != ''){
+    $cookie_lifetime = 30; //days
+    $date_of_expiry = time() + 60 * 60 * 24 * $cookie_lifetime;
+    setcookie("STYXKEY_usaidralf_search_history", $new_search_terms_list, $date_of_expiry, "/");
+  }
+}
+
+function usaidralf_get_search_history(){
+  //get new search term if its there
+  $search_term = isset($_GET['s']) ? $_GET['s'] : '';
+
+  if(isset($_COOKIE['STYXKEY_usaidralf_search_history'])){
+    $search_terms_list = $_COOKIE['STYXKEY_usaidralf_search_history'];
+    //put search terms into array
+    $search_terms = explode(',', $search_terms_list);
+
+    //get number of terms to save to history
+    $history_limit = get_field('search_term_history_limit', 'option');
+    
+    //if we are at history limit remove first search term
+    if((count($search_terms) == $history_limit) && ($search_term != '')){
+      array_shift($search_terms);
+    }
+
+    //add the new search term to end of array if there is one
+    if($search_term != ''){
+      array_push($search_terms, $search_term);
+    }
+
+    //convert terms array to string and return
+    $new_search_terms_list = implode(',', $search_terms);
+
+    return $new_search_terms_list;
+  }
+  else{ //no cookie, must be first search or they've been cleared with js function
+    return $search_term;
+  }
+}

@@ -647,6 +647,14 @@ main.result{
   padding-bottom:40px;
 }
 
+#clear-search-history{
+  display:block;
+  margin-top:-10px;
+  margin-bottom:5px;
+  font-size:14px;
+  font-style:italic;
+}
+
 
 @media (max-width:767px){
   .search-bar .form-group{

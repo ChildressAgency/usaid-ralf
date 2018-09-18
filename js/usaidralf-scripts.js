@@ -45,4 +45,12 @@ jQuery(document).ready(function($){
     $(this).attr('data-original-title', 'Expand All');
     $('#impacts-accordion .collapse').collapse('hide');
   });
+
+  //clear search history
+  $('#clear-search-history').on('click', function(e){
+    e.preventDefault();
+
+    Cookies.remove('STYXKEY_usaidralf_search_history', { path:'/' });
+    $(this).parent().remove();
+  });
 });
