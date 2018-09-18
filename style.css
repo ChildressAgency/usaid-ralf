@@ -341,20 +341,21 @@ section{
 #quick-select .section-header p{
   max-width:980px;
 }
-.factor-grid{
+.terms-grid{
   display:flex;
   flex-wrap:wrap;
   justify-content:space-between;
   text-align:center;
 }
-.factor-grid .grid-item{
+.terms-grid .grid-item{
   margin:3px;
   width:auto;
   flex-grow:1;
   flex-shrink:1;
   flex-basis:auto;
 }
-.factor-grid .grid-item .factor-name{
+.terms-grid .grid-item .factor-name,
+.terms-grid .grid-item .search-term{
   font-size:22px;
   font-family:"AvenirNext", sans-serif;
   font-weight:400;
@@ -365,14 +366,28 @@ section{
   border-radius:4px;
   display:block;
 }
-.factor-grid .grid-item .factor-name>input[type="checkbox"]{
+.terms-grid .grid-item .factor-name>input[type="checkbox"]{
   position:absolute;
   opacity:0;
 }
-.factor-grid .grid-item:hover .factor-name,
-.factor-grid .grid-item .factor-name.active,
-.factor-grid .grid-item .factor-name>input[type="checkbox"]:checked{
+.terms-grid .grid-item:hover .factor-name,
+.terms-grid .grid-item .factor-name.active,
+.terms-grid .grid-item .factor-name>input[type="checkbox"]:checked,
+.terms-grid .grid-item .search-term:hover,
+.terms-grid .grid-item .search-term:focus{
   background-color:#d9e021;
+}
+.terms-grid .grid-item .search-term{
+  color:#000;
+}
+.terms-grid .grid-item .search-term:hover,
+.terms-grid .grid-item .search-term:focus{
+  text-decoration:none;
+  color:#000;
+}
+.terms-grid .grid-item .search-term>span{
+  font-size:14px;
+  font-style:italic;
 }
 #quick-select .btn-main:hover,
 #quick-select .btn-main:focus{

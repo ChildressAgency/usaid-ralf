@@ -12,6 +12,7 @@
         <h3 class="media-heading"><?php the_title(); ?></h3>
         <?php
           $sectors = get_the_terms($impact_id, 'sectors');
+          if($sectors):
           foreach($sectors as $sector): 
               $acf_sector_id = '';
               $acf_sub_sector_id = '';
@@ -52,7 +53,9 @@
                   </div>
                 </div>
           
-        <?php endforeach; ?>
+        <?php endforeach; else: ?>
+         <p>No impacts are associated with this activity.</p>
+        <?php endif; ?>
       </div>
     </div>
 <?php else: 
@@ -61,7 +64,7 @@
       echo '<div class="media-body" style="padding-top:40px;"><p>No Activities have been associated with the <span style="text-transform:capitalize;">' . get_the_title() . '</span> impact.</p></div>';
     }
     else{
-      echo '<p>No factors have been selected.</p>';
+      //echo '<p>No factors have been selected.</p>';
     }
   //} ?>
     

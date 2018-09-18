@@ -86,7 +86,7 @@
       </header>
 
       <form action="<?php echo home_url('quick-select-results'); ?>" method="post">
-        <div class="factor-grid">
+        <div class="factor-grid terms-grid">
           <?php 
             $impact_tags = get_terms(array(
               'taxonomy' => 'impact_tags',
@@ -112,6 +112,33 @@
           <input type="submit" class="btn-main" value="Search" />
         </div>
       </form>
+    </div>
+  </section>
+
+  <section id="common-search-terms">
+    <div class="container">
+      <header class="section-header">
+        <h2><?php the_field('common_search_terms_section_title'); ?></h2>
+        <?php the_field('common_search_terms_section_intro'); ?>
+      </header>
+
+      <div class="terms-grid">
+        <?php
+          global $wpdb;
+          $common_search_terms = $wpdb->get_results("
+            SELECT query, MAX(hits) as hits
+            FROM wp_swp_log
+            GROUP BY query
+            ORDER BY COUNT(query) DESC, hits DESC
+            LIMIT 20");
+
+          foreach($common_search_terms as $search_term){
+            echo '<div class="grid-item">';
+            echo '<a href="' . add_query_arg('s', $search_term->query, home_url()) . '" class="search-term">' . $search_term->query . ' <span>(' . $search_term->hits . ' results)</a>';
+            echo '</div>';
+          }
+        ?>
+      </div>
     </div>
   </section>
 <?php get_footer(); ?>
