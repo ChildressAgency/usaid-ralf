@@ -128,6 +128,7 @@
           $common_search_terms = $wpdb->get_results("
             SELECT query, MAX(hits) as hits
             FROM wp_swp_log
+            WHERE hits > 0
             GROUP BY query
             ORDER BY COUNT(query) DESC, hits DESC
             LIMIT 20");
