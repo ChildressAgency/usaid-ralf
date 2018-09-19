@@ -724,19 +724,20 @@ function usaidralf_get_search_history(){
     //put search terms into array
     $search_terms = explode(',', $search_terms_list);
 
-    //get number of terms to save to history
-    $history_limit = get_field('search_term_history_limit', 'option');
-    
-    //if we are at history limit remove first search term
-    if((count($search_terms) == $history_limit) && ($search_term != '')){
-      array_shift($search_terms);
-    }
+    //don't do anything if the search term is empty or already in the list
+    if(($search_term !='') && (!in_array($search_term, $search_terms))){
 
-    //add the new search term to end of array if there is one
-    if($search_term != ''){
+      //get number of terms to save to history
+      $history_limit = get_field('search_term_history_limit', 'option');
+    
+      //if we are at history limit remove first search term
+      if((count($search_terms) == $history_limit)){
+        array_shift($search_terms);
+      }
+
+      //add the new search term to end of array if there is one
       array_push($search_terms, $search_term);
     }
-
     //convert terms array to string and return
     $new_search_terms_list = implode(',', $search_terms);
 
