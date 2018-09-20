@@ -12,7 +12,7 @@
                 foreach($sectors as $sector):
                   $acf_sector_id = 'sectors_' . $sector->term_id; ?>
 
-                  <article>
+                  <article class="ralf-article">
                     <header class="result-header">
                       <span class="result-type-icon impact" data-toggle="tooltip" data-placement="top" title="Impact"></span>
                       <a href="<?php echo esc_url(get_term_link($sector->term_id), 'sectors'); ?>" class="sector-icon sector-icon-small" data-toggle="tooltip" data-placement="top" title="<?php echo $sector->name; ?>">
@@ -22,6 +22,9 @@
                     </header>
                     <section class="result-content">
                       <?php the_content(); ?>
+                      <div class="report-button" data-article_id="<?php echo get_the_ID(); ?>"">
+
+                      </div>
                     </section>
                     <section class="related-activities">
                       <h3>Related Activities</h3>

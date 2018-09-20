@@ -13,46 +13,50 @@ $(document).ready(function($){
   
     //loop through each article and see if its already been saved, then update the button
     $('.ralf-article').each(function(){
-      var $article = $(this);
-      var articleId = $article.data('article_id');
+      var $articleReportButton = $(this).find('.report-button');
+      var articleId = $articleReportButton.data('article_id');
 
       if(savedReportIds.indexOf(articleId) < 0){
         //this article id has not been saved
-        $article.find('.report-button').html(saveToReportButton);
+        $articleReportButton.html(saveToReportButton);
+
         //setup sidebar report button
-        if($('#sidebar-report-button')){
-          $('#sidebar-report-button').removeClass('remove-from-report').addClass('save-to-report').text('Save To Report');
-        }
+        $('.results-sidebar').find('.report-button').html(saveToReportButton);
+        //if($('#sidebar-report-button')){
+        //  $('#sidebar-report-button').removeClass('remove-from-report').addClass('save-to-report').text('Save To Report');
+        //}
       }
       else{
         //this article id has been saved
-        $article.find('.report-button').html(removeFromReportButton);
+        $articleReportButton.html(removeFromReportButton);
+
         //setup sidebar report button
-        if($('#sidebar-report-button')){
-          $('#sidebar-report-button').removeClass('save-to-report').addClass('remove-from-report').text('Remove From Report');
-        }
+        $('.results-sidebar').find('.report-button').html(removeFromReportButton);
+        //if($('#sidebar-report-button')){
+        //  $('#sidebar-report-button').removeClass('save-to-report').addClass('remove-from-report').text('Remove From Report');
+        //}
       }
     });
   }
   else{
     //if no report ids have been saved to the cookie so far, set all buttons as savers
-    $('.report-button').each(function(){
-      $(this).html(saveToReportButton);
-    });
+    $('.report-button').html(saveToReportButton);
+    
     //setup sidebar report button
-    if($('#sidebar-report-button')){
-      $('#sidebar-report-button').removeClass('remove-from-report').addClass('save-to-report').text('Save To Report');
-    }
+    //if($('#sidebar-report-button')){
+    //  $('#sidebar-report-button').removeClass('remove-from-report').addClass('save-to-report').text('Save To Report');
+    //}
   }
   
   //save report button clicked
   $('.report-button').on('click', '.save-to-report', function(e){
     e.preventDefault();
+    $clickedButtonParent = $(this).parent('.report-button');
     
     //this will hold the string of ids to put back into the cookie
     var reportIds = '';
     //get the article id for the button
-    var articleId = $(this).parents('.ralf-article').data('article_id');
+    var articleId = $(this).parent('.report-button').data('article_id');
     //get fresh cookie
     var savedReportIds_cookie = Cookies.get(reportIdsCookieName);
 
@@ -73,22 +77,28 @@ $(document).ready(function($){
 
     //put the report ids into the cookie
     Cookies.set(reportIdsCookieName, reportIds, { expires:30 });
+
     //change the save button to remove
-    $(this).parent('.report-button').html(removeFromReportButton + '<span><em>Added to report!</em></span>');
+    $('.report-button').html(removeFromReportButton);
+    $clickedButtonParent.append('<span><em>Added to report!</em></span>');
+    //$(this).parent('.report-button').html(removeFromReportButton + '<span><em>Added to report!</em></span>');
+
     //change the sidebar button to remove
-    if($('#sidebar-report-button')){
-      $('#sidebar-report-button').removeClass('save-to-report').addClass('remove-from-report').text('Remove From Report');
-    }
+    //$('.results-sidebar').find('.report-button').html(removeFromReportButton + '<span><em>Added to report!</em></span>');
+    //if($('#sidebar-report-button')){
+    //  $('#sidebar-report-button').removeClass('save-to-report').addClass('remove-from-report').text('Remove From Report');
+    //}
   });
 
   //remove report button clicked
   $('.report-button').on('click', '.remove-from-report', function(e){
     e.preventDefault();
+    $clickedButtonParent = $(this).parent('.report-button');
 
     //this will hold the string of ids to put back into the cookie
     var reportIds = '';
     //get the article id for the button
-    var articleId = $(this).parents('.ralf-article').data('article_id');
+    var articleId = $clickedButtonParent.data('article_id');
     
     //get fresh cookie
     var savedReportIds_cookie = Cookies.get(reportIdsCookieName);
@@ -110,12 +120,15 @@ $(document).ready(function($){
       }
     }
 
-    //change the button save, even there was no cookie
-    $(this).parent('.report-button').html(saveToReportButton + '<span><em>Removed from report</em></span>');
+    $('.report-button').html(saveToReportButton);
+    $clickedButtonParent.append('<span><em>Removed from report</em></span>');
+    //$(this).parent('.report-button').html(saveToReportButton + '<span><em>Removed from report</em></span>');
+
     //change sidebar button to save
-    if($('#sidebar-report-button')){
-      $('#sidebar-report-button').removeClass('remove-from-report').addClass('save-to-report').text('Save To Report');
-    }
+    //$('.results-sidebar').find('.report-button').html(saveToReportButton + '<span><em>Removed from report</em></span>');
+    //if($('#sidebar-report-button')){
+    //  $('#sidebar-report-button').removeClass('remove-from-report').addClass('save-to-report').text('Save To Report');
+    //}
   });
   
   //email report functions
