@@ -135,7 +135,7 @@
 
           foreach($common_search_terms as $search_term){
             echo '<div class="grid-item">';
-            echo '<a href="' . add_query_arg('s', $search_term->query, home_url()) . '" class="search-term">' . $search_term->query . ' <span>(' . $search_term->hits . ' results)</a>';
+            echo '<a href="' . esc_url(add_query_arg('s', $search_term->query, home_url())) . '" class="search-term">' . $search_term->query . ' <span>(' . $search_term->hits . ' results)</a>';
             echo '</div>';
           }
         ?>
