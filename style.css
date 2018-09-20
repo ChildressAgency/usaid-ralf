@@ -65,6 +65,11 @@ a{
   border-color:#fff;
   text-decoration:none;
 }
+.sidebar-section .btn-main{
+  background-color:transparent;
+  padding:0;
+  border:none;
+}
 .btn-alt{
   display:inline-block;
   background-color:transparent;
@@ -91,7 +96,7 @@ a{
 .btns-inline input+input{
   margin-left:25px;
 }
-.btn-main.btn-report{
+.ralf-article .btn-main.btn-report{
   font-size:16px;
   font-family:"AvenirNext", sans-serif;
   font-style:normal;
@@ -99,8 +104,8 @@ a{
   color:#fff;
   padding:10px 30px;
 }
-.btn-main.btn-report:hover,
-.btn-main.btn-report:focus{
+.ralf-article .btn-main.btn-report:hover,
+.ralf-article .btn-main.btn-report:focus{
   background-color:#b3b3b3;
 }
 .sidebar-section .save-to-report,
@@ -650,6 +655,9 @@ main.result{
 .report-button>span{
   display:inline-block;
   margin-left:15px;
+}
+.results-sidebar .report-button>span{
+  margin-left:0;
 }
 .wp-pagenavi{
   margin-top:40px;
