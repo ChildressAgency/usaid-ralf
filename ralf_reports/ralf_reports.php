@@ -44,7 +44,7 @@ class ralf_report{
     $form_content = '<div class="email-report">
                       <h3>Email this report</h3>
                       <div class="form-group">
-                        <input type="text" id="email-addresses" name="email-addresses" class="form-control" placeholder="' . __('Enter a comma-separated list of email addresses.', 'ralfreports') . '" />
+                        <input type="text" required id="email-addresses" name="email-addresses" class="form-control" placeholder="' . __('Enter a comma-separated list of email addresses.', 'ralfreports') . '" />
                       </div>
                       <button class="btn-main btn-report send-email" data-nonce="' . $nonce . '" data-report_ids="' . $report_ids . '">' . __('Send Email', 'ralfreports') . '</button>
                       <p class="email-response"></p>
@@ -55,7 +55,14 @@ class ralf_report{
 
   function send_rtf_report(){
     $report_ids = $_POST['report_ids'];
-    $email_addresses = $_POST['email-addresses'];
+
+    //sanitize email addresses
+    $entered_email_addresses = $_POST['email-addresses'];
+    $email_addresses = $this->sanitize_email_addresses($entered_email_addresses);
+
+    //log emailed reports
+    $report_url_id = $this->log_email_reports($email_addresses, $report_ids);
+
     //put report_ids string into array
     $report_ids_array = explode(',', $report_ids);
 
@@ -97,7 +104,7 @@ class ralf_report{
     }
 
     //link to the report using querystrings with the ids
-    $message .= "\r\n" . 'Here is a link back to your report: ' . esc_url(add_query_arg('report_ids', $report_ids, home_url('view-report')));
+    $message .= "\r\n" . 'Here is a link back to your report: ' . esc_url(home_url('report/' . $report_url_id));
     //$message .= "\r\n" . $ralf_report_name;
 
     //send the email with attachment
@@ -148,7 +155,40 @@ class ralf_report{
     } wp_reset_postdata();
 
     return $rtf_report;
-  }  
+  } 
+  
+  function sanitize_email_addresses($entered_email_addresses){
+    $email_addresses = explode(',', $entered_email_addresses);
+    $sanitized_email_addresses = [];
+    foreach($email_addresses as $email_address){
+      $sanitized_email_addresses[] = sanitize_email($email_address);
+    }
+
+    return implode(',', $sanitized_email_addresses);
+  }
+
+  function log_email_reports($email_addresses, $report_ids){
+    global $wpdb;
+
+    $emails = explode(',', $email_addresses);
+    $email_domains = [];
+    foreach($emails as $email){
+      $email_parts = explode('@', $email);
+      $email_domains[] = $email_parts[1];
+    }
+
+    $email_domains_str = implode(',', $email_domains);
+
+    $wpdb->insert(
+      'emailed_reports',
+      array(
+        'email_domains' => $email_domains_str,
+        'report_ids' => $report_ids,
+      )
+    );
+
+    return $wpdb->insert_id;
+  }
 }
 
 new ralf_report;
