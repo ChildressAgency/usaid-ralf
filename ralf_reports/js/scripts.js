@@ -124,9 +124,12 @@ $(document).ready(function($){
     //get the entered email addresses
     var emailAddresses = $('#email-addresses').val();
 
-    if(emailAddresses.length === 0){
+    var validEmailAddresses = validateEmailAddresses(emailAddresses);
+
+    if(emailAddresses.length == 0 || validEmailAddresses == false){
       //email addresses field was empty
       $('#email-addresses').css('border', '2px solid red');
+      $('.email-response').text('Please enter only valid email addresses.');
       return false;
     }
 
@@ -159,4 +162,25 @@ $(document).ready(function($){
       //$button.width($button.width()).text('Send Email').prop('disabled', false);
     });
   });
+
+  function validateEmailAddresses(emailAddresses){
+    //var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    var re = /\S+@\S+\.\S+/;
+
+    var emails = emailAddresses.split(',');
+    //emails.forEach(function(email){
+    //  if(re.test(email) == false){
+    //    return false;
+    //  }
+    //});
+
+    for(var i=0; i<emails.length; i++){
+      //console.log(re.test(emails[i]));
+      if(re.test(emails[i]) == false){
+        return false;
+      }
+    }
+
+    return true;
+  }
 });
