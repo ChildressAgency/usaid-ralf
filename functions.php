@@ -717,7 +717,7 @@ function usaidralf_update_search_history(){
 
 function usaidralf_get_search_history(){
   //get new search term if its there
-  $search_term = isset($_GET['s']) ? $_GET['s'] : '';
+  $search_term = isset($_GET['s']) ? sanitize_text_field($_GET['s']) : '';
 
   if(isset($_COOKIE['STYXKEY_usaidralf_search_history'])){
     $search_terms_list = $_COOKIE['STYXKEY_usaidralf_search_history'];
