@@ -1,10 +1,10 @@
 <?php
-/*
+
 add_action('wp_footer', 'show_template');
 function show_template() {
 	global $template;
 	print_r($template);
-}*/
+}
 
 add_action('wp_enqueue_scripts', 'jquery_cdn');
 function jquery_cdn(){
@@ -746,4 +746,19 @@ function usaidralf_get_search_history(){
   else{ //no cookie, must be first search or they've been cleared with js function
     return $search_term;
   }
+}
+
+//RewriteRule ^/view-report/([^.]*)$ /view-report/report_id=$1 [PT]
+add_filter('query_vars', 'usaidralf_register_custom_query_vars', 1);
+function usaidralf_register_custom_query_vars($vars){
+  //array_push($vars, 'report_id');
+  $vars[] = 'report_id';
+  return $vars;
+}
+add_action('init', 'usaidralf_rewrite_report_url');
+function usaidralf_rewrite_report_url(){
+  //add_rewrite_tag('%report_id%', '([0-9]+)');
+
+  //add_rewrite_rule('^report/([0-9]+)/?$', '/index.php?p=182&amp;report_id=$matches[1]', 'top');
+  add_rewrite_rule('^/view-report/([^.]*)$', '/view-report/report_id=$matches[1]', 'top');
 }
