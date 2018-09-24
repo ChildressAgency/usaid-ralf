@@ -104,7 +104,7 @@ class ralf_report{
     }
 
     //link to the report using querystrings with the ids
-    $message .= "\r\n" . 'Here is a link back to your report: ' . esc_url(home_url('report/' . $report_url_id));
+    $message .= "\r\n" . 'Here is a link back to your report: ' . esc_url(home_url('view-report/' . $report_url_id));
     //$message .= "\r\n" . $ralf_report_name;
 
     //send the email with attachment
