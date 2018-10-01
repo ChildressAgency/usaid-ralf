@@ -551,13 +551,13 @@ main.result{
   display:inline-block;
   margin-right:25px;
 }
-.result-header h1{
+.result-header h1>a{
   font-size:32px;
   font-weight:300;
   margin-top:0;
+  color:#000;
 }
 .result-content{
-  border-bottom:1px solid #000;
   padding-bottom:20px;
 }
 .results-content table{
@@ -603,6 +603,7 @@ main.result{
 .impact-by-sector{
   font-family:"AvenirNext", sans-serif;
   font-size:16px;
+  border-top:1px solid #000;
 }
 .impact-by-sector>h2{
   font-size:22px;
