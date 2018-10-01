@@ -56,7 +56,7 @@ $(document).ready(function($){
     //this will hold the string of ids to put back into the cookie
     var reportIds = '';
     //get the article id for the button
-    var articleId = $(this).parent('.report-button').data('article_id');
+    var articleId =$clickedButtonParent.data('article_id');
     //get fresh cookie
     var savedReportIds_cookie = Cookies.get(reportIdsCookieName);
 

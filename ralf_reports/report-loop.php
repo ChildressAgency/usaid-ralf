@@ -1,4 +1,4 @@
-<article class="ralf-article" data-article_id="<?php echo get_the_ID(); ?>">
+<article class="ralf-article">
   <header class="result-header">
     <h1><?php the_title(); ?></h1>
   </header>
@@ -42,7 +42,7 @@
       </section>
   <?php endif; ?>
 
-  <div class="report-button hidden-print">
+  <div class="report-button hidden-print" data-article_id="<?php echo get_the_ID(); ?>">
 
   </div>
   
