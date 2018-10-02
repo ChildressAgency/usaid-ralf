@@ -81,7 +81,7 @@ class HtmlParser extends Parser {
 	* @return string
 	*/
 	protected function stripString($html) {
-		str_replace(array('&nbsp;', '&quot;', '&laquo;', '&copy;', '&raquo;'), array(' ', "'", '"', '©', '"'), $html);
+		str_replace(array('&nbsp;', '&quot;', '&laquo;', '&copy;', '&raquo;', '&amp;'), array(' ', "'", '"', '©', '"', '&'), $html);
 		return  preg_replace('/\&[a-zA-Z0-9]{1,}\;/is', '', $html);  
 	}
 

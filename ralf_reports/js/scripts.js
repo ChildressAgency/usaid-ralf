@@ -22,9 +22,6 @@ $(document).ready(function($){
 
         //setup sidebar report button
         $('.results-sidebar').find('.report-button').html(saveToReportButton);
-        //if($('#sidebar-report-button')){
-        //  $('#sidebar-report-button').removeClass('remove-from-report').addClass('save-to-report').text('Save To Report');
-        //}
       }
       else{
         //this article id has been saved
@@ -32,20 +29,12 @@ $(document).ready(function($){
 
         //setup sidebar report button
         $('.results-sidebar').find('.report-button').html(removeFromReportButton);
-        //if($('#sidebar-report-button')){
-        //  $('#sidebar-report-button').removeClass('save-to-report').addClass('remove-from-report').text('Remove From Report');
-        //}
       }
     });
   }
   else{
     //if no report ids have been saved to the cookie so far, set all buttons as savers
     $('.report-button').html(saveToReportButton);
-    
-    //setup sidebar report button
-    //if($('#sidebar-report-button')){
-    //  $('#sidebar-report-button').removeClass('remove-from-report').addClass('save-to-report').text('Save To Report');
-    //}
   }
   
   //save report button clicked
@@ -56,7 +45,7 @@ $(document).ready(function($){
     //this will hold the string of ids to put back into the cookie
     var reportIds = '';
     //get the article id for the button
-    var articleId =$clickedButtonParent.data('article_id');
+    var articleId = $clickedButtonParent.data('article_id');
     //get fresh cookie
     var savedReportIds_cookie = Cookies.get(reportIdsCookieName);
 
@@ -79,15 +68,9 @@ $(document).ready(function($){
     Cookies.set(reportIdsCookieName, reportIds, { expires:30 });
 
     //change the save button to remove
-    $('.report-button').html(removeFromReportButton);
-    $clickedButtonParent.append('<span><em>Added to report!</em></span>');
-    //$(this).parent('.report-button').html(removeFromReportButton + '<span><em>Added to report!</em></span>');
-
-    //change the sidebar button to remove
-    //$('.results-sidebar').find('.report-button').html(removeFromReportButton + '<span><em>Added to report!</em></span>');
-    //if($('#sidebar-report-button')){
-    //  $('#sidebar-report-button').removeClass('save-to-report').addClass('remove-from-report').text('Remove From Report');
-    //}
+    var $btnToUpdate = $('.report-button[data-article_id="' + articleId + '"]');
+    $btnToUpdate.html(removeFromReportButton);
+    $btnToUpdate.append('<span><em>Added to report!</em></span>');
   });
 
   //remove report button clicked
@@ -120,15 +103,10 @@ $(document).ready(function($){
       }
     }
 
-    $('.report-button').html(saveToReportButton);
-    $clickedButtonParent.append('<span><em>Removed from report</em></span>');
-    //$(this).parent('.report-button').html(saveToReportButton + '<span><em>Removed from report</em></span>');
-
-    //change sidebar button to save
-    //$('.results-sidebar').find('.report-button').html(saveToReportButton + '<span><em>Removed from report</em></span>');
-    //if($('#sidebar-report-button')){
-    //  $('#sidebar-report-button').removeClass('remove-from-report').addClass('save-to-report').text('Save To Report');
-    //}
+    //change the remove button to save
+    var $btnToUpdate = $('.report-button[data-article_id="' + articleId + '"]');
+    $btnToUpdate.html(saveToReportButton);
+    $btnToUpdate.append('<span><em>Removed from report</em></span>');
   });
   
   //email report functions

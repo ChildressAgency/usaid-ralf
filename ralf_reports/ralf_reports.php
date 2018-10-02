@@ -123,9 +123,11 @@ class ralf_report{
     $rtf_report = '<h1>Report of Activities and Associated Impacts</h1>';
 
     $activities_report = new WP_Query(array(
-      'post_type' => 'activities',
+      'post_type' => array('activities', 'impacts'),
       'posts_per_page' => -1,
-      'post__in' => $report_ids
+      'post__in' => $report_ids,
+      'orderby' => 'post_type',
+      'order' => 'DESC'
     ));
     //$rtf_report = print_r($activities_report, true);
 
@@ -135,8 +137,12 @@ class ralf_report{
 
         $rtf_report .= '<h2>' . get_the_title() . '</h2>';
         $rtf_report .= '<p>' . get_the_content() . '</p>';
-        $rtf_report .= '<h3>CONDITIONS</h3>';
-        $rtf_report .= get_field('conditions');
+        
+        $conditions = get_field('conditions');
+        if($conditions){
+          $rtf_report .= '<h3>CONDITIONS</h3>';
+          $rtf_report .= str_replace("& ", "and ", get_field('conditions'));
+        }
 
         $impact_ids = get_field('related_impacts', false, false);
         if(!empty($impact_ids)){
@@ -145,8 +151,8 @@ class ralf_report{
 
           foreach($impacts_by_sector as $sector){
             foreach($sector['impacts'] as $impact){
-              $rtf_report .= '<h4>' . $impact->impact_title . '</h4>';
-              $rtf_report .= '<p>' . $impact->impact_description . '</p>';
+              $rtf_report .= '<h4>' . str_replace("& ", "and ", $impact->impact_title) . '</h4>';
+              $rtf_report .= '<p>' . str_replace("& ", "and ", $impact->impact_description) . '</p>';
             }
           }
         }
