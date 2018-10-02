@@ -3,7 +3,7 @@
     <span class="result-type-icon activity" data-toggle="tooltip" data-placement="top" title="Activity"></span>
   </div>
   <div class="media-body">
-    <h3 class="media-heading"><?php the_title(); ?></h3>
+    <h3 class="media-heading"><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h3>
     <?php
       $impact_ids = get_field('related_impacts', false, false);
       if(!empty($impact_ids)):

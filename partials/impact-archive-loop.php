@@ -9,7 +9,7 @@
         <span class="result-type-icon impact" data-toggle="tooltip" data-placement="top" title="Impact"></span>
       </div>
       <div class="media-body">
-        <h3 class="media-heading"><?php the_title(); ?></h3>
+        <h3 class="media-heading"><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h3>
         <?php
           $sectors = get_the_terms($impact_id, 'sectors');
           if($sectors):
