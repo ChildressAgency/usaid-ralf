@@ -339,6 +339,18 @@ function usaidralf_create_post_type(){
       )
     )
   );
+  register_taxonomy('priority_keywords',
+    array('impacts', 'activities'),
+    array(
+      'hierarchical' => false,
+      'show_admin_column' => false,
+      'public' => true,
+      'labels' => array(
+        'name' => 'Priority Keywords',
+        'singular_name' => 'Priority Keyword'
+      )
+    )
+  );
 }
 
 add_filter('acf/fields/relationship/result/key=field_5a980a2e5519d', 'usaidralf_related_impacts_relationship_display', 10, 4);
@@ -749,7 +761,7 @@ function usaidralf_get_search_history(){
 }
 
 //RewriteRule ^/view-report/([^.]*)$ /view-report/report_id=$1 [PT]
-add_filter('query_vars', 'usaidralf_register_custom_query_vars', 1);
+//add_filter('query_vars', 'usaidralf_register_custom_query_vars');
 function usaidralf_register_custom_query_vars($vars){
   //array_push($vars, 'report_id');
   $vars[] = 'report_id';
@@ -757,8 +769,9 @@ function usaidralf_register_custom_query_vars($vars){
 }
 add_action('init', 'usaidralf_rewrite_report_url');
 function usaidralf_rewrite_report_url(){
-  //add_rewrite_tag('%report_id%', '([0-9]+)');
+  //add_rewrite_tag('%report_id%', '([0-9]*)', 'report_id=');
+  add_rewrite_tag('%report_id%', '([^&]+)');
 
-  //add_rewrite_rule('^report/([0-9]+)/?$', '/index.php?p=182&amp;report_id=$matches[1]', 'top');
-  add_rewrite_rule('^/view-report/([^.]*)$', '/view-report/report_id=$matches[1]', 'top');
+  add_rewrite_rule('^view-report/([^.]*)$', 'index.php?pagename=view-report&report_id=$matches[1]', 'top');
+  //add_rewrite_rule('/view-report/([^.]*)$', 'view-report?report_id=$matches[1]', 'top');
 }
