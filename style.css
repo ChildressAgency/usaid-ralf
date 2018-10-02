@@ -104,10 +104,11 @@ a{
   color:#fff;
   padding:10px 30px;
 }
-.ralf-article .btn-main.btn-report:hover,
-.ralf-article .btn-main.btn-report:focus{
+.btn-main.btn-report:hover,
+.btn-main.btn-report:focus{
   background-color:#b3b3b3;
 }
+
 .sidebar-section .save-to-report,
 .sidebar-section .remove-from-report{
   color:#c4d82e;
