@@ -443,6 +443,9 @@ main.results-list{
   font-size:32px;
   font-weight:300;
 }
+.results-list .media-heading>a{
+  color:#000;
+}
 .results-list .media-left{
   padding-right:20px;
 }
