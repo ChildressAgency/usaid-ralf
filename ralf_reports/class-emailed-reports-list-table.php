@@ -107,7 +107,7 @@ class ralf_list_table extends WP_List_Table{
     $columns = array(
       'cb' => '<input type="checkbox" />',
       'email_domains' => __('Emailed Domains', 'ralfreports'),
-      'report_ids' => __('Report IDs', 'ralfreports'),
+      'report_ids' => __('Activites / Impacts', 'ralfreports'),
       'email_date' => __('Email Date', 'ralfreports')
     );
 
@@ -135,7 +135,7 @@ class ralf_list_table extends WP_List_Table{
 
     $this->process_bulk_action();
 
-    $per_page = $this->get_items_per_page('emailed_report_per_page', 25);
+    $per_page = $this->get_items_per_page('emailed_reports_per_page', 25);
     $current_page = $this->get_pagenum();
     $total_items = self::emailed_reports_count();
 
