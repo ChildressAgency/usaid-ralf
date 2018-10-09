@@ -736,8 +736,12 @@ function usaidralf_get_search_history(){
     //put search terms into array
     $search_terms = explode(',', $search_terms_list);
 
+    $filter_chars = '()^;<>/\'"!';
     //don't do anything if the search term is empty or already in the list
-    if(($search_term !='') && (!in_array($search_term, $search_terms))){
+    //also dont do anything if the search term has an invalid char ($filter_chars)
+    if(($search_term != '') 
+      && (!in_array($search_term, $search_terms))  
+      && (strpbrk($search_term, $filter_chars) === false)){
 
       //get number of terms to save to history
       $history_limit = get_field('search_term_history_limit', 'option');
