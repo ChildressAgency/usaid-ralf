@@ -19,6 +19,7 @@ class ralf_report{
 
     add_action('wp_ajax_nopriv_send_rtf_report', array($this, 'send_rtf_report'));
     add_action('wp_ajax_send_rtf_report', array($this, 'send_rtf_report'));
+    //add_action('admin_menu', array($this, 'register_email_report_submenu'));
   }
 
   function ralf_report(){
@@ -195,6 +196,11 @@ class ralf_report{
 
     return $wpdb->insert_id;
   }
+
 }
 
 new ralf_report;
+
+if(is_admin()){
+  require_once 'ralf-admin.php';
+}
