@@ -683,6 +683,11 @@ main.result{
   font-style:italic;
 }
 
+.media.keyword{
+  border-left:3px solid red;
+  border-right:3px solid red;
+}
+
 
 @media (max-width:767px){
   .search-bar .form-group{

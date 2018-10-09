@@ -1,4 +1,4 @@
-<div class="media">
+<div class="media<?php if(has_term('', 'priority_keywords')){ echo ' keyword'; } ?>">
   <div class="media-left">
     <span class="result-type-icon activity" data-toggle="tooltip" data-placement="top" title="Activity"></span>
   </div>

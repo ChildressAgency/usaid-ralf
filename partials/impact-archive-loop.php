@@ -4,7 +4,7 @@
   $num_activities = usaidralf_get_related_activities($impact_id);
   //var_dump($num_activities);
   if($num_activities->post_count > 0): ?>
-    <div class="media">
+    <div class="media<?php if(has_term('', 'priority_keywords')){ echo ' keyword'; } ?>">
       <div class="media-left">
         <span class="result-type-icon impact" data-toggle="tooltip" data-placement="top" title="Impact"></span>
       </div>
