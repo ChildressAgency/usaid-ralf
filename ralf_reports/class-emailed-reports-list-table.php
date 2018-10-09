@@ -27,7 +27,24 @@ class ralf_list_table extends WP_List_Table{
     $sql .= ' OFFSET ' . ($page_number - 1) * $per_page;
 
     $result = $wpdb->get_results($sql, 'ARRAY_A');
-    var_dump($result);
+
+    $result_count = count($result);
+    for($r = 0; $r < $result_count; $r++){
+      $reports = $result[$r]['report_ids'];
+      $report_ids = explode(',', $reports);
+
+      $article_titles = [];
+      foreach($report_ids as $report_id){
+        $report_title = $wpdb->get_var($wpdb->prepare("SELECT post_title FROM {$wpdb->prefix}posts WHERE ID = %d", $report_id));
+
+        $report_title_list = '<li>' . $report_title . '</li>';
+
+        $article_titles[] = $report_title_list;
+      }
+      $result[$r]['report_ids'] = '<ul style="margin-top:0; list-style:disc;">' . implode('', $article_titles) . '</ul>';
+    }
+    
+    //var_dump($result);
     return $result;
   }
 
