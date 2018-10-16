@@ -42,6 +42,8 @@ class ralf_list_table extends WP_List_Table{
         $article_titles[] = $report_title_list;
       }
       $result[$r]['report_ids'] = '<ul style="margin-top:0; list-style:disc;">' . implode('', $article_titles) . '</ul>';
+
+      $result[$r]['view_report'] = '<a href="' . esc_url(home_url('view-report/?report_ids=' . implode(',', $report_ids))) . '" target="_blank">View Report</a>';
     }
     
     //var_dump($result);
@@ -91,6 +93,7 @@ class ralf_list_table extends WP_List_Table{
       case 'email_domains':
       case 'report_ids':
       case 'email_date':
+      case 'view_report':
         return $item[$column_name];
       default:
         return print_r($item, true);
@@ -108,7 +111,8 @@ class ralf_list_table extends WP_List_Table{
       'cb' => '<input type="checkbox" />',
       'email_domains' => __('Emailed Domains', 'ralfreports'),
       'report_ids' => __('Activites / Impacts', 'ralfreports'),
-      'email_date' => __('Email Date', 'ralfreports')
+      'email_date' => __('Email Date', 'ralfreports'),
+      'view_report' => __('', 'ralfreports')
     );
 
     return $columns;
