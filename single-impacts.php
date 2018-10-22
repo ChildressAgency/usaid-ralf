@@ -9,40 +9,71 @@
                 $impact_id = get_the_ID();
                 $sectors = get_the_terms($impact_id, 'sectors');
                 
-                foreach($sectors as $sector):
-                  $acf_sector_id = 'sectors_' . $sector->term_id; ?>
+                if(!empty($sectors)):
+                  foreach($sectors as $sector):
+                    $acf_sector_id = 'sectors_' . $sector->term_id; ?>
 
-                  <article class="ralf-article">
-                    <header class="result-header">
-                      <span class="result-type-icon impact" data-toggle="tooltip" data-placement="top" title="Impact"></span>
-                      <a href="<?php echo esc_url(get_term_link($sector->term_id), 'sectors'); ?>" class="sector-icon sector-icon-small" data-toggle="tooltip" data-placement="top" title="<?php echo $sector->name; ?>">
-                        <img src="<?php the_field('sector_icon', $acf_sector_id); ?>" class="img-circle img-responsive" alt="<?php echo $sector->name; ?> Sector" style="background-color:<?php the_field('sector_color', $acf_sector_id); ?>;" />
-                      </a>
-                      <h1><?php the_title(); ?></h1>
-                    </header>
-                    <section class="result-content">
-                      <?php the_content(); ?>
-                      <div class="report-button" data-article_id="<?php echo get_the_ID(); ?>"">
+                    <article class="ralf-article">
+                      <header class="result-header">
+                        <span class="result-type-icon impact" data-toggle="tooltip" data-placement="top" title="Impact"></span>
+                        <a href="<?php echo esc_url(get_term_link($sector->term_id), 'sectors'); ?>" class="sector-icon sector-icon-small" data-toggle="tooltip" data-placement="top" title="<?php echo $sector->name; ?>">
+                          <img src="<?php the_field('sector_icon', $acf_sector_id); ?>" class="img-circle img-responsive" alt="<?php echo $sector->name; ?> Sector" style="background-color:<?php the_field('sector_color', $acf_sector_id); ?>;" />
+                        </a>
+                        <h1><?php the_title(); ?></h1>
+                      </header>
+                      <section class="result-content">
+                        <?php the_content(); ?>
+                        <div class="report-button" data-article_id="<?php echo get_the_ID(); ?>"">
 
-                      </div>
-                    </section>
-                    <section class="related-activities">
-                      <h3>Related Activities</h3>
-                      <?php
-                        $related_activities = usaidralf_get_related_activities($impact_id);
-                        if($related_activities->have_posts()): ?>
-                          <ul>
-                            <?php while($related_activities->have_posts()): $related_activities->the_post(); ?>
-                              <li><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></li>
-                            <?php endwhile; wp_reset_postdata(); ?>
-                          </ul>
-                      <?php else: ?>
-                        <p>No related Activities</p>
-                      <?php endif; ?>
-                    </section>
-                  </article>
+                        </div>
+                      </section>
+                      <section class="related-activities">
+                        <h3>Related Activities</h3>
+                        <?php
+                          $related_activities = usaidralf_get_related_activities($impact_id);
+                          if($related_activities->have_posts()): ?>
+                            <ul>
+                              <?php while($related_activities->have_posts()): $related_activities->the_post(); ?>
+                                <li><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></li>
+                              <?php endwhile; wp_reset_postdata(); ?>
+                            </ul>
+                        <?php else: ?>
+                          <p>No related Activities</p>
+                        <?php endif; ?>
+                      </section>
+                    </article>
+                
+                <?php endforeach; ?>
+              <?php else: ?>
               
-              <?php endforeach; ?>
+                    <article class="ralf-article">
+                      <header class="result-header">
+                        <span class="result-type-icon impact" data-toggle="tooltip" data-placement="top" title="Impact"></span>
+                        <h1><?php the_title(); ?></h1>
+                      </header>
+                      <section class="result-content">
+                        <?php the_content(); ?>
+                        <div class="report-button" data-article_id="<?php echo get_the_ID(); ?>"">
+
+                        </div>
+                      </section>
+                      <section class="related-activities">
+                        <h3>Related Activities</h3>
+                        <?php
+                          $related_activities = usaidralf_get_related_activities($impact_id);
+                          if($related_activities->have_posts()): ?>
+                            <ul>
+                              <?php while($related_activities->have_posts()): $related_activities->the_post(); ?>
+                                <li><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></li>
+                              <?php endwhile; wp_reset_postdata(); ?>
+                            </ul>
+                        <?php else: ?>
+                          <p>No related Activities</p>
+                        <?php endif; ?>
+                      </section>
+                    </article>
+                
+              <?php endif; ?>
             <?php endwhile; endif; ?>
           </main>
         </div>
