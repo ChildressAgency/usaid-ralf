@@ -17,6 +17,8 @@ class ralf_report{
 
     add_action('wp_enqueue_scripts', array($this, 'scripts'));
 
+    add_action('plugins_loaded', array($this, 'delete_old_reports'));
+
     add_action('wp_ajax_nopriv_send_rtf_report', array($this, 'send_rtf_report'));
     add_action('wp_ajax_send_rtf_report', array($this, 'send_rtf_report'));
     //add_action('admin_menu', array($this, 'register_email_report_submenu'));
@@ -195,6 +197,10 @@ class ralf_report{
     );
 
     return $wpdb->insert_id;
+  }
+
+  function delete_old_reports(){
+    include('delete_old_reports.php');
   }
 
 }
