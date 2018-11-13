@@ -210,3 +210,7 @@ new ralf_report;
 if(is_admin()){
   require_once 'ralf-admin.php';
 }
+
+if(is_admin()){
+  require_once 'ralf-dashboard.php';
+}
