@@ -66,9 +66,7 @@
                       </div>
                     </section>
                   <?php endif; ?>
-                <div class="report-button" data-article_id="<?php echo get_the_ID(); ?>">
-                  
-                </div>
+                  <?php echo do_shortcode('[report_button]'); ?>
               </article>
             <?php endwhile; endif; ?>
 
