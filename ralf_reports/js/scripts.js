@@ -40,7 +40,7 @@ $(document).ready(function($){
   //save report button clicked
   $('.report-button').on('click', '.save-to-report', function(e){
     e.preventDefault();
-    $clickedButtonParent = $(this).parent('.report-button');
+    var $clickedButtonParent = $(this).parent('.report-button');
     
     //this will hold the string of ids to put back into the cookie
     var reportIds = '';
@@ -66,6 +66,10 @@ $(document).ready(function($){
 
     //put the report ids into the cookie
     Cookies.set(reportIdsCookieName, reportIds, { expires:30 });
+
+    //record the save
+    var nonce = $clickedButtonParent.data('nonce');
+    record_save(articleId, nonce);
 
     //change the save button to remove
     var $btnToUpdate = $('.report-button[data-article_id="' + articleId + '"]');
@@ -175,3 +179,17 @@ $(document).ready(function($){
     return true;
   }
 });
+
+function record_save(articleId, nonce){
+  if(articleId !== ''){
+    var data = {
+      'action': 'record_report_save',
+      'article_id': articleId,
+      'nonce': nonce
+    }
+
+    $.post(ralf_settings.ralf_ajaxurl, data, function(response){
+      
+    });
+  }
+}
