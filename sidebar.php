@@ -2,9 +2,7 @@
   <?php dynamic_sidebar('ralf-sidebar'); ?>
   <?php if(is_singular('activities') || is_singular('impacts')): ?>
     <div class="sidebar-section">
-      <div class="report-button" data-article_id="<?php echo get_the_ID(); ?>">
-        <a href="#" id="sidebar-report-button" class="save-to-report">Save To Report</a>
-      </div>
+      <?php echo do_shortcode('[report_button]'); ?>
     </div>
   <?php endif; ?>
   <?php 
