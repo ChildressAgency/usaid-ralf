@@ -13,6 +13,14 @@ class ralf_dashboard{
 
     add_filter('set-screen-option', array(__CLASS__, 'set_screen'), 10, 3);
     add_action('admin_menu', array($this, 'dashboard_submenus'));
+
+    add_action('load-post.php', array($this, 'init_metabox'));
+    add_action('load-post-new.php', array($this, 'init_metabox'));
+
+    add_filter('manage_activities_posts_columns', array($this, 'set_saved_count_column'));
+    add_filter('manage_impacts_posts_columns', array($this, 'set_saved_count_column'));
+    add_action('manage_activities_posts_custom_column', array($this, 'activities_saved_count_column_values', 10, 2));
+    add_action('manage_impacts_posts_custom_column', array($this, 'impacts_saved_count_column_values', 10, 2));
   }
 
   function ralf_dashboard_setup(){
@@ -138,6 +146,60 @@ class ralf_dashboard{
 
     </div>
     <?php
+  }
+
+  public function init_metabox(){
+    add_action('add_meta_boxes', array($this, 'add_saved_count_metabox'));
+  }
+
+  public function add_saved_count_metabox($post_type){
+    $post_types = array('activities', 'impacts');
+    if(in_array($post_type, $post_types)){
+      add_meta_box(
+        'save-count',
+        __('Number of Times Saved to Report', 'ralfreports'),
+        array($this, 'show_saved_count'),
+        $post_type,
+        'side'
+      );
+    }
+  }
+
+  public function show_saved_count($post){
+    global $wpdb;
+    $article_id = $post->ID;
+
+    $saved_count = get_saved_count($article_id);
+
+    echo '<p>' . $saved_count . '</p>';
+  }
+
+  public function get_saved_count($article_id){
+    $saved_count = $wpdb->get_var($wpdb->prepare("
+      SELECT COUNT(*) AS count
+      FROM $wpdb->postmeta,
+      WHERE article_id = %d", $article_id));
+
+    return $saved_count;
+  }
+
+  public function set_saved_count_column($columns){
+    $columns['saved_count'] = __('Number of Times Saved to Report', 'ralfreports');
+    return $columns;
+  }
+
+  public function activities_saved_count_column_values($column, $post_id){
+    if($column == 'saved_count'){
+      $saved_count = get_saved_count($post_id);
+      echo $saved_count;
+    }
+  }
+
+  public function impacts_saved_count_column_values($column, $post_id){
+    if($column == 'saved_count'){
+      $saved_count = get_saved_count($post_id);
+      echo $saved_count;
+    }
   }
 
   public static function get_instance(){
