@@ -23,9 +23,7 @@
                       </header>
                       <section class="result-content">
                         <?php the_content(); ?>
-                        <div class="report-button" data-article_id="<?php echo get_the_ID(); ?>"">
-
-                        </div>
+                        <?php echo do_shortcode('[report_button]'); ?>
                       </section>
                       <section class="related-activities">
                         <h3>Related Activities</h3>
@@ -53,9 +51,7 @@
                       </header>
                       <section class="result-content">
                         <?php the_content(); ?>
-                        <div class="report-button" data-article_id="<?php echo get_the_ID(); ?>"">
-
-                        </div>
+                        <?php echo do_shortcode('[report_button]'); ?>
                       </section>
                       <section class="related-activities">
                         <h3>Related Activities</h3>
