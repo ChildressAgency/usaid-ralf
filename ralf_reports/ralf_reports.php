@@ -224,7 +224,7 @@ class ralf_report{
     else{
       global $wpdb;
       $wpdb->insert(
-        'saved_statistics',
+        'saved_reports',
         array(
           'article_id' => $article_id
         ),
