@@ -52,8 +52,6 @@
         </section>
     <?php endif; ?>
   </div><!-- end .collapse-container -->
-  <div class="report-button hidden-print" data-article_id="<?php echo get_the_ID(); ?>">
-
-  </div>
+  <?php echo do_shortcode('[report_button]'); ?>
   
 </article>
