@@ -108,6 +108,11 @@ a{
 .btn-main.btn-report:focus{
   background-color:#b3b3b3;
 }
+.sidebar-section .btn-main.btn-report:hover,
+.sidebar-section .btn-main.btn-report:focus{
+  background-color:transparent;
+  color:#b3b3b3;
+}
 
 .sidebar-section .save-to-report,
 .sidebar-section .remove-from-report{
