@@ -14,13 +14,19 @@ class ralf_report{
   public function __construct(){
     add_shortcode('ralf_report', array($this, 'ralf_report'));
     add_shortcode('email_form', array($this, 'email_rtf_form'));
+    add_shortcode('report_button', array($this, 'report_button_container'));
 
     add_action('wp_enqueue_scripts', array($this, 'scripts'));
+
+    add_action('acf/init', array($this, 'add_acf_saved_count'));
 
     add_action('plugins_loaded', array($this, 'delete_old_reports'));
 
     add_action('wp_ajax_nopriv_send_rtf_report', array($this, 'send_rtf_report'));
     add_action('wp_ajax_send_rtf_report', array($this, 'send_rtf_report'));
+    add_action('wp_ajax_nopriv_record_report_save', array($this, 'record_report_save'));
+    add_action('wp_ajax_record_report_save', array($this, 'record_report_save'));
+
     //add_action('admin_menu', array($this, 'register_email_report_submenu'));
   }
 
@@ -203,13 +209,86 @@ class ralf_report{
     include('delete_old_reports.php');
   }
 
+  function add_acf_saved_count(){
+    acf_add_local_field_group(array(
+      'key' => 'group_saved_count',
+      'title' => 'Number of Times Saved to Report',
+      'fields' => array(
+        array(
+          'key' => 'field_saved_count',
+          'label' => '',
+          'name' => 'saved_count',
+          'type' => 'number',
+          'instructions' => '',
+          'required' => 0,
+          'conditional_logic' => 0,
+          'wrapper' => array(
+            'width' => '',
+            'class' => '',
+            'id' => ''
+          ),
+          'default_value' => 0,
+          'placeholder' => '',
+          'append' => '',
+          'min' => 0,
+          'max' => '',
+          'step' => '',
+          'readonly' => 1
+        )
+      ),
+      'location' => array(
+        array(
+          array(
+            'param' => 'post_type',
+            'operator' => '==',
+            'value' => 'activities'
+          )
+        ),
+        array(
+          array(
+            'param' => 'post_type',
+            'operator' => '==',
+            'value' => 'impacts'
+          )
+        )
+      ),
+      'menu_order' => 0,
+      'position' => 'side',
+      'style' => 'default',
+      'label_placement' => 'top',
+      'instruction_placement' => 'label',
+      'hide_on_screen' => '',
+      'active' => 1,
+      'description' => '',
+    ));
+  }
+
+  function report_button_container(){
+    $article_id = get_the_ID();
+    $nonce = wp_create_nonce('report_button_' . $article_id);
+
+    $btn_container = '<div class="report-button hidden-print" data-article_id="' . $article_id . '" data-nonce="' . $nonce . '"></div>';
+    echo $btn_container;
+  }
+
+  function record_report_save(){
+    $article_id = $_POST['article_id'];
+    //verify nonce
+    if(check_ajax_referer('report_button_' . $article_id, 'nonce', false) == false){
+      wp_send_json_error();
+    }
+    else{
+      global $wpdb;
+      $wpdb->query($wpdb->prepare("
+        UPDATE $wpdb->postmeta
+        SET meta_value = meta_value + 1
+        WHERE post_id = %d
+          AND meta_key = %s", $article_id, 'saved_count'));
+    }
+  }
 }
 
 new ralf_report;
-
-if(is_admin()){
-  require_once 'ralf-admin.php';
-}
 
 if(is_admin()){
   require_once 'ralf-dashboard.php';
