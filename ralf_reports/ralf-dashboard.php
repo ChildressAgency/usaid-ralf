@@ -1,6 +1,9 @@
 <?php
-if(!class_exists('ralf_list_table')){
+if(!class_exists('emailed_reports_list_table')){
   require_once 'class-emailed-reports-list-table.php';
+}
+if(!class_exists('saved_stats_list_table')){
+  require_once 'class-saved-stats-list-table.php';
 }
 
 class ralf_dashboard{
