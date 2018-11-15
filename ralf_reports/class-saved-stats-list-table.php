@@ -15,7 +15,7 @@ class saved_stats_list_table extends WP_List_Table{
   public static function get_saved_stats($per_page = 25, $page_number = 1){
     global $wpdb;
 
-    $sql = 'SELECT article_id, COUNT(*) AS count FROM saved_reports GROUP BY article_id';
+    $sql = 'SELECT article_id, COUNT(*) AS saved_count FROM saved_reports GROUP BY article_id';
 
     if(!empty($_REQUEST['orderby'])){
       $sql .= ' ORDER BY ' . esc_sql($_REQUEST['orderby']);
@@ -27,12 +27,13 @@ class saved_stats_list_table extends WP_List_Table{
 
     $result = $wpdb->get_results($sql, 'ARRAY_A');
 
+    //change article id to title and link - still called article_id in array
     $result_count = count($result);
     for($r = 0; $r < $result_count; $r++){
-      $article_title = $wpdb->get_var($wpdb->prepare("
-      SELECT post_title
-      FROM $wpdb->posts
-      WHERE ID = %d", $result[$r]['article_id']));
+      $article_title = get_the_title($result[$r]['article_id']);
+      $article_link = get_permalink($result[$r]['article_id']);
+
+      $result[$r]['article_id'] = '<a href="' . $article_link . '" target="_blank">' . $article_title . '</a>';
     }
 
     return $result;
@@ -41,11 +42,12 @@ class saved_stats_list_table extends WP_List_Table{
   public static function saved_to_report_count(){
     global $wpdb;
 
-    $report_count = $wpdb->get_var("
-      SELECT COUNT(DISTINCT('article_id'))
-      FROM saved_reports");
+    $report_count = $wpdb->get_results("
+      SELECT article_id
+      FROM saved_reports
+      GROUP BY article_id", 'ARRAY_N');
 
-    return $report_count;
+    return count($report_count);
   }
 
   public function no_items(){
@@ -55,12 +57,12 @@ class saved_stats_list_table extends WP_List_Table{
   function column_name($item){
     $title = '<strong>' . $item['name'] . '</strong>';
 
-    return $title
+    return $title;
   }
 
   public function column_default($item, $column_name){
     switch($column_name){
-      case 'article_name':
+      case 'article_id':
       case 'saved_count':
         return $item[$column_name];
       default:
@@ -70,8 +72,8 @@ class saved_stats_list_table extends WP_List_Table{
 
   function get_columns(){
     $columns = array(
-      'article_name' => __('Article Name', 'ralfreports'),
-      'saved_count' => __('saved_count')
+      'article_id' => __('Article Name', 'ralfreports'),
+      'saved_count' => __('Number of Times Saved to Report', 'ralfreports')
     ); 
 
     return $columns;
@@ -79,8 +81,8 @@ class saved_stats_list_table extends WP_List_Table{
 
   public function get_sortable_columns(){
     $sortable_columns = array(
-      'article_name' => array('article_name', true);
-      'saved_count' => array('saved_counter', true);
+      'article_id' => array('article_id', true),
+      'saved_count' => array('saved_count', true)
     );
 
     return $sortable_columns;
@@ -91,7 +93,7 @@ class saved_stats_list_table extends WP_List_Table{
 
     $per_page = $this->get_items_per_page('saved_stats_per_page', 25);
     $current_page = $this->get_pagenum();
-    $total_items = $self::saved_to_report_count();
+    $total_items = self::saved_to_report_count();
 
     $this->set_pagination_args([
       'total_items' => $total_items,
