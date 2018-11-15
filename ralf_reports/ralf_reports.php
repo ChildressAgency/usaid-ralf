@@ -12,6 +12,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 
 class ralf_report{
   public function __construct(){
+    add_action('init', array($this, 'ralf_report_load_textdomain'));
     add_shortcode('ralf_report', array($this, 'ralf_report'));
     add_shortcode('email_form', array($this, 'email_rtf_form'));
     add_shortcode('report_button', array($this, 'report_button_container'));
@@ -26,6 +27,10 @@ class ralf_report{
     add_action('wp_ajax_record_report_save', array($this, 'record_report_save'));
 
     //add_action('admin_menu', array($this, 'register_email_report_submenu'));
+  }
+
+  function ralf_report_load_textdomain(){
+    load_plugin_textdomain('ralfreports', false, basename(dirname(__FILE__)) . '/languages');
   }
 
   function ralf_report(){
