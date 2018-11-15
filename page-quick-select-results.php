@@ -11,7 +11,7 @@
                 $impact_tag_ids = array_map('intval', $impact_tag_ids);
                 //var_dump($impact_tag_ids);
 
-                echo '<p>Showing results for the following tags: ';
+                echo '<p>' . __('Showing results for the following tags: ', 'usaidralf');
                 $len = count($impact_tag_ids);
                 foreach($impact_tag_ids as $index => $impact_tag){
                   $term = get_term_by('id', $impact_tag, 'impact_tags');
@@ -47,7 +47,7 @@
                   }
                 }
                 else{
-                  echo '<p>Sorry, nothing was found.</p>';
+                  echo '<p>' . __('Sorry, nothing was found.', 'usaidralf') . '</p>';
                 }
               }
               else{
@@ -63,7 +63,7 @@
                   }
                 }
                 else{
-                  echo '<p>Sorry, nothing was found.</p>';
+                  echo '<p>' . __('Sorry, nothing was found.', 'usaidralf') . '</p>';
                 }
               }
             ?>

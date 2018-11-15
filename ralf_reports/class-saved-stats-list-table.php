@@ -98,8 +98,8 @@ class saved_stats_list_table extends WP_List_Table{
 
   protected function get_views(){
     $status_links = array(
-      'all' => __('<a href="' . esc_url(get_admin_url('', 'index.php?page=saved-statistics-submenu-page&time_period=all')) . '">All</a>', 'ralfreports'),
-      'ninety_days' => __('<a href="' . esc_url(get_admin_url('', 'index.php?page=saved-statistics-submenu-page&time_period=ninety_days')) . '">Last 90 Days</a>', 'ralfreports')
+      'all' => '<a href="' . esc_url(get_admin_url('', 'index.php?page=saved-statistics-submenu-page&time_period=all')) . '">' . __('All', 'ralfreports') . '</a>',
+      'ninety_days' => '<a href="' . esc_url(get_admin_url('', 'index.php?page=saved-statistics-submenu-page&time_period=ninety_days')) . '">' . __('Last 90 Days', 'ralfreports') . '</a>'
     );
 
     return $status_links;

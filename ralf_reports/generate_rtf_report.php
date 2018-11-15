@@ -3,7 +3,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 
 //$report_ids = $report_ids_array
 function get_report($report_ids){
-  $rtf_report = '<h1>Report of Activities and Associated Impacts</h1>';
+  $rtf_report = '<h1>' . __('Report of Activities and Associated Impacts', 'ralfreports') . '</h1>';
 
   $activities_report = new WP_Query(array(
     'post_type' => 'activities',
@@ -17,13 +17,13 @@ function get_report($report_ids){
 
       $rtf_report .= '<h2>' . get_the_title() . '</h2>';
       $rtf_report .= get_the_content();
-      $rtf_report .= '<h3>CONDITIONS</h3>';
+      $rtf_report .= '<h3>' . __('CONDITIONS', 'ralfreports') . '</h3>';
       $rtf_report .= get_the_field('conditions');
 
       $impact_ids = get_field('related_impacts', false, false);
       if(!empty($impact_ids)){
         $impacts_by_sector = usaidralf_get_impacts_by_sector($impact_ids);
-        $rtf_report .= '<h3>IMPACT BY SECTOR</h3>';
+        $rtf_report .= '<h3>' . __('IMPACT BY SECTOR', 'ralfreports') . '</h3>';
 
         foreach($impacts_by_sector as $sector){
           foreach($sector['impacts'] as $impact){

@@ -31,13 +31,13 @@ class ralf_dashboard{
   function ralf_dashboard_setup(){
     wp_add_dashboard_widget(
       'emailed-reports',
-      'Emailed Reports',
+      __('Emailed Reports', 'ralfreports'),
       array($this, 'show_emailed_reports_dashboard')
     );
 
     wp_add_dashboard_widget(
       'saved-to-report-statistics',
-      'Saved to Report Statistics',
+      __('Saved to Report Statistics', 'ralfreports'),
       array($this, 'show_saved_statistics_dashboard')
     );
   }
@@ -57,8 +57,8 @@ class ralf_dashboard{
   public function dashboard_submenus(){
     $emailed_reports_submenu = add_submenu_page(
       'index.php',
-      'Emailed Reports',
-      'Emailed Reports',
+      _x('Emailed Reports', 'submenu page title', 'ralfreports'),
+      _x('Emailed Reports', 'submenu title', 'ralfreports'),
       'manage_options',
       'emailed-reports-submenu-page',
       array($this, 'show_emailed_reports_submenu')
@@ -68,8 +68,8 @@ class ralf_dashboard{
 
     $saved_stats_submenu = add_submenu_page(
       'index.php',
-      'Saved to Report Statistics',
-      'Saved Stats',
+      _x('Saved to Report Statistics', 'submenu page title', 'ralfreports'),
+      _x('Saved Stats', 'submenu title', 'ralfreports'),
       'manage_options',
       'saved-statistics-submenu-page',
       array($this, 'show_saved_stats_submenu')
@@ -81,7 +81,7 @@ class ralf_dashboard{
   public function emailed_reports_screen_option(){
     $option = 'per_page';
     $args = array(
-      'label' => 'Emailed Reports Per Page',
+      'label' => __('Emailed Reports Per Page', 'ralfreports'),
       'default' => 25,
       'option' => 'emailed_reports_per_page'
     );
@@ -94,7 +94,7 @@ class ralf_dashboard{
   public function saved_stats_screen_option(){
     $option = 'per_page';
     $args = array(
-      'label' => 'Saved Stats Per Page',
+      'label' => __('Saved Stats Per Page', 'ralfreports'),
       'default' => 25,
       'option' => 'saved_stats_per_page'
     );

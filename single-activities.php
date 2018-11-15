@@ -5,7 +5,7 @@
         <div class="col-sm-8 col-md-9">
           <main class="result">
             <div class="go-back">
-              <a href="javascript:history.back(-1);">BACK</a>
+              <a href="javascript:history.back(-1);"><?php _e('BACK', 'usaidralf'); ?></a>
             </div>
             <?php if(have_posts()): while(have_posts()): the_post(); ?>
               <article class="ralf-article">
@@ -20,7 +20,7 @@
                   </div>
                   <?php if(get_field('conditions')): ?>
                     <div class="activity-conditions">
-                      <h2>POTENTIAL CONDITIONS</h2>
+                      <h2><?php _e('POTENTIAL CONDITIONS', 'usaidralf'); ?></h2>
                       <?php the_field('conditions'); ?>
                     </div>
                   <?php endif; ?>
@@ -32,7 +32,7 @@
                     $impacts_by_sector = usaidralf_get_impacts_by_sector($impact_ids); ?>
 
                     <section class="impact-by-sector">
-                      <h2>IMPACT BY SECTOR<span class="dashicons dashicons-excerpt-view" data-toggle="tooltip" data-position="top" title="Expand All"></span></h2>
+                      <h2><?php _e('IMPACT BY SECTOR', 'usaidralf'); ?><span class="dashicons dashicons-excerpt-view" data-toggle="tooltip" data-position="top" title="<?php _e('Expand All', 'usaidralf'); ?>"></span></h2>
                       <div class="panel-group" id="impacts-accordion" role="tablist" aria-multiselectable="true">
                         <?php 
                             $i = 0;

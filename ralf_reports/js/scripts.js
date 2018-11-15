@@ -1,7 +1,7 @@
 $(document).ready(function($){
   //define the save/remove buttons
-  var saveToReportButton = '<a href="#" class="btn-main btn-report save-to-report">Save To Report</a>';
-  var removeFromReportButton = '<a href="#" class="btn-main btn-report remove-from-report">Remove From Report</a>';
+  var saveToReportButton = '<a href="#" class="btn-main btn-report save-to-report">' + ralf_settings.save_to_report_label + '</a>';
+  var removeFromReportButton = '<a href="#" class="btn-main btn-report remove-from-report">' + ralf_settings.remove_from_report_label + '</a>';
   var reportIdsCookieName = 'STYXKEY_report_ids'; //STYXKEY is required by pantheon.io for some reason
 
   //get the report ids saved so far from the cookie
@@ -74,7 +74,7 @@ $(document).ready(function($){
     //change the save button to remove
     var $btnToUpdate = $('.report-button[data-article_id="' + articleId + '"]');
     $btnToUpdate.html(removeFromReportButton);
-    $btnToUpdate.append('<span><em>Added to report!</em></span>');
+    $btnToUpdate.append('<span><em>' + ralf_settings.added_to_report_label + '</em></span>');
   });
 
   //remove report button clicked
@@ -110,7 +110,7 @@ $(document).ready(function($){
     //change the remove button to save
     var $btnToUpdate = $('.report-button[data-article_id="' + articleId + '"]');
     $btnToUpdate.html(saveToReportButton);
-    $btnToUpdate.append('<span><em>Removed from report</em></span>');
+    $btnToUpdate.append('<span><em>' + ralf_settings.removed_from_report_label + '</em></span>');
   });
   
   //email report functions
@@ -124,7 +124,7 @@ $(document).ready(function($){
     if(emailAddresses.length == 0 || validEmailAddresses == false){
       //email addresses field was empty
       $('#email-addresses').css('border', '2px solid red');
-      $('.email-response').text('Please enter only valid email addresses.');
+      $('.email-response').text(ralf_settings.valid_email_address_error);
       return false;
     }
 

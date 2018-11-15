@@ -3,7 +3,7 @@
 if ( ! defined( 'ABSPATH' ) ) exit; ?>
 
 <header class="page-header">
-  <h1>Report of Activities and Associated Impacts</h1>
+  <h1><?php _e('Report of Activities and Associated Impacts', 'ralfreports'); ?></h1>
 </header>
 
 <?php
@@ -62,5 +62,5 @@ if($activities_ids){
   return call_user_func($shortcode_tags['email_form'], array('activity_ids' => $activities_ids));
 }
 else{
-  echo '<p>Sorry, your report could not be found.</p>';
+  echo '<p>' . __('Sorry, your report could not be found.', 'ralfreports') . '</p>';
 }

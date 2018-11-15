@@ -577,7 +577,7 @@ class usaidralf_view_report_widget extends WP_Widget{
 			echo $args['before_title'] . $title . $args['after_title'];
 		}
 
-    echo '<a href="' . home_url('view-report') . '">View Report</a>';
+    echo '<a href="' . home_url('view-report') . '">' . __('View Report', 'usaidralf') . '</a>';
 
 		echo $args['after_widget'];
 	}

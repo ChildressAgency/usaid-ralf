@@ -43,7 +43,7 @@ class emailed_reports_list_table extends WP_List_Table{
       }
       $result[$r]['report_ids'] = '<ul style="margin-top:0; list-style:disc;">' . implode('', $article_titles) . '</ul>';
 
-      $result[$r]['view_report'] = '<a href="' . esc_url(home_url('view-report/?report_ids=' . implode(',', $report_ids))) . '" target="_blank">View Report</a>';
+      $result[$r]['view_report'] = '<a href="' . esc_url(home_url('view-report/?report_ids=' . implode(',', $report_ids))) . '" target="_blank">' . __('View Report', 'ralfreports') . '</a>';
     }
     
     //var_dump($result);
@@ -77,7 +77,7 @@ class emailed_reports_list_table extends WP_List_Table{
 
     $actions = array('delete' =>
       sprintf(
-        '<a href="?page=%s&action=%s&emailed_report=%s&_wpnonce=%s">Delete</a>', 
+        '<a href="?page=%s&action=%s&emailed_report=%s&_wpnonce=%s">' . __('Delete', 'ralfreports') . '</a>', 
         esc_attr($_REQUEST['page']), 
         'delete', 
         absint($item['ID']), 
@@ -110,7 +110,7 @@ class emailed_reports_list_table extends WP_List_Table{
     $columns = array(
       'cb' => '<input type="checkbox" />',
       'email_domains' => __('Emailed Domains', 'ralfreports'),
-      'report_ids' => __('Activites / Impacts', 'ralfreports'),
+      'report_ids' => __('Activities / Impacts', 'ralfreports'),
       'email_date' => __('Email Date', 'ralfreports'),
       'view_report' => __('', 'ralfreports')
     );
@@ -156,7 +156,7 @@ class emailed_reports_list_table extends WP_List_Table{
       $nonce = esc_attr($_REQUEST['_wpnonce']);
 
       if(!wp_verify_nonce($nonce, 'ralf_delete_emailed_report')){
-        die('Go get a life script kiddies');
+        die();
       }
       else{
         self::delete_emailed_report(absint($_GET['emailed_report']));

@@ -4,9 +4,9 @@ global $wpdb;
 
 $emailed_reports_table = '<table cellpadding="0" cellspacing="0" class="emailed-reports-table">';
 $emailed_reports_table .= '<thead><tr>'
-                        . '<th>Emailed Domains</th>'
-                        . '<th>Activities / Impacts</th>'
-                        . '<th>Email Date</th>'
+                        . '<th>' . __('Emailed Domains', 'ralfreports') . '</th>'
+                        . '<th>' . __('Activities / Impacts', 'ralfreports') . '</th>'
+                        . '<th>' . __('Email Date', 'ralfreports') . '</th>'
                         . '<th></th>'
                         . '</tr></thead><tbody>';
 
@@ -28,7 +28,7 @@ for($i = 0; $i < $emailed_reports_count; $i++){
 
   $emailed_reports_table .= '<td style="border-bottom:1px solid #000;">' . $emailed_reports[$i]['email_date'] . '</td>';
 
-  $emailed_reports_table .= '<td style="border-bottom:1px solid #000;"><a href="' . esc_url(home_Url('view-report/?report_ids=' . $report_ids)) . '" target="_blank">View Report</a></td>';
+  $emailed_reports_table .= '<td style="border-bottom:1px solid #000;"><a href="' . esc_url(home_Url('view-report/?report_ids=' . $report_ids)) . '" target="_blank">' . __('View Report', 'ralfreports') . '</a></td>';
 
   $emailed_reports_table .= '</tr>';
 }
@@ -36,7 +36,7 @@ for($i = 0; $i < $emailed_reports_count; $i++){
 $emailed_reports_table .= '</tbody></table>';
 
 echo $emailed_reports_table;
-echo '<p><a href="' . esc_url(get_admin_url('', 'index.php?page=emailed-reports-submenu-page')) . '" class="button">View Full List</a></p>';
+echo '<p><a href="' . esc_url(get_admin_url('', 'index.php?page=emailed-reports-submenu-page')) . '" class="button">' . __('View Full List', 'ralfreports') . '</a></p>';
 
 function get_reports_list($reports){
   global $wpdb;

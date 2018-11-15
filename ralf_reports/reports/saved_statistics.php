@@ -3,8 +3,8 @@ global $wpdb;
 
 $saved_stats_table = '<table cellpadding="0" cellspacing="0" class="saved-stats-table">';
 $saved_stats_table .= '<thead><tr>'
-                    . '<th>Article</th>'
-                    . '<th>Count</th>'
+                    . '<th>' . __('Article', 'ralfreports') . '</th>'
+                    . '<th>' . __('Count', 'ralfreports') . '</th>'
                     . '<th></th>'
                     . '</tr></thead><tbody>';
                     
@@ -27,4 +27,4 @@ for($i = 0; $i < $saved_stats_count; $i++){
 $saved_stats_table .= '</tbody></table>';
 
 echo $saved_stats_table;
-echo '<p><a href="' . esc_url(get_admin_url('', 'index.php?page=saved-statistics-submenu-page')) . '" class="button">View All Stats</a></p>';
+echo '<p><a href="' . esc_url(get_admin_url('', 'index.php?page=saved-statistics-submenu-page')) . '" class="button">' . __('View All Stats', 'ralfreports') . '</a></p>';

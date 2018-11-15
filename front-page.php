@@ -11,7 +11,7 @@
                   <div class="slide-caption">
                     <h1><?php the_sub_field('slide_title'); ?></h1>
                     <?php the_sub_field('slide_caption'); ?>
-                    <a href="<?php echo esc_url(get_term_link(get_sub_field('sector_link'))); ?>" class="btn-main">View Impacts</a>
+                    <a href="<?php echo esc_url(get_term_link(get_sub_field('sector_link'))); ?>" class="btn-main"><?php _e('View Impacts', 'usaidralf'); ?></a>
                   </div>
                 </div>
               </div>
@@ -34,7 +34,7 @@
       <p><?php the_field('search_bar_text'); ?></p>
       <form class="form-inline" action="<?php echo home_url(); ?>" method="get">
         <div class="form-group">
-          <label for="search-field" class="sr-only">Search</label>
+          <label for="search-field" class="sr-only"><?php _e('Search', 'usaidralf'); ?></label>
           <div class="input-group">
             <input type="text" id="search-field" name="s" class="form-control" />
             <div class="input-group-addon">
@@ -42,7 +42,7 @@
             </div>
           </div>
         </div>
-        <input type="submit" class="btn-main" value="Search" />
+        <input type="submit" class="btn-main" value="<?php _e('Search', 'usaidralf'); ?>" />
       </form>
     </div>
   </div>
@@ -108,8 +108,8 @@
         </div>
         <div class="clearfix"></div>
         <div class="btns-inline">
-          <a href="#" class="btn-alt">Load More</a>
-          <input type="submit" class="btn-main" value="Search" />
+          <a href="#" class="btn-alt"><?php _e('Load More', 'usaidralf'); ?></a>
+          <input type="submit" class="btn-main" value="<?php _e('Search', 'usaidralf'); ?>" />
         </div>
       </form>
     </div>
@@ -137,7 +137,7 @@
           foreach($common_search_terms as $search_term){
             if(strpbrk($search_term->query, $filter_chars) == false){
               echo '<div class="grid-item">';
-              echo '<a href="' . esc_url(add_query_arg('s', $search_term->query, home_url())) . '" class="search-term">' . $search_term->query . ' <span>(' . $search_term->hits . ' results)</a>';
+              echo '<a href="' . esc_url(add_query_arg('s', $search_term->query, home_url())) . '" class="search-term">' . $search_term->query . ' <span>(' . $search_term->hits . ' ' . __('results', 'usaidralf') . ')</a>';
               echo '</div>';
             }
           }

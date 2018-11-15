@@ -44,7 +44,12 @@ class ralf_report{
     wp_localize_script('ralf-report', 'ralf_settings', array(
       'ralf_ajaxurl' => admin_url('admin-ajax.php'),
       'send_label' => __('Email Report', 'ralfreports'),
-      'error' => __('Sorry, something went wrong. Please try again.', 'ralfreports')
+      'error' => __('Sorry, something went wrong. Please try again.', 'ralfreports'),
+      'save_to_report_label' => __('Save To Report', 'ralfreports'),
+      'remove_from_report_label' => __('Remove From Report', 'ralfreports'),
+      'added_to_report_label' => __('Added to report!', 'ralfreports'),
+      'removed_from_report_label' => __('Removed from report', 'ralfreports'),
+      'valid_email_address_error' => __('Please enter only valid email addresses.', 'ralfreports')
     ));
   }
 
@@ -54,7 +59,7 @@ class ralf_report{
 
     $nonce = wp_create_nonce('email_rtf_report_' . $report_ids);
     $form_content = '<div class="email-report">
-                      <h3>Email this report</h3>
+                      <h3>' . __('Email this report', 'ralfreports') . '</h3>
                       <div class="form-group">
                         <input type="text" required id="email-addresses" name="email-addresses" class="form-control" placeholder="' . __('Enter a comma-separated list of email addresses.', 'ralfreports') . '" />
                       </div>
@@ -105,10 +110,10 @@ class ralf_report{
 
     //create the email variables
     $to = $email_addresses;
-    $subject = 'Your RALF Impact Report';
+    $subject = __('Your RALF Impact Report', 'ralfreports');
     //$headers = 'From: USAID RALF <jcampbell@childressagency.com>';
     $headers = '';
-    $message = 'Your RALF Impact Report is attached to this email. Your chosen Activities are listed below:' . "\r\n\r\n";
+    $message = __('Your RALF Impact Report is attached to this email. Your chosen Activities are listed below:', 'ralfreports') . "\r\n\r\n";
 
     //show the title of each article in the message body
     foreach($report_ids_array as $report_id){
@@ -116,7 +121,7 @@ class ralf_report{
     }
 
     //link to the report using querystrings with the ids
-    $message .= "\r\n" . 'Here is a link back to your report: ' . esc_url(home_url('view-report/' . $report_url_id));
+    $message .= "\r\n" . __('Here is a link back to your report: ', 'ralfreports') . esc_url(home_url('view-report/' . $report_url_id));
     //$message .= "\r\n" . $ralf_report_name;
 
     //send the email with attachment
@@ -132,7 +137,7 @@ class ralf_report{
   }
 
   function get_report($report_ids){
-    $rtf_report = '<h1>Report of Activities and Associated Impacts</h1>';
+    $rtf_report = '<h1>' . __('Report of Activities and Associated Impacts', 'ralfreports') . '</h1>';
 
     $activities_report = new WP_Query(array(
       'post_type' => array('activities', 'impacts'),
@@ -152,14 +157,14 @@ class ralf_report{
         
         $conditions = get_field('conditions');
         if($conditions){
-          $rtf_report .= '<h3>CONDITIONS</h3>';
+          $rtf_report .= '<h3>' . __('CONDITIONS', 'ralfreports') . '</h3>';
           $rtf_report .= str_replace("& ", "and ", get_field('conditions'));
         }
 
         $impact_ids = get_field('related_impacts', false, false);
         if(!empty($impact_ids)){
           $impacts_by_sector = usaidralf_get_impacts_by_sector($impact_ids);
-          $rtf_report .= '<h3>IMPACT BY SECTOR</h3>';
+          $rtf_report .= '<h3>' . __('IMPACT BY SECTOR', 'ralfreports') . '</h3>';
 
           foreach($impacts_by_sector as $sector){
             foreach($sector['impacts'] as $impact){

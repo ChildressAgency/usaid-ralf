@@ -17,7 +17,7 @@
                       <header class="result-header">
                         <span class="result-type-icon impact" data-toggle="tooltip" data-placement="top" title="Impact"></span>
                         <a href="<?php echo esc_url(get_term_link($sector->term_id), 'sectors'); ?>" class="sector-icon sector-icon-small" data-toggle="tooltip" data-placement="top" title="<?php echo $sector->name; ?>">
-                          <img src="<?php the_field('sector_icon', $acf_sector_id); ?>" class="img-circle img-responsive" alt="<?php echo $sector->name; ?> Sector" style="background-color:<?php the_field('sector_color', $acf_sector_id); ?>;" />
+                          <img src="<?php the_field('sector_icon', $acf_sector_id); ?>" class="img-circle img-responsive" alt="<?php echo $sector->name; ?> <?php _e('Sector', 'usaidralf'); ?>" style="background-color:<?php the_field('sector_color', $acf_sector_id); ?>;" />
                         </a>
                         <h1><?php the_title(); ?></h1>
                       </header>
@@ -26,7 +26,7 @@
                         <?php echo do_shortcode('[report_button]'); ?>
                       </section>
                       <section class="related-activities">
-                        <h3>Related Activities</h3>
+                        <h3><?php _e('Related Activities', 'usaidralf'); ?></h3>
                         <?php
                           $related_activities = usaidralf_get_related_activities($impact_id);
                           if($related_activities->have_posts()): ?>
@@ -36,7 +36,7 @@
                               <?php endwhile; wp_reset_postdata(); ?>
                             </ul>
                         <?php else: ?>
-                          <p>No related Activities</p>
+                          <p><?php _e('No related Activities', 'usaidralf'); ?></p>
                         <?php endif; ?>
                       </section>
                     </article>
@@ -54,7 +54,7 @@
                         <?php echo do_shortcode('[report_button]'); ?>
                       </section>
                       <section class="related-activities">
-                        <h3>Related Activities</h3>
+                        <h3><?php _e('Related Activities', 'usaidralf'); ?></h3>
                         <?php
                           $related_activities = usaidralf_get_related_activities($impact_id);
                           if($related_activities->have_posts()): ?>
@@ -64,7 +64,7 @@
                               <?php endwhile; wp_reset_postdata(); ?>
                             </ul>
                         <?php else: ?>
-                          <p>No related Activities</p>
+                          <p><?php _e('No related Activities', 'usaidralf'); ?></p>
                         <?php endif; ?>
                       </section>
                     </article>

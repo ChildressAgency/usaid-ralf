@@ -18,7 +18,7 @@
       </div>
       <?php if(get_field('conditions')): ?>
         <div class="activity-conditions">
-          <h2>CONDITIONS</h2>
+          <h2><?php _e('CONDITIONS', 'ralfreports'); ?></h2>
           <?php the_field('conditions'); ?>
         </div>
       <?php endif; ?>
@@ -30,7 +30,7 @@
         $impacts_by_sector = usaidralf_get_impacts_by_sector($impact_ids); ?>
 
         <section class="impact-by-sector">
-          <h2>IMPACT BY SECTOR</h2>
+          <h2><?php _e('IMPACT BY SECTOR', 'ralfreports'); ?></h2>
           <div class="panel-group" role="tablist">
             <?php
               foreach($impacts_by_sector as $sector):

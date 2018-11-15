@@ -3,7 +3,7 @@
   <div class="container">
     <main class="results-list">
       <header class="page-header">
-        <h1>Report of Activities and Associated Impacts</h1>
+        <h1><?php _e('Report of Activities and Associated Impacts', 'usaidralf'); ?></h1>
       </header>
         <?php
           if(isset($_COOKIE['STYXKEY_report_ids'])){
@@ -31,7 +31,7 @@
             echo do_shortcode('[email_form]');
           }
           else{
-            echo '<p>You haven\'t saved any Activities to report.</p>';
+            echo '<p>' . __('You haven\'t saved any Activities to report.', 'usaidralf') . '</p>';
           }
         ?>
     </main>

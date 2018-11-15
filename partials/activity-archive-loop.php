@@ -1,6 +1,6 @@
 <div class="media<?php if(has_term('', 'priority_keywords')){ echo ' keyword'; } ?>">
   <div class="media-left">
-    <span class="result-type-icon activity" data-toggle="tooltip" data-placement="top" title="Activity"></span>
+    <span class="result-type-icon activity" data-toggle="tooltip" data-placement="top" title="<?php _e('Activity', 'usaidralf'); ?>"></span>
   </div>
   <div class="media-body">
     <h3 class="media-heading"><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h3>
@@ -40,7 +40,7 @@
                 </a>
                 <?php if($sector_term->parent > 0): ?>
                   <a href="<?php echo esc_url(get_term_link($sector_term->term_id, 'sectors')); ?>" class="sub-sector" data-toggle="tooltip" data-placement="top" title="<?php echo $sector_term->name; ?>">
-                    <img src="<?php the_field('sector_icon', $acf_sub_sector_id); ?>" class="img-circle img-responsive" alt="<?php echo $sector_term->name; ?> Sector" style="background-color:<?php the_field('sector_color', $acf_sub_sector_id); ?>" />
+                    <img src="<?php the_field('sector_icon', $acf_sub_sector_id); ?>" class="img-circle img-responsive" alt="<?php echo $sector_term->name; ?> <?php _e('Sector', 'usaidralf'); ?>" style="background-color:<?php the_field('sector_color', $acf_sub_sector_id); ?>" />
                   </a>
                 <?php endif; ?>
               </div>

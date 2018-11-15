@@ -10,7 +10,7 @@
     if($search_history != ''){
       $search_history_terms = explode(',', $search_history);
 
-      echo '<div class="sidebar-section"><h4>SEARCH HISTORY</h4>';
+      echo '<div class="sidebar-section"><h4>' . __('SEARCH HISTORY', 'usaidralf') . '</h4>';
       echo '<a href="#" id="clear-search-history">[clear history]</a><ul>';
       foreach($search_history_terms as $search_term){
         echo '<li><a href="' . esc_url(add_query_arg('s', $search_term, home_url())) . '">' . $search_term . '</a></li>';
