@@ -15,7 +15,15 @@ class saved_stats_list_table extends WP_List_Table{
   public static function get_saved_stats($per_page = 25, $page_number = 1){
     global $wpdb;
 
-    $sql = 'SELECT article_id, COUNT(*) AS saved_count FROM saved_reports GROUP BY article_id';
+    $sql = 'SELECT article_id, COUNT(*) AS saved_count FROM saved_reports';
+
+    if(!empty($_REQUEST['time_period'])){
+      if($_REQUEST['time_period'] == 'ninety_days'){
+        $sql .= ' WHERE saved_date >= DATE_ADD(NOW(), INTERVAL -90 DAY)';
+      }
+    }
+    
+    $sql .= ' GROUP BY article_id';
 
     if(!empty($_REQUEST['orderby'])){
       $sql .= ' ORDER BY ' . esc_sql($_REQUEST['orderby']);
@@ -86,6 +94,15 @@ class saved_stats_list_table extends WP_List_Table{
     );
 
     return $sortable_columns;
+  }
+
+  protected function get_views(){
+    $status_links = array(
+      'all' => __('<a href="' . esc_url(get_admin_url('', 'index.php?page=saved-statistics-submenu-page&time_period=all')) . '">All</a>', 'ralfreports'),
+      'ninety_days' => __('<a href="' . esc_url(get_admin_url('', 'index.php?page=saved-statistics-submenu-page&time_period=ninety_days')) . '">Last 90 Days</a>', 'ralfreports')
+    );
+
+    return $status_links;
   }
 
   public function prepare_items(){

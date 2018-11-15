@@ -24,6 +24,8 @@ class ralf_dashboard{
     add_filter('manage_impacts_posts_columns', array($this, 'set_saved_count_column'));
     add_action('manage_activities_posts_custom_column', array($this, 'activities_saved_count_column_values', 10, 2));
     add_action('manage_impacts_posts_custom_column', array($this, 'impacts_saved_count_column_values', 10, 2));
+
+    //add_filter('views_saved-statistics-submenu-page', array($this, 'stats_filter', 10, 1));
   }
 
   function ralf_dashboard_setup(){
@@ -134,6 +136,7 @@ class ralf_dashboard{
       <div id="poststuff">
         <div id="post-body" class="metabox-holder">
           <div id="post-body-content">
+            <?php $this->saved_stats_list->views(); ?>
             <div class="meta-box-sortables ui-sortable">
               <form method="post">
                 <?php
