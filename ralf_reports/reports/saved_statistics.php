@@ -18,7 +18,7 @@ $saved_stats_count = count($saved_stats);
 for($i = 0; $i < $saved_stats_count; $i++){
   $saved_stats_table .= '<tr>';
 
-  $saved_stats_table .= '<td><a href="' . get_permalink($saved_state[$i]['article_id']) . '">' . get_the_title($saved_stats[$i]['article_id']) . '</a></td>';
+  $saved_stats_table .= '<td><a href="' . get_permalink($saved_stats[$i]['article_id']) . '" target="_blank">' . get_the_title($saved_stats[$i]['article_id']) . '</a></td>';
   $saved_stats_table .= '<td>' . $saved_stats[$i]['count'] . '</td>';
 
   $saved_stats_table .= '</tr>';
