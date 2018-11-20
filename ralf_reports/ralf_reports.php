@@ -18,6 +18,7 @@ class ralf_report{
     add_shortcode('report_button', array($this, 'report_button_container'));
 
     add_action('wp_enqueue_scripts', array($this, 'scripts'));
+    add_action('acf/init', array($this, 'add_acf_field_groups'));
 
     add_action('plugins_loaded', array($this, 'delete_old_reports'));
 
@@ -243,6 +244,53 @@ class ralf_report{
         )
       );
     }
+  }
+
+  function add_acf_field_groups(){
+    acf_add_local_field_group(array(
+      'key' => 'group_5bcde52f3147b',
+      'title' => 'Report History Settings',
+      'fields' => array(
+        array(
+          'key' => 'field_5bcde537c6286',
+          'label' => 'How long to store reports?',
+          'name' => 'how_long_to_store_reports',
+          'type' => 'number',
+          'instructions' => 'Enter the number of days to keep reports before they are deleted.',
+          'required' => 0,
+          'conditional_logic' => 0,
+          'wrapper' => array(
+            'width' => '25',
+            'class' => '',
+            'id' => ''
+          ),
+          'default_value' => '',
+          'placeholder' => '',
+          'prepend' => '',
+          'append' => 'days',
+          'min' => '',
+          'max' => '',
+          'step' => 1
+        )
+      ),
+      'location' => array(
+        array(
+          array(
+            'param' => 'options_page',
+            'operator' => '==',
+            'value' => 'general-settings'
+          )
+        )
+      ),
+      'menu_order' => 0,
+      'position' => 'normal',
+      'style' => 'default',
+      'label_placement' => 'top',
+      'instruction_placement' => 'label',
+      'hide_on_screen' => '',
+      'active' => 1,
+      'description' => ''
+    ));
   }
 }
 
