@@ -414,8 +414,29 @@ function usaidralf_create_post_type(){
       )
     )
   );
+  register_taxonomy('resource_types',
+    'resources',
+    array(
+      'hierarchical' => true,
+      'show_admin_column' => true,
+      'public' => true,
+      'labels' => array(
+        'name' => _x('Resource Types', 'taxonomy general name', 'usaidralf'),
+        'singular_name' => _x('Resource Type', 'taxonomy singular name', 'usaidralf'),
+        'search_items' => __('Search Resource Types', 'usaidralf'),
+        'all_items' => __('All Resource Types', 'usaidralf'),
+        'parent_item' => __('Parent Resource Type', 'usaidralf'),
+        'parent_item_colon' => __('Parent Resource Type:', 'usaidralf'),
+        'edit_item' => __('Edit Resource Type', 'usaidralf'),
+        'update_item' => __('Update Resource Type', 'usaidralf'),
+        'add_new_item' => __('Add New Resource Type', 'usaidralf'),
+        'new_item_name' => __('New Resource Type Name', 'usaidralf'),
+        'menu_name' => __('Resource Types', 'usaidralf')
+      )
+    )
+  );
   register_taxonomy('priority_keywords',
-    array('impacts', 'activities'),
+    array('impacts', 'activities', 'resources'),
     array(
       'hierarchical' => false,
       'show_admin_column' => false,
@@ -436,7 +457,7 @@ function usaidralf_create_post_type(){
         'add_or_remove_items' => __('Add or Remove Priority Keywords', 'usaidralf'),
         'choose_from_most_used' => __('Choose from the most used Priority Keywords', 'usaidralf'),
         'not_found' => __('No Priority Keywords Found', 'usaidralfd'),
-        'menu_name' => __('Activities', 'usaidralf')
+        'menu_name' => __('Priority Keywords', 'usaidralf')
       )
     )
   );
