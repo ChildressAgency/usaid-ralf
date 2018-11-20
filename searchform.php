@@ -1,6 +1,6 @@
 <form action="<?php echo home_url(); ?>" method="get">
   <div class="form-group">
-    <label for="search-field" class="sr-only">Search</label>
+    <label for="search-field" class="sr-only"><?php _e('Search', 'usaidralf'); ?></label>
     <div class="input-group">
       <input type="text" id="search-field" name="s" class="form-control" />
       <div class="input-group-btn">

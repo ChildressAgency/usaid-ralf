@@ -17,7 +17,7 @@
                 }
               }
               else{
-                echo '<p>Sorry, nothing was found.</p>';
+                echo '<p>' . __('Sorry, nothing was found.', 'usaidralf') . '</p>';
               }
             ?>
           </main>

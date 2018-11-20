@@ -65,6 +65,11 @@ a{
   border-color:#fff;
   text-decoration:none;
 }
+.sidebar-section .btn-main{
+  background-color:transparent;
+  padding:0;
+  border:none;
+}
 .btn-alt{
   display:inline-block;
   background-color:transparent;
@@ -91,7 +96,7 @@ a{
 .btns-inline input+input{
   margin-left:25px;
 }
-.btn-main.btn-report{
+.ralf-article .btn-main.btn-report{
   font-size:16px;
   font-family:"AvenirNext", sans-serif;
   font-style:normal;
@@ -103,7 +108,14 @@ a{
 .btn-main.btn-report:focus{
   background-color:#b3b3b3;
 }
-.sidebar-section .save-to-report{
+.sidebar-section .btn-main.btn-report:hover,
+.sidebar-section .btn-main.btn-report:focus{
+  background-color:transparent;
+  color:#b3b3b3;
+}
+
+.sidebar-section .save-to-report,
+.sidebar-section .remove-from-report{
   color:#c4d82e;
   font-family:"AvenirNext", sans-serif;
   font-weight:800;
@@ -340,20 +352,21 @@ section{
 #quick-select .section-header p{
   max-width:980px;
 }
-.factor-grid{
+.terms-grid{
   display:flex;
   flex-wrap:wrap;
   justify-content:space-between;
   text-align:center;
 }
-.factor-grid .grid-item{
+.terms-grid .grid-item{
   margin:3px;
   width:auto;
   flex-grow:1;
   flex-shrink:1;
   flex-basis:auto;
 }
-.factor-grid .grid-item .factor-name{
+.terms-grid .grid-item .factor-name,
+.terms-grid .grid-item .search-term{
   font-size:22px;
   font-family:"AvenirNext", sans-serif;
   font-weight:400;
@@ -364,14 +377,28 @@ section{
   border-radius:4px;
   display:block;
 }
-.factor-grid .grid-item .factor-name>input[type="checkbox"]{
+.terms-grid .grid-item .factor-name>input[type="checkbox"]{
   position:absolute;
   opacity:0;
 }
-.factor-grid .grid-item:hover .factor-name,
-.factor-grid .grid-item .factor-name.active,
-.factor-grid .grid-item .factor-name>input[type="checkbox"]:checked{
+.terms-grid .grid-item:hover .factor-name,
+.terms-grid .grid-item .factor-name.active,
+.terms-grid .grid-item .factor-name>input[type="checkbox"]:checked,
+.terms-grid .grid-item .search-term:hover,
+.terms-grid .grid-item .search-term:focus{
   background-color:#d9e021;
+}
+.terms-grid .grid-item .search-term{
+  color:#000;
+}
+.terms-grid .grid-item .search-term:hover,
+.terms-grid .grid-item .search-term:focus{
+  text-decoration:none;
+  color:#000;
+}
+.terms-grid .grid-item .search-term>span{
+  font-size:14px;
+  font-style:italic;
 }
 #quick-select .btn-main:hover,
 #quick-select .btn-main:focus{
@@ -420,6 +447,9 @@ main.results-list{
 .results-list .media-heading{
   font-size:32px;
   font-weight:300;
+}
+.results-list .media-heading>a{
+  color:#000;
 }
 .results-list .media-left{
   padding-right:20px;
@@ -530,13 +560,13 @@ main.result{
   display:inline-block;
   margin-right:25px;
 }
-.result-header h1{
+.result-header h1>a{
   font-size:32px;
   font-weight:300;
   margin-top:0;
+  color:#000;
 }
 .result-content{
-  border-bottom:1px solid #000;
   padding-bottom:20px;
 }
 .results-content table{
@@ -582,6 +612,7 @@ main.result{
 .impact-by-sector{
   font-family:"AvenirNext", sans-serif;
   font-size:16px;
+  border-top:1px solid #000;
 }
 .impact-by-sector>h2{
   font-size:22px;
@@ -635,6 +666,9 @@ main.result{
   display:inline-block;
   margin-left:15px;
 }
+.results-sidebar .report-button>span{
+  margin-left:0;
+}
 .wp-pagenavi{
   margin-top:40px;
   text-align:center;
@@ -644,6 +678,19 @@ main.result{
   background-color:#333;
   padding-top:40px;
   padding-bottom:40px;
+}
+
+#clear-search-history{
+  display:block;
+  margin-top:-10px;
+  margin-bottom:5px;
+  font-size:14px;
+  font-style:italic;
+}
+
+.media.keyword{
+  border-left:3px solid red;
+  border-right:3px solid red;
 }
 
 

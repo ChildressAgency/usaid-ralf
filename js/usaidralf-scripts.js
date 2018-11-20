@@ -31,61 +31,6 @@ jQuery(document).ready(function($){
     }
   });
 
-  //add to report
-  if(typeof articleId !== 'undefined'){
-    var reportIds = Cookies.get('STYXKEY_report_ids');
-    var reportIdArr;
-    //var report_button = '<a href="#" id="saveToReport" class="save-to-report">Save To Report</a>';
-    $('.report-button').each(function () {
-      $(this).html('<a href="#" id="saveToReport" class="btn-main btn-report">Save To Report</a>');
-    });
-
-    if (reportIds) {
-      var reportIdArr = reportIds.split(',');
-
-      if (reportIdArr.indexOf(articleId) > -1) {
-        //report_button = '<a href="#" id="removeFromReport" class="save-to-report">Remove From Report</a>';
-        $('.report-button').each(function () {
-          $(this).html('<a href="#" id="removeFromReport" class="btn-main btn-report">Remove From Report</a>');
-        });
-      }
-    }
-  }
-
-  $('.report-button').on('click', '#saveToReport', function (e) {
-    e.preventDefault();
-    if (reportIdArr) {
-      if (reportIdArr.indexOf(articleId) < 0) {
-        reportIdArr.push(articleId);
-      }
-
-      reportIds = reportIdArr.toString();
-    }
-    else {
-      reportIds = articleId;
-    }
-
-    Cookies.set('STYXKEY_report_ids', reportIds, { expires: 30 });
-    $('.report-button').each(function () {
-      $(this).html('<a href="#" id="removeFromReport" class="btn-main btn-report">Remove From Report</a><span><em>Added to report!</em></span>');
-    });
-  });
-
-  $('.report-button').on('click', '#removeFromReport', function (e) {
-    e.preventDefault();
-
-    var idIndex = reportIdArr.indexOf(articleId);
-    if (idIndex > -1) {
-      reportIdArr.splice(idIndex, 1);
-    }
-
-    reportIds = reportIdArr.toString();
-    Cookies.set('STYXKEY_report_ids', reportIds, { expires: 30 });
-    $('.report-button').each(function () {
-      $(this).html('<a href="#" id="saveToReport" class="btn-main btn-report">Save To Report</a><span><em>Removed from report</em></span>');
-    });
-  });  
-
   $(function () {
     $('[data-toggle="tooltip"]').tooltip();
   });
@@ -99,5 +44,13 @@ jQuery(document).ready(function($){
     $(this).removeClass('dashicons-list-view').addClass('dashicons-excerpt-view');
     $(this).attr('data-original-title', 'Expand All');
     $('#impacts-accordion .collapse').collapse('hide');
+  });
+
+  //clear search history
+  $('#clear-search-history').on('click', function(e){
+    e.preventDefault();
+
+    Cookies.remove('STYXKEY_usaidralf_search_history', { path:'/' });
+    $(this).parent().remove();
   });
 });

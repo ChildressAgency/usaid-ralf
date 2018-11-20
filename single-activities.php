@@ -5,10 +5,10 @@
         <div class="col-sm-8 col-md-9">
           <main class="result">
             <div class="go-back">
-              <a href="javascript:history.back(-1);">BACK</a>
+              <a href="javascript:history.back(-1);"><?php _e('BACK', 'usaidralf'); ?></a>
             </div>
-            <article>
-              <?php if(have_posts()): while(have_posts()): the_post(); ?>
+            <?php if(have_posts()): while(have_posts()): the_post(); ?>
+              <article class="ralf-article">
                 <header class="result-header">
                   <span class="result-type-icon activity" data-toggle="tooltip" data-placement="top" title="Activity"></span>
                   <div class="sector-icon sector-icon-small"></div>
@@ -20,7 +20,7 @@
                   </div>
                   <?php if(get_field('conditions')): ?>
                     <div class="activity-conditions">
-                      <h2>POTENTIAL CONDITIONS</h2>
+                      <h2><?php _e('POTENTIAL CONDITIONS', 'usaidralf'); ?></h2>
                       <?php the_field('conditions'); ?>
                     </div>
                   <?php endif; ?>
@@ -32,7 +32,7 @@
                     $impacts_by_sector = usaidralf_get_impacts_by_sector($impact_ids); ?>
 
                     <section class="impact-by-sector">
-                      <h2>IMPACT BY SECTOR<span class="dashicons dashicons-excerpt-view" data-toggle="tooltip" data-position="top" title="Expand All"></span></h2>
+                      <h2><?php _e('IMPACT BY SECTOR', 'usaidralf'); ?><span class="dashicons dashicons-excerpt-view" data-toggle="tooltip" data-position="top" title="<?php _e('Expand All', 'usaidralf'); ?>"></span></h2>
                       <div class="panel-group" id="impacts-accordion" role="tablist" aria-multiselectable="true">
                         <?php 
                             $i = 0;
@@ -66,13 +66,9 @@
                       </div>
                     </section>
                   <?php endif; ?>
-                <?php $article_id = get_the_ID(); ?>
-                <script>var articleId = "<?php echo $article_id; ?>";</script>
-                <div class="report-button">
-                  
-                </div>
-              <?php endwhile; endif; ?>
-            </article>
+                  <?php echo do_shortcode('[report_button]'); ?>
+              </article>
+            <?php endwhile; endif; ?>
 
           </main>
         </div>
