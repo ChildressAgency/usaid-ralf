@@ -20,6 +20,7 @@
                 echo '<p>' . __('Sorry, nothing was found.', 'usaidralf') . '</p>';
               }
             ?>
+            <?php usaidralf_pagination(); ?>
           </main>
         </div>
         <div class="col-sm-4 col-md-3">
