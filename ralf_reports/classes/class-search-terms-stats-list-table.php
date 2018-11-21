@@ -17,8 +17,10 @@ class search_terms_stats_list_table extends WP_List_Table{
 
     $sql = "SELECT query AS searched_term, COUNT(*) AS searched_count FROM {$wpdb->prefix}swp_log";
 
+    $sql .= ' WHERE query NOT REGEXP "[()^;<>/\'\"!]"';
+
     if(!empty($_REQUEST['time_period']) && $_REQUEST['time_period'] == 'ninety_days'){
-      $sql .= ' WHERE tstamp >= DATE_ADD(NOW(), INTERVAL -90 DAY)';
+      $sql .= ' AND tstamp >= DATE_ADD(NOW(), INTERVAL -90 DAY)';
     }
 
     $sql .= ' GROUP BY query';
