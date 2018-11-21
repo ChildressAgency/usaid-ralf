@@ -27,7 +27,7 @@ class ralf_report{
     add_action('wp_ajax_nopriv_record_report_save', array($this, 'record_report_save'));
     add_action('wp_ajax_record_report_save', array($this, 'record_report_save'));
 
-    //add_action('admin_menu', array($this, 'register_email_report_submenu'));
+    //add_filter('searchwp_query_results', array($this, 'log_search_results'), 10, 2);
   }
 
   function ralf_report_load_textdomain(){
@@ -215,7 +215,7 @@ class ralf_report{
   }
 
   function delete_old_reports(){
-    include('delete_old_reports.php');
+    include 'delete_old_reports.php';
   }
 
   function report_button_container(){
@@ -244,6 +244,18 @@ class ralf_report{
         )
       );
     }
+  }
+
+  function log_search_results($post_ids, $args){
+    $count_field_acf_key = 'field_5bf56db6a2d37';
+
+    foreach($post_ids as $post_id){
+      $count = get_field($count_field_acf_key, $post_id);
+      $count++;
+      update_field($count_field_acf_key, $count, $post_id);
+    }
+
+    return $post_ids;
   }
 
   function add_acf_field_groups(){
@@ -290,6 +302,65 @@ class ralf_report{
       'hide_on_screen' => '',
       'active' => 1,
       'description' => ''
+    ));
+
+    acf_add_local_field_group(array(
+      'key' => 'group_5bf56d9a31048',
+      'title' => 'Number of Times Shown in Search Results',
+      'fields' => array(
+        array(
+          'key' => 'field_5bf56db6a2d37',
+          'label' => 'Number of Times Shown in Search Results',
+          'name' => 'search_results_count',
+          'type' => 'number',
+          'instructions' => '',
+          'required' => 0,
+          'conditional_logic' => 0,
+          'wrapper' => array(
+            'width' => '',
+            'class' => '',
+            'id' => '',
+          ),
+          'default_value' => 0,
+          'placeholder' => '',
+          'prepend' => '',
+          'append' => '',
+          'min' => '',
+          'max' => '',
+          'step' => 1,
+        ),
+      ),
+      'location' => array(
+        array(
+          array(
+            'param' => 'post_type',
+            'operator' => '==',
+            'value' => 'activities',
+          ),
+        ),
+        array(
+          array(
+            'param' => 'post_type',
+            'operator' => '==',
+            'value' => 'impacts',
+          ),
+        ),
+        array(
+          array(
+            'param' => 'post_type',
+            'operator' => '==',
+            'value' => 'resources',
+          ),
+        ),
+      ),
+      'menu_order' => 0,
+      'position' => 'side',
+      'style' => 'default',
+      'label_placement' => 'top',
+      'instruction_placement' => 'label',
+      'hide_on_screen' => '',
+      'active' => 1,
+      'description' => '',
     ));
   }
 }
