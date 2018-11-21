@@ -21,8 +21,8 @@ class ralf_dashboard{
     add_filter('set-screen-option', array(__CLASS__, 'set_screen'), 10, 3);
     add_action('admin_menu', array($this, 'dashboard_submenus'));
 
-    add_action('load-post.php', array($this, 'init_metabox'));
-    add_action('load-post-new.php', array($this, 'init_metabox'));
+    add_action('load-post.php', array($this, 'saved_count_metabox'));
+    add_action('load-post-new.php', array($this, 'saved_count_metabox'));
 
     add_filter('manage_activities_posts_columns', array($this, 'set_saved_count_column'));
     add_filter('manage_impacts_posts_columns', array($this, 'set_saved_count_column'));
@@ -213,7 +213,7 @@ class ralf_dashboard{
     <?php
   }
 
-  public function init_metabox(){
+  public function saved_count_metabox(){
     add_action('add_meta_boxes', array($this, 'add_saved_count_metabox'));
   }
 
