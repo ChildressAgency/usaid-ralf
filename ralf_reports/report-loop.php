@@ -1,3 +1,7 @@
+<?php
+// Exit if accessed directly
+if (!defined('ABSPATH')){ exit; }
+?>
 <article class="ralf-article">
   <header class="result-header">
     <?php 

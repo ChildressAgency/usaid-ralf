@@ -1,5 +1,6 @@
 <?php
-if(!defined('ABSPATH')) exit;
+// Exit if accessed directly
+if (!defined('ABSPATH')){ exit; }
 
 $how_long_to_store_reports = get_field('how_long_to_store_reports', 'option');
 

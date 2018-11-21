@@ -1,4 +1,7 @@
 <?php
+// Exit if accessed directly
+if (!defined('ABSPATH')){ exit; }
+
 if(!class_exists('emailed_reports_list_table')){
   require_once 'classes/class-emailed-reports-list-table.php';
 }

@@ -1,5 +1,6 @@
 <?php
-if ( ! defined( 'ABSPATH' ) ) exit;
+// Exit if accessed directly
+if (!defined('ABSPATH')){ exit; }
 
 //$report_ids = $report_ids_array
 function get_report($report_ids){
