@@ -1,15 +1,19 @@
 <?php
 if(!class_exists('emailed_reports_list_table')){
-  require_once 'class-emailed-reports-list-table.php';
+  require_once 'classes/class-emailed-reports-list-table.php';
 }
 if(!class_exists('saved_stats_list_table')){
-  require_once 'class-saved-stats-list-table.php';
+  require_once 'classes/class-saved-stats-list-table.php';
+}
+if(!class_exists('search_terms_stats_list_table')){
+  require_once 'classes/class-search-terms-stats-list-table.php';
 }
 
 class ralf_dashboard{
   static $instance;
-  public $emailed_reports_list;
-  public $saved_stats_list;
+  protected $emailed_reports_list;
+  protected $saved_stats_list;
+  protected $search_terms_stats_list;
 
   public function __construct(){
     add_action('wp_dashboard_setup', array($this, 'ralf_dashboard_setup'));
@@ -34,10 +38,10 @@ class ralf_dashboard{
 
     add_filter('posts_clauses', array($this, 'orderby_saved_count'), 1, 2);
 
-    //add_filter('views_saved-statistics-submenu-page', array($this, 'stats_filter', 10, 1));
+    add_action('searchwp_stats_after_count', array($this, 'link_stats_keywords'), 10, 2);
   }
 
-  function ralf_dashboard_setup(){
+  public function ralf_dashboard_setup(){
     wp_add_dashboard_widget(
       'emailed-reports',
       __('Emailed Reports', 'ralfreports'),
@@ -72,7 +76,6 @@ class ralf_dashboard{
       'emailed-reports-submenu-page',
       array($this, 'show_emailed_reports_submenu')
     );
-
     add_action("load-$emailed_reports_submenu", array($this, 'emailed_reports_screen_option'));
 
     $saved_stats_submenu = add_submenu_page(
@@ -83,8 +86,17 @@ class ralf_dashboard{
       'saved-statistics-submenu-page',
       array($this, 'show_saved_stats_submenu')
     );
-
     add_action("load-$saved_stats_submenu", array($this, 'saved_stats_screen_option'));
+
+    $search_term_stats_submenu = add_submenu_page(
+      'index.php',
+      _x('Search Terms Statistics', 'submenu page title', 'ralfreports'),
+      _x('Search Terms Stats', 'submenu title', 'ralfreports'),
+      'manage_options',
+      'search-term-stats-submenu-page',
+      array($this, 'show_search_term_stats_submenu')
+    );
+    add_action("load-$search_term_stats_submenu", array($this, 'search_terms_stats_screen_option'));
   }
 
   public function emailed_reports_screen_option(){
@@ -111,6 +123,19 @@ class ralf_dashboard{
     add_screen_option($option, $args);
 
     $this->saved_stats_list = new saved_stats_list_table();
+  }
+
+  public function search_terms_stats_screen_option(){
+    $option = 'per_page';
+    $args = array(
+      'label' => __('Search Terms Per Page', 'ralfreports'),
+      'default' => 25,
+      'option' => 'search_terms_per_page'
+    );
+
+    add_screen_option($option, $args);
+
+    $this->search_terms_stats_list = new search_terms_stats_list_table();
   }
 
   public function show_emailed_reports_submenu(){
@@ -163,6 +188,31 @@ class ralf_dashboard{
     <?php
   }
 
+  public function show_search_term_stats_submenu(){
+    ?>
+    <div class="wrap">
+      <h2>Search Terms Statistics</h2>
+
+      <div id="poststuff">
+        <div id="post-body" class="metabox-holder">
+          <div id="post-body-content">
+            <?php $this->search_terms_stats_list->views(); ?>
+            <div class="meta-box-sortables ui-sortable">
+              <form method="post">
+                <?php 
+                  $this->search_terms_stats_list->prepare_items();
+                  $this->search_terms_stats_list->display();
+                ?>
+              </form>
+            </div>
+          </div>
+        </div>
+        <br class="clear" />
+      </div>
+    </div>
+    <?php
+  }
+
   public function init_metabox(){
     add_action('add_meta_boxes', array($this, 'add_saved_count_metabox'));
   }
@@ -189,7 +239,7 @@ class ralf_dashboard{
     echo '<p>' . $saved_count . '</p>';
   }
 
-  public function get_saved_count($article_id){
+  protected function get_saved_count($article_id){
     global $wpdb;
 
     $saved_count = $wpdb->get_var($wpdb->prepare("
@@ -236,6 +286,11 @@ class ralf_dashboard{
     //var_dump($query);
 
     return $pieces;
+  }
+
+  function link_stats_keywords($query, $args){
+    echo '<a href="' . esc_url(add_query_arg('s', $query, home_url())) . '" target="_blank" style="float:right;">' . __('View Results', 'ralfreports') . '</a>';
+    //var_dump($query);
   }
 
   public static function get_instance(){
