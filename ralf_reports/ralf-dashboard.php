@@ -22,10 +22,16 @@ class ralf_dashboard{
 
     add_filter('manage_activities_posts_columns', array($this, 'set_saved_count_column'));
     add_filter('manage_impacts_posts_columns', array($this, 'set_saved_count_column'));
-    add_action('manage_activities_posts_custom_column', array($this, 'activities_saved_count_column_values'), 10, 2);
-    add_action('manage_impacts_posts_custom_column', array($this, 'impacts_saved_count_column_values'), 10, 2);
+    add_filter('manage_resources_posts_columns', array($this, 'set_saved_count_column'));
+
+    add_action('manage_activities_posts_custom_column', array($this, 'saved_count_column_values'), 10, 2);
+    add_action('manage_impacts_posts_custom_column', array($this, 'saved_count_column_values'), 10, 2);
+    add_action('manage_resources_posts_custom_column', array($this, 'saved_count_column_values'), 10, 2);
+
     add_filter('manage_edit-activities_sortable_columns', array($this, 'sortable_saved_count'));
     add_filter('manage_edit-impacts_sortable_columns', array($this, 'sortable_saved_count'));
+    add_filter('manage_edit-resources_sortable_columns', array($this, 'sortable_saved_count'));
+
     add_filter('posts_clauses', array($this, 'orderby_saved_count'), 1, 2);
 
     //add_filter('views_saved-statistics-submenu-page', array($this, 'stats_filter', 10, 1));
@@ -201,14 +207,7 @@ class ralf_dashboard{
     return array_merge($columns,array('saved_count' => __('Number of Times Saved to Report', 'ralfreports')));
   }
 
-  public function activities_saved_count_column_values($column, $post_id){
-    if($column == 'saved_count'){
-      $saved_count = $this->get_saved_count($post_id);
-      echo $saved_count;
-    }
-  }
-
-  public function impacts_saved_count_column_values($column, $post_id){
+  public function saved_count_column_values($column, $post_id){
     if($column == 'saved_count'){
       $saved_count = $this->get_saved_count($post_id);
       echo $saved_count;
