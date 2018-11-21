@@ -303,7 +303,7 @@ class ralf_report{
       'active' => 1,
       'description' => ''
     ));
-
+/*
     acf_add_local_field_group(array(
       'key' => 'group_5bf56d9a31048',
       'title' => 'Number of Times Shown in Search Results',
@@ -361,7 +361,7 @@ class ralf_report{
       'hide_on_screen' => '',
       'active' => 1,
       'description' => '',
-    ));
+    ));*/
   }
 }
 
