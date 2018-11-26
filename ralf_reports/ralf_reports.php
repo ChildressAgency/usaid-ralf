@@ -13,6 +13,8 @@ if (!defined('ABSPATH')){ exit; }
 class ralf_report{
   public function __construct(){
     add_action('init', array($this, 'ralf_report_load_textdomain'));
+    add_action('plugins_loaded', array($this, 'process_admin_tasks'));
+
     add_shortcode('ralf_report', array($this, 'ralf_report'));
     add_shortcode('email_form', array($this, 'email_rtf_form'));
     add_shortcode('report_button', array($this, 'report_button_container'));
@@ -20,7 +22,6 @@ class ralf_report{
     add_action('wp_enqueue_scripts', array($this, 'scripts'));
     add_action('acf/init', array($this, 'create_acf_field_groups'));
 
-    add_action('plugins_loaded', array($this, 'delete_old_reports'));
 
     add_action('wp_ajax_nopriv_send_rtf_report', array($this, 'send_rtf_report'));
     add_action('wp_ajax_send_rtf_report', array($this, 'send_rtf_report'));
@@ -214,8 +215,12 @@ class ralf_report{
     return $wpdb->insert_id;
   }
 
-  function delete_old_reports(){
-    include 'delete_old_reports.php';
+  function process_admin_tasks(){
+    require_once 'delete_old_reports.php';
+
+    if(isset($_GET['email_admin_reports'])){
+      require_once 'reports/email_admin_reports.php';
+    }
   }
 
   function report_button_container(){
