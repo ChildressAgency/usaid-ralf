@@ -1,6 +1,7 @@
 <?php
 // Exit if accessed directly
 if (!defined('ABSPATH')){ exit; }
+?>
 
 <header class="page-header">
   <h1><?php _e('Report of Activities and Associated Impacts', 'ralfreports'); ?></h1>
