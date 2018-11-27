@@ -9,7 +9,7 @@ if (!defined('ABSPATH')){ exit; }
       if(get_post_type() == 'activities'){
         echo '<span class="result-type-icon activity" data-toggle="tooltip" data-placement="top" title="Activity"></span>';
       }
-      else if(get_post_type() == 'impacts'){
+      elseif(get_post_type() == 'impacts'){
         echo '<span class="result-type-icon impact" data-toggle="tooltip" data-placement="top" title="Impact"></span>';
       }
     ?>

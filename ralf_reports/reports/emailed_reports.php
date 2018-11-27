@@ -7,7 +7,7 @@ global $wpdb;
 $emailed_reports_table = '<table cellpadding="0" cellspacing="0" class="emailed-reports-table">';
 $emailed_reports_table .= '<thead><tr>'
                         . '<th>' . __('Emailed Domains', 'ralfreports') . '</th>'
-                        . '<th>' . __('Activities / Impacts', 'ralfreports') . '</th>'
+                        . '<th>' . __('Activities / Impacts / Resources', 'ralfreports') . '</th>'
                         . '<th>' . __('Email Date', 'ralfreports') . '</th>'
                         . '<th></th>'
                         . '</tr></thead><tbody>';
