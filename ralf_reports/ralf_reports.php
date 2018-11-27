@@ -142,7 +142,7 @@ class ralf_report{
     $rtf_report = '<h1>' . __('Report of Activities and Associated Impacts', 'ralfreports') . '</h1>';
 
     $activities_report = new WP_Query(array(
-      'post_type' => array('activities', 'impacts'),
+      'post_type' => array('activities', 'impacts', 'resources'),
       'posts_per_page' => -1,
       'post__in' => $report_ids,
       'orderby' => 'post_type',
