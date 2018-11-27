@@ -2,6 +2,9 @@
   <div class="page-content">
     <div class="container">
       <div class="row">
+        <div class="col-sm-4 col-md-3">
+          <?php get_sidebar(); ?>
+        </div>
         <div class="col-sm-8 col-md-9">
           <main class="results-list">
             <?php 
@@ -21,9 +24,6 @@
               } usaidralf_pagination(); //wp_pagenavi();
             ?>
           </main>
-        </div>
-        <div class="col-sm-4 col-md-3">
-          <?php get_sidebar(); ?>
         </div>
       </div>
     </div>
