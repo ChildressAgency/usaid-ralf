@@ -21,7 +21,7 @@ class ralf_report{
 
     add_action('wp_enqueue_scripts', array($this, 'scripts'));
     add_action('acf/init', array($this, 'create_acf_field_groups'));
-
+    add_action('widgets_init', array($this, 'register_view_report_widget'));
 
     add_action('wp_ajax_nopriv_send_rtf_report', array($this, 'send_rtf_report'));
     add_action('wp_ajax_send_rtf_report', array($this, 'send_rtf_report'));
@@ -53,6 +53,11 @@ class ralf_report{
       'removed_from_report_label' => __('Removed from report', 'ralfreports'),
       'valid_email_address_error' => __('Please enter only valid email addresses.', 'ralfreports')
     ));
+  }
+
+  public function register_view_report_widget(){
+    require_once 'view-report-widget.php';
+    register_widget('view_report_widget');
   }
 
   public function email_rtf_form($atts){

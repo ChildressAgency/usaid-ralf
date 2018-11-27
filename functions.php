@@ -303,7 +303,7 @@ function usaidralf_pagination(){
   if(is_array($pages)){
     $paged = (get_query_var('paged') == 0) ? 1 : get_query_var('paged');
 
-    echo '<nav aria-label="Page navigation"><ul class="pagination">';
+    echo '<nav aria-label="Page navigation" class="pagination-nav"><ul class="pagination">';
 
     foreach($pages as $page){
       echo '<li>' . $page . '</li>';
@@ -513,7 +513,7 @@ add_filter('pre_get_posts','usaidralf_searchfilter');
 function usaidralf_searchfilter($query){
 
   if ($query->is_search && !is_admin() ) {
-    $query->set('post_type',array('activities', 'impacts'));
+    $query->set('post_type',array('activities', 'impacts', 'resources'));
   }
  
   return $query;
@@ -549,7 +549,7 @@ function usaidralf_widgets_init(){
 add_action('widgets_init', 'usaidralf_load_widget');
 function usaidralf_load_widget(){
   register_widget('usaidralf_sector_selector_widget');
-  register_widget('usaidralf_view_report_widget');
+  //register_widget('usaidralf_view_report_widget');
 }
 
 class usaidralf_sector_selector_widget extends WP_Widget{
@@ -583,50 +583,6 @@ class usaidralf_sector_selector_widget extends WP_Widget{
       }
     }
     echo '</ul>';
-		echo $args['after_widget'];
-	}
-
-	public function form($instance){
-		if(isset($instance['title'])){
-			$title = $instance['title'];
-		}
-		else{
-			$title = __('New title', 'usaidralf');
-		}
-	?>
-		<p>
-			<label for="<?php echo $this->get_field_id('title'); ?>"><?php _e('Title:'); ?></label>
-			<input class="widefat" id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title'); ?>" type="text" value="<?php echo esc_attr($title); ?>" />
-		</p>
-	<?php
-	}
-
-	public function update($new_instance, $old_instance){
-		$instance = array();
-		$instance['title'] = (!empty($new_instance['title'])) ? strip_tags($new_instance['title']) : '';
-		return $instance;
-	}
-}
-
-class usaidralf_view_report_widget extends WP_Widget{
-	function __construct(){
-		parent::__construct(
-			'wuaidralf_view_report_widget',
-			__('View Report Widget', 'usaidralf'),
-			array('description' => __('Show the View Report button', 'usaidralf'))
-		);
-	}
-
-	public function widget($args, $instance){
-		$title = apply_filters('widget_title', $instance['title']);
-
-		echo $args['before_widget'];
-		if(!empty($title)){
-			echo $args['before_title'] . $title . $args['after_title'];
-		}
-
-    echo '<a href="' . home_url('view-report') . '">' . __('View Report', 'usaidralf') . '</a>';
-
 		echo $args['after_widget'];
 	}
 
