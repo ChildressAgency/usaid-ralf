@@ -673,6 +673,10 @@ main.result{
   margin-top:40px;
   text-align:center;
 }
+.pagination-nav{
+  text-align:center;
+  margin-top:40px;
+}
 
 #footer{
   background-color:#333;
