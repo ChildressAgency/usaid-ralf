@@ -18,7 +18,7 @@
               }
               else{
                 echo '<p>Sorry, nothing was found.</p>';
-              } wp_pagenavi();
+              } usaidralf_pagination(); //wp_pagenavi();
             ?>
           </main>
         </div>
