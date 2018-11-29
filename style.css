@@ -533,10 +533,24 @@ main.results-list article+article{
   font-family:"AvenirNext", sans-serif;
   margin-bottom:25px;
 }
-.sidebar-section h4{
+.sidebar-section h4:not(.view-report-widget-title){
   font-size:16px;
   font-weight:800;
   margin-top:0;
+  margin-bottom:0;
+  background-color:#e6e6e6;
+  border:2px solid #ccc;
+  border-top-left-radius:35px;
+  border-top-right-radius:35px;
+  text-align:center;
+  padding:20px 20px 5px 20px;
+}
+.sidebar-section h4.view-report-widget-title{
+  font-size:16px;
+  font-weight:800;
+}
+.sidebar-section h4.view-report-widget-title>a{
+  font-size:20px;
 }
 .sidebar-section a{
   font-size:16px;
@@ -544,7 +558,14 @@ main.results-list article+article{
 }
 .sidebar-section ul{
   list-style:none;
+  margin-bottom:0;
   padding-left:0;
+}
+.sidebar-section-body{
+  padding:10px 20px 15px 20px;
+  border:2px solid #ccc;
+  border-bottom-left-radius:35px;
+  border-bottom-right-radius:35px;
 }
 .results-sidebar.affix-bottom{
   position:absolute;
@@ -552,6 +573,17 @@ main.results-list article+article{
 .view-report-widget-title{
   text-align:center;
 }
+#clear-search-history{
+  display:block;
+  margin-top:10px;
+  font-size:14px;
+  font-style:italic;
+  font-weight:600;
+  border-top:1px solid #ddd;
+  padding-top:10px;
+  text-transform:uppercase;
+}
+
 
 main.result{
   padding-top:40px;
@@ -683,14 +715,6 @@ main.result{
   background-color:#333;
   padding-top:40px;
   padding-bottom:40px;
-}
-
-#clear-search-history{
-  display:block;
-  margin-top:-10px;
-  margin-bottom:5px;
-  font-size:14px;
-  font-style:italic;
 }
 
 .media.keyword{
