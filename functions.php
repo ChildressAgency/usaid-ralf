@@ -173,21 +173,106 @@ function usaidralf_get_impacts_by_sector($impact_ids){
   return $impacts_by_sector;
 }
 
-function usaidralf_get_related_activities($impact_id){
+//$article_type can be impacts (default) or resources
+function usaidralf_get_related_activities($article_id, $article_type = 'impacts'){
+  $meta_key = 'related_' . $article_type;
   $activities = new WP_Query(array(
     'post_type' => 'activities',
     'posts_per_page' => -1,
     'post_status' => 'publish',
     'meta_query' => array(
       array(
-        'key' => 'related_impacts',
-        'value' => '"' . $impact_id . '"',
+        'key' => $meta_key,
+        'value' => '"' . $article_id . '"',
         'compare' => 'LIKE'
       )
     )
   ));
 
   return $activities;
+}
+
+//only for resources cpt
+function usaidralf_get_related_impacts($resource_id){
+  $impacts = new WP_Query(array(
+    'post_type' => 'impacts',
+    'posts_per_page' => -1,
+    'post_status' => 'publish',
+    'meta_query' => array(
+      array(
+        'key' => 'related_resources',
+        'value' => '"' . $resource_id . '"',
+        'compare' => 'LIKE'
+      )
+    )
+  ));
+
+  return $impacts;
+}
+
+function usaidralf_show_article_meta($article_type, $article_id, $sectors){
+  switch($article_type){
+    case 'impacts':
+      $bg_color = get_field('impacts_color', 'option');
+      $btn_text = __('Impact', 'usaidralf');
+      $article_class = 'article-type';
+    break;
+
+    case 'activities':
+      $bg_color = get_field('activities_color', 'option');
+      $btn_text = __('Activity', 'usaidralf');
+      $article_class = 'article-type';
+    break;
+
+    case 'resources':
+      $bg_color = get_field('resources_color', 'option');
+      $btn_text = __('Resource', 'usaidralf');
+      $article_class = 'article-type resource-article-type';
+    break;
+
+    default:
+      $bg_color = '';
+      $btn_text = '';
+      $article_class = 'article-type';
+  }
+  echo '<span class="' . $article_class . '" style="background-color:' . $bg_color . ';">' . $btn_text . '</span>';
+
+  //list sector buttons
+  $parent_selected = false;
+  foreach($sectors as $sector){
+    $sector_name = $sector->name;
+    $sector_color = get_field('sector_color', 'sectors_' . $sector->term_id);
+    $sector_url = esc_url(get_term_link($sector->term_id), 'sectors');
+
+    if($sector->parent == 0){ $parent_selected = true; }
+
+    if($sector->parent > 0){
+      if($parent_selected == false){
+        $sector_parent = get_term($sector->parent, 'sectors');
+        $sector_parent_color = get_field('sector_color', 'sectors_' . $sector_parent->term_id);
+        $sector_parent_url = esc_url(get_term_link($sector_parent->term_id), 'sectors');
+
+        echo '<a href="' . $sector_parent_url . '" class="meta-btn btn-sector" style="background-color:' . $sector_parent_color . ';">' . $sector_parent->name . '</a>';
+      }
+      echo '<a href="' . $sector_url . '" class="meta-btn btn-sector" style="background-color:' . $sector_color . '">' . $sector_name . '</a>';
+    }
+    else{
+      echo '<a href="' . $sector_url . '" class="meta-btn btn-sector" style="background-color:' . $sector_color . '">' . $sector_name . '</a>';
+    }
+  }
+
+  //activities button, w/ count
+  $related_activities = usaidralf_get_related_activities($article_id, $article_type);
+  $num_activities = $related_activities->post_count;
+
+  echo '<a href="' . get_permalink($article_id) . '" class="meta-btn btn-activities" style="background-color:' . get_field('activities_color', 'option') . ';">' . sprintf(__('Activities (%d)', 'usaidralf'), $num_activities) . '</a>';
+
+  if($article_type == 'resources'){
+    $related_impacts = usaidralf_get_related_impacts($article_id);
+    $num_impacts = $related_impacts->post_count;
+
+    echo '<a href="' . get_permalink($article_id) . '" class="meta-btn btn-impacts" style="background-color:' . get_field('impacts_color', 'option') . ';">' . sprintf(__('Impacts (%d)', 'usaidralf'), $num_impacts) . '</a>';
+  }
 }
 
 // add the filter for your relationship field
@@ -333,17 +418,33 @@ function usaidralf_get_related_activities($impact_id){
 		
 		return $value;
 		
-  } // end function acf_reciprocal_relationship
+} // end function acf_reciprocal_relationship
 
-  if(function_exists('acf_add_options_page')){
-    acf_add_options_page(array(
-      'page_title' => 'General Settings',
-      'menu_title' => 'General Settings',
-      'menu_slug' => 'general-settings',
-      'capability' => 'edit_posts',
-      'redirect' => false
-    ));
-  }
+if(function_exists('acf_add_options_page')){
+  acf_add_options_page(array(
+    'page_title' => __('General Settings', 'usaidralf'),
+    'menu_title' => __('General Settings', 'usaidralf'),
+    'menu_slug' => 'general-settings',
+    'capability' => 'edit_posts',
+    'redirect' => false
+  ));
+
+  acf_add_options_sub_page(array(
+    'page_title' => __('Activities Settings', 'usaidralf'),
+    'menu_title' => __('Activities Settings', 'usaidralf'),
+    'parent_slug' => 'edit.php?post_type=activities'
+  ));
+  acf_add_options_sub_page(array(
+    'page_title' => __('Impacts Settings', 'usaidralf'),
+    'menu_title' => __('Impacts Settings', 'usaidralf'),
+    'parent_slug' => 'edit.php?post_type=impacts'
+  ));
+  acf_add_options_sub_page(array(
+    'page_title' => __('Resources Settings', 'usaidralf'),
+    'menu_title' => __('Resources Settings', 'usaidralf'),
+    'parent_slug' => 'edit.php?post_type=resources'
+  ));
+}
   
 
 /*********************
