@@ -12,10 +12,13 @@
                 while(have_posts()){
                   the_post();
                   if(get_post_type(get_the_ID()) == 'activities'){
-                    get_template_part('partials/activity', 'archive-loop');
+                    get_template_part('partials/activities-archive', 'loop');
+                  }
+                  elseif(get_post_type(get_the_ID()) == 'impacts'){
+                    get_template_part('partials/impact-archive', 'loop');
                   }
                   else{
-                    get_template_part('partials/impact', 'archive-loop');
+                    get_template_part('partials/archive', 'loop');
                   }
                 }
               }
