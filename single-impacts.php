@@ -23,7 +23,7 @@
                   <?php the_content(); ?>
                 </section>
 
-                <section class="related-activities">
+                <section class="related">
                   <h3><?php _e('Related Activities', 'usaidralf'); ?></h3>
                   <?php 
                     $related_activities = usaidralf_get_related_activities($impact_id);
@@ -38,7 +38,7 @@
                   <?php endif; wp_reset_postdata(); ?>
                 </section>
 
-                <section class="related-resources">
+                <section class="related">
                   <h3><?php _e('Related Resources', 'usaidralf'); ?></h3>
                   <?php 
                     $related_resources = get_field('related_resources', $impact_id);
