@@ -125,6 +125,8 @@ a{
 .results-sidebar .report-button .btn-main{
   width:100%;
   text-align:center;
+  padding-left:10px;
+  padding-right:10px;
 }
 
 #header-nav{
@@ -705,6 +707,7 @@ main.result{
   color:#000;
 }
 .result-content{
+  margin-top:25px;
   padding-bottom:20px;
 }
 .results-content table{
@@ -789,6 +792,9 @@ main.result{
   margin-top:20px;
 }
 .impact-by-sector>h2>.dashicons{
+  margin-left:15px;
+}
+.impact-by-sector-meta{
   margin-left:15px;
 }
 .go-back{
