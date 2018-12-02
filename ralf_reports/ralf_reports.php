@@ -21,7 +21,7 @@ class ralf_report{
 
     add_action('wp_enqueue_scripts', array($this, 'scripts'));
     add_action('acf/init', array($this, 'create_acf_field_groups'));
-    add_action('widgets_init', array($this, 'register_view_report_widget'));
+    add_action('widgets_init', array($this, 'register_widgets'));
 
     add_action('wp_ajax_nopriv_send_rtf_report', array($this, 'send_rtf_report'));
     add_action('wp_ajax_send_rtf_report', array($this, 'send_rtf_report'));
@@ -55,8 +55,8 @@ class ralf_report{
     ));
   }
 
-  public function register_view_report_widget(){
-    require_once 'view-report-widget.php';
+  public function register_widgets(){
+    require_once 'widgets/view-report-widget.php';
     register_widget('view_report_widget');
   }
 
@@ -229,11 +229,13 @@ class ralf_report{
   }
 
   function report_button_container(){
-    $article_id = get_the_ID();
-    $nonce = wp_create_nonce('report_button_' . $article_id);
+    if(is_singular('activities') || is_singular('impacts') || is_singular('resources')){
+      $article_id = get_the_ID();
+      $nonce = wp_create_nonce('report_button_' . $article_id);
 
-    $btn_container = '<div class="report-button hidden-print" data-article_id="' . $article_id . '" data-nonce="' . $nonce . '"></div>';
-    echo $btn_container;
+      $btn_container = '<div class="report-button hidden-print" data-article_id="' . $article_id . '" data-nonce="' . $nonce . '"></div>';
+      echo $btn_container;
+    }
   }
 
   function record_report_save(){
