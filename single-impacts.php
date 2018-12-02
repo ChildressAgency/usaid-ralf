@@ -52,6 +52,7 @@
                     <p><?php _e('No related Resources', 'usaidralf'); ?></p>
                   <?php endif; ?>
                 </section>
+                <?php echo do_shortcode('[report_button]'); ?>
               </article>
             <?php endwhile; endif; ?>
           </main>
