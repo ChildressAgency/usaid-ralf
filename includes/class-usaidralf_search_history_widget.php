@@ -27,6 +27,9 @@ class usaidralf_search_history_widget extends WP_Widget{
       echo '</ul>';
       echo '<a href="#" id="clear-search-history">' . __('clear all', 'usaidralf') . '</a></div>';
     }
+    else{
+      echo '<div class="sidebar-section-body"><ul><li><span class="search-history-empty">' . __('Your search history is empty.', 'usaidralf') . '</span></li></ul></div>';
+    }
   }
 
   protected function get_search_history($widget_id){
