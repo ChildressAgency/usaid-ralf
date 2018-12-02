@@ -210,7 +210,7 @@ function usaidralf_get_related_impacts($resource_id){
   return $impacts;
 }
 
-function usaidralf_show_article_meta($article_type, $article_id, $sectors){
+function usaidralf_show_article_meta($article_type, $article_id, $sectors = ''){
   switch($article_type){
     case 'impacts':
       $bg_color = get_field('impacts_color', 'option');
@@ -238,34 +238,38 @@ function usaidralf_show_article_meta($article_type, $article_id, $sectors){
   echo '<span class="' . $article_class . '" style="background-color:' . $bg_color . ';">' . $btn_text . '</span>';
 
   //list sector buttons
-  $parent_selected = false;
-  foreach($sectors as $sector){
-    $sector_name = $sector->name;
-    $sector_color = get_field('sector_color', 'sectors_' . $sector->term_id);
-    $sector_url = esc_url(get_term_link($sector->term_id), 'sectors');
+  if($sectors != ''){
+    $parent_selected = false;
+    foreach($sectors as $sector){
+      $sector_name = $sector->name;
+      $sector_color = get_field('sector_color', 'sectors_' . $sector->term_id);
+      $sector_url = esc_url(get_term_link($sector->term_id), 'sectors');
 
-    if($sector->parent == 0){ $parent_selected = true; }
+      if($sector->parent == 0){ $parent_selected = true; }
 
-    if($sector->parent > 0){
-      if($parent_selected == false){
-        $sector_parent = get_term($sector->parent, 'sectors');
-        $sector_parent_color = get_field('sector_color', 'sectors_' . $sector_parent->term_id);
-        $sector_parent_url = esc_url(get_term_link($sector_parent->term_id), 'sectors');
+      if($sector->parent > 0){
+        if($parent_selected == false){
+          $sector_parent = get_term($sector->parent, 'sectors');
+          $sector_parent_color = get_field('sector_color', 'sectors_' . $sector_parent->term_id);
+          $sector_parent_url = esc_url(get_term_link($sector_parent->term_id), 'sectors');
 
-        echo '<a href="' . $sector_parent_url . '" class="meta-btn btn-sector" style="background-color:' . $sector_parent_color . ';">' . $sector_parent->name . '</a>';
+          echo '<a href="' . $sector_parent_url . '" class="meta-btn btn-sector" style="background-color:' . $sector_parent_color . ';">' . $sector_parent->name . '</a>';
+        }
+        echo '<a href="' . $sector_url . '" class="meta-btn btn-sector" style="background-color:' . $sector_color . '">' . $sector_name . '</a>';
       }
-      echo '<a href="' . $sector_url . '" class="meta-btn btn-sector" style="background-color:' . $sector_color . '">' . $sector_name . '</a>';
-    }
-    else{
-      echo '<a href="' . $sector_url . '" class="meta-btn btn-sector" style="background-color:' . $sector_color . '">' . $sector_name . '</a>';
+      else{
+        echo '<a href="' . $sector_url . '" class="meta-btn btn-sector" style="background-color:' . $sector_color . '">' . $sector_name . '</a>';
+      }
     }
   }
 
-  //activities button, w/ count
-  $related_activities = usaidralf_get_related_activities($article_id, $article_type);
-  $num_activities = $related_activities->post_count;
+  if($article_type == 'impacts'){
+    //activities button, w/ count
+    $related_activities = usaidralf_get_related_activities($article_id, $article_type);
+    $num_activities = $related_activities->post_count;
 
-  echo '<a href="' . get_permalink($article_id) . '" class="meta-btn btn-activities" style="background-color:' . get_field('activities_color', 'option') . ';">' . sprintf(__('Activities (%d)', 'usaidralf'), $num_activities) . '</a>';
+    echo '<a href="' . get_permalink($article_id) . '" class="meta-btn btn-activities" style="background-color:' . get_field('activities_color', 'option') . ';">' . sprintf(__('Activities (%d)', 'usaidralf'), $num_activities) . '</a>';
+  }
 
   if($article_type == 'resources'){
     $related_impacts = usaidralf_get_related_impacts($article_id);
