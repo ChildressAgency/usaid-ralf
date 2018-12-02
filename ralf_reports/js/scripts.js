@@ -75,6 +75,10 @@ $(document).ready(function($){
     var $btnToUpdate = $('.report-button[data-article_id="' + articleId + '"]');
     $btnToUpdate.html(removeFromReportButton);
     $btnToUpdate.append('<span><em>' + ralf_settings.added_to_report_label + '</em></span>');
+
+    //update the sidebar view report link
+    var reportIdsCount = reportIds.split(',').length;
+    $('#view-report-widget-count').text(reportIdsCount);
   });
 
   //remove report button clicked
@@ -111,6 +115,10 @@ $(document).ready(function($){
     var $btnToUpdate = $('.report-button[data-article_id="' + articleId + '"]');
     $btnToUpdate.html(saveToReportButton);
     $btnToUpdate.append('<span><em>' + ralf_settings.removed_from_report_label + '</em></span>');
+
+    //update the sidebar view report link
+    var reportIdsCount = reportIds.split(',').length;
+    $('#view-report-widget-count').text(reportIdsCount);    
   });
   
   //email report functions
