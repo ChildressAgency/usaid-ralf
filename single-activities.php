@@ -2,18 +2,25 @@
   <div class="page-content">
     <div class="container">
       <div class="row">
+      <div class="col-sm-4 col-md-3">
+          <?php get_sidebar(); ?>
+        </div>
         <div class="col-sm-8 col-md-9">
           <main class="result">
             <div class="go-back">
               <a href="javascript:history.back(-1);"><?php _e('BACK', 'usaidralf'); ?></a>
             </div>
-            <?php if(have_posts()): while(have_posts()): the_post(); ?>
+            <?php if(have_posts()): while(have_posts()): the_post(); 
+              $activity_id = get_the_ID(); ?>
+
               <article class="ralf-article">
                 <header class="result-header">
-                  <span class="result-type-icon activity" data-toggle="tooltip" data-placement="top" title="Activity"></span>
-                  <div class="sector-icon sector-icon-small"></div>
                   <h1><?php the_title(); ?></h1>
+                  <div class="results-meta">
+                    <?php usaidralf_show_article_meta('activities', $activity_id); ?>
+                  </div>
                 </header>
+
                 <section class="result-content">
                   <div class="activity-description">
                     <p><?php the_content(); ?></p>
@@ -44,14 +51,19 @@
                                 <div class="panel-heading" role="tab" id="impact-title<?php echo $i; ?>">
                                   <h3 class="panel-title">
                                     <a href="#impact<?php echo $i; ?>" role="button" data-toggle="collapse" data-parent="#impacts-accordion"  aria-expanded="false" aria-controls="impact<?php echo $i; ?>">
-                                      
-                                        <img src="<?php the_field('sector_icon', $acf_sector_id); ?>" class="img-circle" alt="<?php echo $sector['sector_name']; ?>" style="background-color:<?php the_field('sector_color', $acf_sector_id); ?>;" data-toggle="tooltip" data-placement="top" title="<?php echo $sector['sector_name']; ?>" />
                                         <span> <?php echo $impact->impact_title; ?></span>
                                     </a>
                                   </h3>
                                   <a href="<?php echo esc_url(get_term_link((int)$sector['sector_id'], 'sectors')); ?>" class="sector-popout" target="_blank">
                                     <span class="dashicons dashicons-external" data-toggle="tooltip" data-position="top" title="<?php echo $sector['sector_name']; ?>"></span>
                                   </a>
+                                  <div class="impact-by-sector-meta">
+                                    <?php
+                                      //get all sectors for this impact to use for meta btns
+                                      $current_impact_sectors = get_the_terms($impact->impact_id, 'sectors');
+                                      usaidralf_show_article_meta('impacts', $impact->impact_id, $current_impact_sectors); 
+                                    ?>
+                                  </div>
                                 </div>
                                 <div class="clearfix"></div>
                                 <div id="impact<?php echo $i; ?>" class="panel-collapse collapse" role="tabpanel" aria-labelledby="impact-title<?php echo $i; ?>">
@@ -71,9 +83,6 @@
             <?php endwhile; endif; ?>
 
           </main>
-        </div>
-        <div class="col-sm-4 col-md-3">
-          <?php get_sidebar(); ?>
         </div>
       </div>
     </div>
