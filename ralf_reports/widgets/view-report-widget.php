@@ -20,7 +20,7 @@ class view_report_widget extends WP_Widget{
     
     $article_count = $this->get_article_count();
 
-    echo '<h4 class="view-report-widget-title"><a href="' . home_url('view-report') . '">' . $title . ' (' . $article_count . ')</a></h4>';
+    echo '<h4 class="view-report-widget-title"><a href="' . home_url('view-report') . '">' . $title . ' (<span id="view-report-widget-count">' . $article_count . '</span>)</a></h4>';
 
 		echo $args['after_widget'];
 	}
