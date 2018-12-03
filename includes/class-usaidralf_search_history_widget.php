@@ -16,12 +16,13 @@ class usaidralf_search_history_widget extends WP_Widget{
       echo $args['before_title'] . $title . $args['after_title'];
     }
 
-    $search_history = $this->get_search_history($args['id']);
+    $search_history = $this->get_search_history($this->id);
     if($search_history != ''){
       $search_history_terms = explode(',', $search_history);
+      $search_history_terms_reordered = array_reverse($search_history_terms);
 
       echo '<div class="sidebar-section-body"><ul>';
-      foreach($search_history_terms as $search_term){
+      foreach($search_history_terms_reordered as $search_term){
         echo '<li><a href="' . esc_url(add_query_arg('s', $search_term, home_url())) . '">' . $search_term . '</a></li>';
       }
       echo '</ul>';
