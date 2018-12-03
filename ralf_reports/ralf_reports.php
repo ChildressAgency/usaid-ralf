@@ -36,7 +36,7 @@ class ralf_report{
   }
 
   function ralf_report(){
-    include('view-report.php');
+    require_once 'view-report.php';
   }
 
   function scripts(){
@@ -65,7 +65,7 @@ class ralf_report{
     $report_ids = implode(',', $atts['activity_ids']);
 
     $nonce = wp_create_nonce('email_rtf_report_' . $report_ids);
-    $form_content = '<div class="email-report">
+    $form_content = '<div class="email-report hidden-print">
                       <h3>' . __('Email this report', 'ralfreports') . '</h3>
                       <div class="form-group">
                         <input type="text" required id="email-addresses" name="email-addresses" class="form-control" placeholder="' . __('Enter a comma-separated list of email addresses.', 'ralfreports') . '" />
@@ -229,7 +229,7 @@ class ralf_report{
   }
 
   function report_button_container(){
-    if(is_singular('activities') || is_singular('impacts') || is_singular('resources')){
+    if(is_singular('activities') || is_singular('impacts') || is_singular('resources') || is_page('view-report')){
       $article_id = get_the_ID();
       $nonce = wp_create_nonce('report_button_' . $article_id);
 
