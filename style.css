@@ -604,6 +604,28 @@ main.results-list article+article{
   border:1px solid #333;
   color:#000;
 }
+.meta-btn.report-expand{
+  background-color:#002f6c;
+  border-radius:10px;
+  height:36px;
+  width:36px;
+  vertical-align:middle;
+  position:relative;
+}
+.meta-btn.report-expand:before{
+  content:"[\2014]";
+  position:absolute;
+  left:50%;
+  top:50%;
+  transform:translate(-50%, -50%);
+}
+.meta-btn.report-expand.collapsed:before{
+  content:"[\002b]";
+}
+
+.email-report{
+  margin-top:60px;
+}
 
 .results-sidebar{
   margin-top:80px;
