@@ -576,7 +576,7 @@ main.results-list article+article{
   text-transform:uppercase;
   font-weight:800;
   line-height:1em;
-  padding:10px 15px;
+  padding:6px 15px;
   margin-right:10px;
 }
 .meta-btn{
@@ -584,7 +584,7 @@ main.results-list article+article{
   color:#fff;
   font-family:"AvenirNext", sans-serif;
   line-height:1em;
-  padding:10px 15px;
+  padding:6px 15px;
   margin-right:10px;
   margin-top:5px;
 }
@@ -608,10 +608,11 @@ main.results-list article+article{
 .meta-btn.report-expand{
   background-color:#002f6c;
   border-radius:10px;
-  height:36px;
+  height:30px;
   width:36px;
   vertical-align:middle;
   position:relative;
+  margin-top:0;
 }
 .meta-btn.report-expand:before{
   content:"[\2014]";
