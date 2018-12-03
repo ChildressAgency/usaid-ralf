@@ -264,7 +264,7 @@ function usaidralf_show_article_meta($article_type, $article_id){
     }
   }
 
-  if($article_type == 'impacts'){
+  if($article_type == 'impacts' || $article_type == 'resources'){
     //activities button, w/ count
     $related_activities = usaidralf_get_related_activities($article_id, $article_type);
     $num_activities = $related_activities->post_count;
@@ -303,7 +303,7 @@ function usaidralf_show_article_meta($article_type, $article_id){
       }
     }
 
-    echo '<a href="' . get_field('original_resource_url', $article_id) . '" class="meta-btn btn-sector resource-article-type">' . __('Source', 'usaidralf') . '</a>';
+    echo '<a href="' . get_field('original_resource_url', $article_id) . '" class="meta-btn btn-sector resource-article-type" target="_blank">' . __('Source', 'usaidralf') . '</a>';
   }
 }
 
