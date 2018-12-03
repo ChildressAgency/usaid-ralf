@@ -302,6 +302,8 @@ function usaidralf_show_article_meta($article_type, $article_id){
         echo '<a href="' . $resource_type_url . '" class="meta-btn btn-sector hidden-print" style="background-color:' . $resource_type_color . ';">' . $resource_type_name . '</a>';
       }
     }
+
+    echo '<a href="' . get_field('original_resource_url', $article_id) . '" class="meta-btn btn-sector resource-article-type">' . __('Source', 'usaidralf') . '</a>';
   }
 }
 
