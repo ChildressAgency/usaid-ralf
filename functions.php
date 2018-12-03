@@ -210,7 +210,7 @@ function usaidralf_get_related_impacts($resource_id){
   return $impacts;
 }
 
-function usaidralf_show_article_meta($article_type, $article_id, $sectors = ''){
+function usaidralf_show_article_meta($article_type, $article_id){
   switch($article_type){
     case 'impacts':
       $bg_color = get_field('impacts_color', 'option');
@@ -238,7 +238,8 @@ function usaidralf_show_article_meta($article_type, $article_id, $sectors = ''){
   echo '<span class="' . $article_class . '" style="background-color:' . $bg_color . ';">' . $btn_text . '</span>';
 
   //list sector buttons
-  if($sectors != ''){
+  $sectors = get_the_terms($article_id, 'sectors');
+  if($sectors){
     $parent_selected = false;
     foreach($sectors as $sector){
       $sector_name = $sector->name;
@@ -258,7 +259,7 @@ function usaidralf_show_article_meta($article_type, $article_id, $sectors = ''){
         echo '<a href="' . $sector_url . '" class="meta-btn btn-sector hidden-print" style="background-color:' . $sector_color . '">' . $sector_name . '</a>';
       }
       else{
-        echo '<a href="' . $sector_url . '" class="meta-btn btn-sector hidden-print" style="background-color:' . $sector_color . '">' . $sector_name . '</a>';
+        echo '<a href="' . $sector_url . '" class="meta-btn btn-sector hidden-print" style="background-color:' . $sector_color . ';">' . $sector_name . '</a>';
       }
     }
   }
@@ -276,6 +277,31 @@ function usaidralf_show_article_meta($article_type, $article_id, $sectors = ''){
     $num_impacts = $related_impacts->post_count;
 
     echo '<a href="' . get_permalink($article_id) . '" class="meta-btn btn-impacts" style="background-color:' . get_field('impacts_color', 'option') . ';">' . sprintf(__('Impacts (%d)', 'usaidralf'), $num_impacts) . '</a>';
+
+    $resource_types = get_the_terms($article_id, 'resource_types');
+    $parent_selected = false;
+    foreach($resource_types as $resource_type){
+      $resource_type_name = $resource_type->name;
+      $resource_type_color = get_field('resource_type_color', 'resource_types_' . $resource_type->term_id);
+      $resource_type_url = esc_url(get_term_link($resource_type->term_id), 'resource_types');
+
+      if($resource_type->parent == 0){ $parent_selected = true; }
+
+      if($resource_type->parent > 0){
+        if($parent_selected == false){
+          $resource_type_parent = get_term($resource_type->parent, 'resource_types');
+          $resource_type_parent_color = get_field('resource_type_color', 'resource_types_' . $resource_type_parent->term_id);
+          $resource_type_parent_url = esc_url(get_term_link($resource_type_parent->term_id), 'resource_types');
+
+          echo '<a href="' . $resource_type_parent_url . '" class="meta-btn btn-sector hidden-print" style="background-color:' . $resource_type_parent_color . ';">' . $resource_type_parent->name . '</a>';
+        }
+
+        echo '<a href="' . $resource_type_url . '" class="meta-btn btn-sector hidden-print" style="background-color:' . $resource_type_color . ';">' . $resource_type_name . '</a>';
+      }
+      else{
+        echo '<a href="' . $resource_type_url . '" class="meta-btn btn-sector hidden-print" style="background-color:' . $resource_type_color . ';">' . $resource_type_name . '</a>';
+      }
+    }
   }
 }
 
@@ -500,6 +526,26 @@ function usaidralf_get_search_history(){
   }
   else{ //no cookie, must be first search or they've been cleared with js function
     return $search_term;
+  }
+}
+
+add_filter('searchwp_query_join', 'usaidralf_join_term_relationships', 10, 3);
+function usaidralf_join_term_relationships($sql, $post_type, $engine){
+  global $wpdb;
+
+  return "LEFT JOIN {$wpdb->prefix}term_relationships as swp_tax_rel ON swp_tax_rel.object_id = {$wpdb->prefix}posts.ID";
+}
+
+add_filter('searchwp_weight_mods', 'usaidralf_weight_priority_keywords');
+function usaidralf_weight_priority_keywords($sql){
+  $searched_keyword = get_search_query();
+  $searched_keyword_term = get_term_by('slug', $searched_keyword, 'priority_keywords');
+
+  if($searched_keyword_term != false){
+    $priority_keyword_id = $searched_keyword_term->term_id;
+    $additional_weight = 1000;
+
+    return $sql . " + (IF ((swp_tax_rel.term_taxonomy_id = {$priority_keyword_id}), {$additional_weight}, 0))";
   }
 }
 

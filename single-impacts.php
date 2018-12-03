@@ -15,7 +15,7 @@
                 <header class="result-header">
                   <h1><?php the_title(); ?></h1>
                   <div class="result-meta">
-                    <?php usaidralf_show_article_meta('impacts', $impact_id, $sectors); ?>
+                    <?php usaidralf_show_article_meta('impacts', $impact_id); ?>
                   </div>
                 </header>
 

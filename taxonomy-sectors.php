@@ -34,15 +34,14 @@
                 ));
 
                 if($impacts->have_posts()): while($impacts->have_posts()): $impacts->the_post();
-                  $impact_id = get_the_ID();
-                  $sectors = get_the_terms($impact_id, 'sectors'); ?>
+                  $impact_id = get_the_ID(); ?>
 
                   <div class="loop-item">
                     <h2 class="loop-item-title">
                       <a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
                     </h2>
                     <div class="loop-item-meta">
-                      <?php usaidralf_show_article_meta('impacts', $impact_id, $sectors); ?>
+                      <?php usaidralf_show_article_meta('impacts', $impact_id); ?>
                     </div>
                   </div>
               <?php endwhile; else: ?>
@@ -65,15 +64,14 @@
                 ));
 
                 if($resources->have_posts()): while($resources->have_posts()): $resources->the_post();
-                  $resource_id = get_the_ID();
-                  $sectors = get_the_terms($resource_id, 'sectors'); ?>
+                  $resource_id = get_the_ID(); ?>
 
                   <div class="loop-item">
                     <h2 class="loop-item-title">
                       <a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
                     </h2>
                     <div class="loop-item-meta">
-                      <?php usaidralf_show_article_meta('resources', $resource_id, $sectors); ?>
+                      <?php usaidralf_show_article_meta('resources', $resource_id); ?>
                     </div>
                   </div>
               <?php endwhile; else: ?>

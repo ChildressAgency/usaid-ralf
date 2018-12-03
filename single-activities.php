@@ -60,8 +60,7 @@
                                   <div class="impact-by-sector-meta">
                                     <?php
                                       //get all sectors for this impact to use for meta btns
-                                      $current_impact_sectors = get_the_terms($impact->impact_id, 'sectors');
-                                      usaidralf_show_article_meta('impacts', $impact->impact_id, $current_impact_sectors); 
+                                      usaidralf_show_article_meta('impacts', $impact->impact_id); 
                                     ?>
                                   </div>
                                 </div>

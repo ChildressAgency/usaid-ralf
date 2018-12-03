@@ -14,7 +14,7 @@ if (!defined('ABSPATH')){ exit; }
     </div>
   </header>
 
-  <div id="article_id-<?php echo $report_article_id; ?>" class="collapse-container panel-collapse collapse visible-print-block" role="tab-panel" aria-labelledby="article-heading">
+  <div id="article_id-<?php echo $report_article_id; ?>" class="collapse-container panel-collapse collapse print-visible" role="tab-panel" aria-labelledby="article-heading">
     <section class="result-content">
       <div class="activity-description">
         <p><?php the_content(); ?></p>
@@ -54,13 +54,12 @@ if (!defined('ABSPATH')){ exit; }
                       <div class="impact-by-sector-meta">
                         <?php
                           //get all sectors for this impact to use for meta btns
-                          $current_impact_sectors = get_the_terms($impact->impact_id, 'sectors');
-                          usaidralf_show_article_meta('impacts', $impact->impact_id, $current_impact_sectors); 
+                          usaidralf_show_article_meta('impacts', $impact->impact_id); 
                         ?>
                       </div>
                     </div>
                     <div class="clearfix"></div>
-                    <div id="impact<?php echo $i; ?>" class="panel-collapse collapse visible-print-block" role="tabpanel" aria-labelledby="impact-title<?php echo $i; ?>">
+                    <div id="impact<?php echo $i; ?>" class="panel-collapse collapse print-visible" role="tabpanel" aria-labelledby="impact-title<?php echo $i; ?>">
                       <div class="panel-body">
                         <?php echo $impact->impact_description; ?>
                       </div>
