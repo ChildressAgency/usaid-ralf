@@ -57,6 +57,7 @@ a{
   padding:2px 20px;
   border-radius:20px;
   border:1px solid #c4d82e;
+  transition:all .3s ease;
 }
 .btn-main:hover,
 .btn-main:focus{
@@ -627,6 +628,9 @@ main.results-list article+article{
 
 .email-report{
   margin-top:60px;
+}
+.btn-main.send-email:hover{
+  background-color:#b3b3b3;
 }
 
 .priority{
