@@ -9,7 +9,14 @@
         <main class="results-list">
           <?php $current_sector = get_queried_object(); ?>
 
-          <h1 class="sector-title"><img src="<?php the_field('sector_icon', 'sectors_' . $current_sector->term_id); ?>" class="img-circle img-responsive" alt="<?php echo $current_sector->name . ' ' . __('Sector', 'usaidralf'); ?>" style="background-color:<?php the_field('sector_color', 'sectors_' . $current_sector->term_id); ?>" /><?php echo $current_sector->name; ?></h1>
+          <h1 class="sector-title">
+            <?php 
+              $sector_icon = get_field('sector_icon', 'sectors_' . $current_sector->term_id);
+              if($sector_icon): ?>
+                <img src="<?php echo $sector_icon; ?>" class="img-circle img-responsive" alt="<?php echo $current_sector->name . ' ' . __('Sector', 'usaidralf'); ?>" style="background-color:<?php the_field('sector_color', 'sectors_' . $current_sector->term_id); ?>" />
+            <?php endif; ?>
+            <?php echo $current_sector->name; ?>
+          </h1>
 
           <ul class="nav nav-pills nav-justified" role="tablist">
             <li role="presentation" class="active"><a href="#impacts" aria-controls="impacts" role="tab" data-toggle="tab">Impacts / Activities</a></li>
