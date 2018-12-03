@@ -78,6 +78,21 @@
                     </section>
                   <?php endif; ?>
                   <?php echo do_shortcode('[report_button]'); ?>
+
+                  <section class="related">
+                    <h3><?php _e('Related Resources', 'usaidralf'); ?></h3>
+                    <?php 
+                      $related_resources = get_field('related_resources', $activity_id);
+                      if($related_resources): ?>
+                        <ul>
+                          <?php foreach($related_resources as $resource): ?>
+                            <li><a href="<?php echo get_permalink($resource); ?>"><?php echo get_the_title($resource); ?></a></li>
+                          <?php endforeach; ?>
+                        </ul>
+                    <?php else: ?>
+                      <p><?php _e('No related Resources', 'usaidralf'); ?></p>
+                    <?php endif; ?>
+                  </section>
               </article>
             <?php endwhile; endif; ?>
 
