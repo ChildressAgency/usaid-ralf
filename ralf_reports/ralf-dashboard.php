@@ -3,13 +3,13 @@
 if (!defined('ABSPATH')){ exit; }
 
 if(!class_exists('emailed_reports_list_table')){
-  require_once 'classes/class-emailed-reports-list-table.php';
+  require_once RALFREPORTS_PLUGIN_DIR . '/classes/class-emailed-reports-list-table.php';
 }
 if(!class_exists('saved_stats_list_table')){
-  require_once 'classes/class-saved-stats-list-table.php';
+  require_once RALFREPORTS_PLUGIN_DIR . '/classes/class-saved-stats-list-table.php';
 }
 if(!class_exists('search_terms_stats_list_table')){
-  require_once 'classes/class-search-terms-stats-list-table.php';
+  require_once RALFREPORTS_PLUGIN_DIR . '/classes/class-search-terms-stats-list-table.php';
 }
 
 class ralf_dashboard{
@@ -59,11 +59,11 @@ class ralf_dashboard{
   }
 
   public function show_emailed_reports_dashboard(){
-    require_once 'reports/emailed_reports.php';
+    require_once RALFREPORTS_PLUGIN_DIR . '/reports/emailed_reports.php';
   }
 
   public function show_saved_statistics_dashboard(){
-    require_once 'reports/saved_statistics.php';
+    require_once RALFREPORTS_PLUGIN_DIR . '/reports/saved_statistics.php';
   }
 
   public static function set_screen($status, $option, $value){
