@@ -44,6 +44,7 @@ $(document).ready(function($){
     
     //this will hold the string of ids to put back into the cookie
     var reportIds = '';
+    var reportIdsCount = 0;
     //get the article id for the button
     var articleId = $clickedButtonParent.data('article_id');
     //get fresh cookie
@@ -58,10 +59,12 @@ $(document).ready(function($){
         savedReportIds.push(articleId);
         reportIds = savedReportIds.toString();
       }
+      reportIdsCount = reportIds.split(',').length;
     }
     else{
       //there aren't any saved reports so far
       reportIds = articleId;
+      reportIdsCount = 1;
     }
 
     //put the report ids into the cookie
@@ -77,7 +80,6 @@ $(document).ready(function($){
     $btnToUpdate.append('<span><em>' + ralf_settings.added_to_report_label + '</em></span>');
 
     //update the sidebar view report link
-    var reportIdsCount = reportIds.split(',').length;
     $('#view-report-widget-count').text(reportIdsCount);
   });
 
