@@ -7,9 +7,10 @@ if (!defined('ABSPATH')){ exit; }
 
 <article class="ralf-article">
   <header class="result-header">
-    <h1 class="article-heading"><?php the_title(); ?></h1>
+    <h2 class="article-heading"><?php the_title(); ?></h2>
     <div class="results-meta">
       <a href="#article_id-<?php echo $report_article_id ?>" class="meta-btn report-expand hidden-print collapsed" role="button" data-toggle="collapse" aria-expanded="false" aria-controls="article_id-<?php echo $report_article_id; ?>" class="collapsed"></a>
+      <span class="article-handle"></span>
       <?php usaidralf_show_article_meta(get_post_type(), $report_article_id); ?>
     </div>
   </header>
