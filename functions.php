@@ -1,4 +1,5 @@
 <?php
+define('USAIDRALF_TEMPLATE_DIR', dirname(__FILE__));
 
 add_action('wp_footer', 'show_template');
 function show_template() {
@@ -65,7 +66,7 @@ function usaidralf_theme_setup(){
   load_theme_textdomain('usaidralf', get_template_directory() . '/languages');
 }
 
-require_once 'includes/class-wp_bootstrap_navwalker.php';
+require_once USAIDRALF_TEMPLATE_DIR . '/includes/class-wp_bootstrap_navwalker.php';
 
 function usaidralf_header_fallback_menu(){ ?>
       
@@ -80,12 +81,12 @@ function usaidralf_header_fallback_menu(){ ?>
 
 <?php }
 
-require_once 'includes/template_pagination.php';
-require_once 'includes/template_cpts.php';
+require_once USAIDRALF_TEMPLATE_DIR . '/includes/template_pagination.php';
+require_once USAIDRALF_TEMPLATE_DIR . '/includes/template_cpts.php';
 add_action('init', 'usaidralf_create_post_type');
 
-require_once 'includes/class-usaidralf_sector_selector_widget.php';
-require_once 'includes/class-usaidralf_search_history_widget.php';
+require_once USAIDRALF_TEMPLATE_DIR . '/includes/class-usaidralf_sector_selector_widget.php';
+require_once USAIDRALF_TEMPLATE_DIR . '/includes/class-usaidralf_search_history_widget.php';
 add_action('widgets_init', 'usaidralf_widgets_init');
 function usaidralf_widgets_init(){
   register_sidebar(array(
