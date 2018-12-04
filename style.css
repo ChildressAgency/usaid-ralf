@@ -337,12 +337,13 @@ section{
 .impact-by-sector .panel-title{
   display:inline-block;
   vertical-align:middle;
+  font-family:Lato, sans-serif;
+  font-weight:700;
+  font-size:20px;
+  padding-left:15px;
 }
 .impact-by-sector .sector-popout{
   display:inline-block;
-  vertical-align:top;
-  height:25px;
-  width:25px;
   margin-top:5px;
   color:#000;
 }
@@ -476,6 +477,9 @@ main.results-list{
 }
 main.results-list article+article{
   margin-top:40px;
+}
+.ralf-article{
+  border-bottom:#f2f2f2;
 }
 .number-activities{
   margin-top:15px;
@@ -808,24 +812,13 @@ main.result{
   border:none;
   padding:0;
 }
-.impact-by-sector .panel-title>a{
-  font-weight:800;
-}
 .impact-by-sector .panel-group .panel-heading+.panel-collapse>.panel-body{
   border:none;
-}
-.impact-by-sector .panel-title>a{
-  display:table;
 }
 .impact-by-sector .panel-title>a>img{
   display:table-cell;
   vertical-align:middle;
   width:44px;
-}
-.impact-by-sector .panel-title>a>span{
-  display:table-cell;
-  vertical-align:middle;
-  padding-left:15px;
 }
 .impact-by-sector .panel-group .panel+.panel{
   margin-top:20px;
