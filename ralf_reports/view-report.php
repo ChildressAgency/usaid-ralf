@@ -44,7 +44,8 @@ elseif(isset($_COOKIE['STYXKEY_report_ids'])){
   );
 }
 
-if($activities_ids){
+//$activities_ids[0] == 0 happens when all items are removed from the report but they haven't left the reports page.
+if($activities_ids && $activities_ids[0] != 0){
   $activities_report = new WP_Query(array(
     'post_type' => array('activities', 'impacts', 'resources'),
     'posts_per_page' => -1,
@@ -63,5 +64,5 @@ if($activities_ids){
   return call_user_func($shortcode_tags['email_form'], array('activity_ids' => $activities_ids));
 }
 else{
-  echo '<p>' . __('Sorry, your report could not be found.', 'ralfreports') . '</p>';
+  echo '<p>' . __('Sorry, no items have been added to your report or your report could not be found. Please make sure cookies are enabled in your browser and try again.', 'ralfreports') . '</p>';
 }
