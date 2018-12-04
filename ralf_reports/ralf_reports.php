@@ -10,6 +10,9 @@
 // Exit if accessed directly
 if (!defined('ABSPATH')){ exit; }
 
+define('RALFREPORTS_PLUGIN_DIR', dirname(__FILE__));
+define('RALFREPORTS_PLUGIN_URL', plugin_dir_url(__FILE__));
+
 class ralf_report{
   public function __construct(){
     add_action('init', array($this, 'ralf_report_load_textdomain'));
@@ -36,7 +39,7 @@ class ralf_report{
   }
 
   function ralf_report(){
-    require_once 'view-report.php';
+    require_once RALFREPORTS_PLUGIN_DIR . '/view-report.php';
   }
 
   function scripts(){
@@ -56,7 +59,7 @@ class ralf_report{
   }
 
   public function register_widgets(){
-    require_once 'widgets/view-report-widget.php';
+    require_once RALFREPORTS_PLUGIN_DIR . '/widgets/view-report-widget.php';
     register_widget('view_report_widget');
   }
 
@@ -99,7 +102,7 @@ class ralf_report{
     $html_report = $this->get_report($report_ids_array);
 
     //using vsword to convert the html into a docx
-    require_once 'vsWord/VsWord.php';
+    require_once RALFREPORTS_PLUGIN_DIR . '/vsWord/VsWord.php';
     VsWord::autoLoad();
 
     $doc = new VsWord();
@@ -221,10 +224,10 @@ class ralf_report{
   }
 
   function process_admin_tasks(){
-    require_once 'delete_old_reports.php';
+    require_once RALFREPORTS_PLUGIN_DIR . '/delete_old_reports.php';
 
     if(isset($_GET['email_admin_reports'])){
-      require_once 'reports/email_admin_reports.php';
+      require_once RALFREPORTS_PLUGIN_DIR . '/reports/email_admin_reports.php';
     }
   }
 
@@ -271,12 +274,12 @@ class ralf_report{
   }
 
   function create_acf_field_groups(){
-    require_once 'acf_fields.php';
+    require_once RALFREPORTS_PLUGIN_DIR . '/acf_fields.php';
   }
 }
 
 new ralf_report;
 
 if(is_admin()){
-  require_once 'ralf-dashboard.php';
+  require_once RALFREPORTS_PLUGIN_DIR . '/ralf-dashboard.php';
 }
