@@ -7,11 +7,12 @@
         </div>
         <div class="col-sm-8 col-md-9">
           <main class="results-list">
-            <h1>Search results for "<?php the_search_query(); ?>"</h1>
+            <?php $searched_word = get_search_query(); ?>
+            <h1><?php printf(__('Search results for "%s"', 'usaidralf'), $searched_word); ?></h1>
 
             <ul class="nav nav-pills nav-justified" role="tablist">
-              <li role="presentation" class="active"><a href="#impacts-activities" aria-controls="impacts-activities" role="tab" data-toggle="tab">Impacts / Activities</a></li>
-              <li role="presentation"><a href="#resources" aria-controls="resources" role="tab" data-toggle="tab">Resources</a></li>
+              <li role="presentation" class="active"><a href="#impacts-activities" aria-controls="impacts-activities" role="tab" data-toggle="tab"><?php _e('Impacts / Activities', 'usaidralf'); ?></a></li>
+              <li role="presentation"><a href="#resources" aria-controls="resources" role="tab" data-toggle="tab"><?php _e('Resources', 'usaidralf'); ?></a></li>
             </ul>
 
             <div class="tab-content">
@@ -21,7 +22,7 @@
 
                   $impacts_activities = new SWP_Query(array(
                     'post_type' => array('impacts', 'activities'),
-                    's' => get_search_query(),
+                    's' => $searched_word,
                     'engine' => 'default',
                     'posts_per_page' => 10,
                     'page' => $paged,
@@ -38,7 +39,7 @@
                       </h2>
                       <div class="loop-item-meta">
                         <?php 
-                          if(has_term('', 'priority_keywords')){
+                          if(has_term($searched_word, 'priority_keywords')){
                             echo '<span class="priority"></span>';
                           }
                           usaidralf_show_article_meta(get_post_type($article_id), $article_id); 
@@ -54,7 +55,7 @@
                 <?php
                   $resources = new SWP_Query(array(
                     'post_type' => 'resources',
-                    's' => get_search_query(),
+                    's' => $searched_word,
                     'engine' => 'default',
                     'posts_per_page' => -1,
                     'fields' => 'all'
@@ -69,7 +70,12 @@
                         <a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
                       </h2>
                       <div class="loop-item-meta">
-                        <?php usaidralf_show_article_meta('resources', $resource_id); ?>
+                        <?php 
+                          if(has_term($searched_word, 'priority_keywords')){
+                            echo '<span class="priority"></span>';
+                          }
+                          usaidralf_show_article_meta('resources', $resource_id); 
+                        ?>
                       </div>
                     </div>
                 <?php endforeach; else: ?>
