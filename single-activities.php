@@ -50,14 +50,13 @@
                               <div class="panel panel-default">
                                 <div class="panel-heading" role="tab" id="impact-title<?php echo $i; ?>">
                                   <h3 class="panel-title">
-                                    <a href="#impact<?php echo $i; ?>" role="button" data-toggle="collapse" data-parent="#impacts-accordion"  aria-expanded="false" aria-controls="impact<?php echo $i; ?>">
-                                        <span> <?php echo $impact->impact_title; ?></span>
+                                    <a href="<?php echo get_permalink($impact->impact_id); ?>" class="sector-popout hidden-print" target="_blank">
+                                      <?php echo $impact->impact_title; ?>
+                                      <span class="dashicons dashicons-external" data-toggle="tooltip" data-position="top" title="<?php echo $sector['sector_name']; ?>"></span>
                                     </a>
                                   </h3>
-                                  <a href="<?php echo esc_url(get_term_link((int)$sector['sector_id'], 'sectors')); ?>" class="sector-popout" target="_blank">
-                                    <span class="dashicons dashicons-external" data-toggle="tooltip" data-position="top" title="<?php echo $sector['sector_name']; ?>"></span>
-                                  </a>
                                   <div class="impact-by-sector-meta">
+                                    <a href="#impact<?php echo $i;; ?>" class="meta-btn report-expand hidden-print collapsed" role="button" data-toggle="collapse" aria-expanded="false" aria-controls="impact<?php echo $i; ?>"></a>
                                     <?php
                                       //get all sectors for this impact to use for meta btns
                                       usaidralf_show_article_meta('impacts', $impact->impact_id); 
