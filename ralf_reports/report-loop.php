@@ -1,17 +1,21 @@
+<?php
+// Exit if accessed directly
+if (!defined('ABSPATH')){ exit; }
+?>
+
+<?php $report_article_id = get_the_ID(); ?>
+
 <article class="ralf-article">
   <header class="result-header">
-    <?php 
-      $report_article_id = get_the_ID(); 
-      if(get_post_type() == 'activities'){
-        echo '<span class="result-type-icon activity" data-toggle="tooltip" data-placement="top" title="Activity"></span>';
-      }
-      else if(get_post_type() == 'impacts'){
-        echo '<span class="result-type-icon impact" data-toggle="tooltip" data-placement="top" title="Impact"></span>';
-      }
-    ?>
-    <h1 class="article-heading"><a href="#article_id-<?php echo $report_article_id ?>" role="button" data-toggle="collapse" aria-expanded="false" aria-controls="article_id-<?php echo $report_article_id; ?>" class="collapsed"><?php the_title(); ?></a></h1>
+    <h2 class="article-heading"><?php the_title(); ?></h2>
+    <div class="results-meta">
+      <a href="#article_id-<?php echo $report_article_id ?>" class="meta-btn report-expand hidden-print collapsed" role="button" data-toggle="collapse" aria-expanded="false" aria-controls="article_id-<?php echo $report_article_id; ?>" class="collapsed"></a>
+      <span class="article-handle"></span>
+      <?php usaidralf_show_article_meta(get_post_type(), $report_article_id); ?>
+    </div>
   </header>
-  <div id="article_id-<?php echo $report_article_id; ?>" class="collapse-container panel-collapse collapse" role="tab-panel" aria-labelledby="article-heading">
+
+  <div id="article_id-<?php echo $report_article_id; ?>" class="collapse-container panel-collapse collapse print-visible" role="tab-panel" aria-labelledby="article-heading">
     <section class="result-content">
       <div class="activity-description">
         <p><?php the_content(); ?></p>
@@ -30,28 +34,44 @@
         $impacts_by_sector = usaidralf_get_impacts_by_sector($impact_ids); ?>
 
         <section class="impact-by-sector">
-          <h2><?php _e('IMPACT BY SECTOR', 'ralfreports'); ?></h2>
-          <div class="panel-group" role="tablist">
-            <?php
+          <h2><?php _e('IMPACT BY SECTOR', 'usaidralf'); ?><span class="dashicons dashicons-excerpt-view" data-toggle="tooltip" data-position="top" title="<?php _e('Expand All', 'usaidralf'); ?>"></span></h2>
+          <div class="panel-group" id="impacts-accordion" role="tablist" aria-multiselectable="true">
+            <?php 
+                $i = 0;
               foreach($impacts_by_sector as $sector):
                 $acf_sector_id = 'sectors_' . $sector['sector_id'];
                 foreach($sector['impacts'] as $impact): ?>
 
                   <div class="panel panel-default">
-                    <div class="panel-heading" role="tab">
-                      <h3 class="panel-title"><a href="#"><?php echo $impact->impact_title; ?></a></h3>
+                    <div class="panel-heading" role="tab" id="impact-title<?php echo $i; ?>">
+                      <h3 class="panel-title">
+                        <a href="<?php echo get_permalink($impact->impact_id); ?>" class="sector-popout hidden-print" target="_blank">
+                          <?php echo $impact->impact_title; ?>
+                          <span class="dashicons dashicons-external" data-toggle="tooltip" data-position="top" title="<?php echo $sector['sector_name']; ?>"></span>
+                        </a>
+                      </h3>
+                      <div class="impact-by-sector-meta">
+                        <a href="#impact<?php echo $i;; ?>" class="meta-btn report-expand hidden-print collapsed" role="button" data-toggle="collapse" aria-expanded="false" aria-controls="impact<?php echo $i; ?>"></a>
+                        <?php
+                          //get all sectors for this impact to use for meta btns
+                          usaidralf_show_article_meta('impacts', $impact->impact_id); 
+                        ?>
+                      </div>
                     </div>
-                    <div class="panel-body">
-                      <?php echo $impact->impact_description; ?>
+                    <div class="clearfix"></div>
+                    <div id="impact<?php echo $i; ?>" class="panel-collapse collapse print-visible" role="tabpanel" aria-labelledby="impact-title<?php echo $i; ?>">
+                      <div class="panel-body">
+                        <?php echo $impact->impact_description; ?>
+                      </div>
                     </div>
                   </div>
-
-              <?php endforeach; ?>
+                
+              <?php $i++; endforeach; ?>
             <?php endforeach; ?>
           </div>
         </section>
     <?php endif; ?>
-  </div><!-- end .collapse-container -->
   <?php echo do_shortcode('[report_button]'); ?>
+  </div><!-- end .collapse-container -->
   
 </article>

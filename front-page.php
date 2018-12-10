@@ -108,7 +108,7 @@
         </div>
         <div class="clearfix"></div>
         <div class="btns-inline">
-          <a href="#" class="btn-alt"><?php _e('Load More', 'usaidralf'); ?></a>
+          <!--<a href="#" class="btn-alt"><?php _e('Load More', 'usaidralf'); ?></a>-->
           <input type="submit" class="btn-main" value="<?php _e('Search', 'usaidralf'); ?>" />
         </div>
       </form>

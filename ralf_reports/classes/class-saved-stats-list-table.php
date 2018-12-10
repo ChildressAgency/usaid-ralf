@@ -1,4 +1,7 @@
 <?php
+// Exit if accessed directly
+if (!defined('ABSPATH')){ exit; }
+
 if(!class_exists('WP_List_Table')){
   require_once(ABSPATH . 'wp-admin/includes/class-wp-list-table.php');
 }
@@ -12,22 +15,20 @@ class saved_stats_list_table extends WP_List_Table{
     ]);
   }
 
-  public static function get_saved_stats($per_page = 25, $page_number = 1){
+  protected function get_saved_stats($per_page = 25, $page_number = 1){
     global $wpdb;
 
     $sql = 'SELECT article_id, COUNT(*) AS saved_count FROM saved_reports';
 
-    if(!empty($_REQUEST['time_period'])){
-      if($_REQUEST['time_period'] == 'ninety_days'){
-        $sql .= ' WHERE saved_date >= DATE_ADD(NOW(), INTERVAL -90 DAY)';
-      }
+    if(!empty($_REQUEST['time_period']) && $_REQUEST['time_period'] == 'ninety_days'){
+      $sql .= ' WHERE saved_date >= DATE_ADD(NOW(), INTERVAL -90 DAY)';
     }
     
     $sql .= ' GROUP BY article_id';
 
     if(!empty($_REQUEST['orderby'])){
       $sql .= ' ORDER BY ' . esc_sql($_REQUEST['orderby']);
-      $sql .= !empty($_REQUEST['order']) ? ' ' . esc_sql($_REQUEST['order']) : ' ASC';
+      $sql .= !empty($_REQUEST['order']) ? ' ' . esc_sql($_REQUEST['order']) : ' DESC';
     }
 
     $sql .= ' LIMIT ' . $per_page;
@@ -47,13 +48,18 @@ class saved_stats_list_table extends WP_List_Table{
     return $result;
   }
 
-  public static function saved_to_report_count(){
+  protected function saved_to_report_count(){
     global $wpdb;
 
-    $report_count = $wpdb->get_results("
-      SELECT article_id
-      FROM saved_reports
-      GROUP BY article_id", 'ARRAY_N');
+    $sql = 'SELECT article_id FROM saved_reports';
+
+    if(!empty($_REQUEST['time_period']) && $_REQUEST['time_period'] == 'ninety_days'){
+      $sql .= ' WHERE saved_date >= DATE_ADD(NOW(), INTERVAL -90 DAY)';
+    }
+
+    $sql .= ' GROUP BY article_id';
+
+    $report_count = $wpdb->get_results($sql, 'ARRAY_N');
 
     return count($report_count);
   }
@@ -62,7 +68,7 @@ class saved_stats_list_table extends WP_List_Table{
     _e('No saved reports were found.', 'ralfreports');
   }
 
-  function column_name($item){
+  public function column_name($item){
     $title = '<strong>' . $item['name'] . '</strong>';
 
     return $title;
@@ -78,7 +84,7 @@ class saved_stats_list_table extends WP_List_Table{
     }
   }
 
-  function get_columns(){
+  public function get_columns(){
     $columns = array(
       'article_id' => __('Article Name', 'ralfreports'),
       'saved_count' => __('Number of Times Saved to Report', 'ralfreports')
@@ -110,13 +116,13 @@ class saved_stats_list_table extends WP_List_Table{
 
     $per_page = $this->get_items_per_page('saved_stats_per_page', 25);
     $current_page = $this->get_pagenum();
-    $total_items = self::saved_to_report_count();
+    $total_items = $this->saved_to_report_count();
 
     $this->set_pagination_args([
       'total_items' => $total_items,
       'per_page' => $per_page
     ]);
 
-    $this->items = self::get_saved_stats($per_page, $current_page);
+    $this->items = $this->get_saved_stats($per_page, $current_page);
   }
 }

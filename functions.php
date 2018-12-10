@@ -1,4 +1,5 @@
 <?php
+define('USAIDRALF_TEMPLATE_DIR', dirname(__FILE__));
 
 add_action('wp_footer', 'show_template');
 function show_template() {
@@ -65,213 +66,7 @@ function usaidralf_theme_setup(){
   load_theme_textdomain('usaidralf', get_template_directory() . '/languages');
 }
 
-/**
- * Class Name: wp_bootstrap_navwalker
- * GitHub URI: https://github.com/twittem/wp-bootstrap-navwalker
- * Description: A custom WordPress nav walker class to implement the Bootstrap 3 navigation style in a custom theme using the WordPress built in menu manager.
- * Version: 2.0.4
- * Author: Edward McIntyre - @twittem
- * License: GPL-2.0+
- * License URI: http://www.gnu.org/licenses/gpl-2.0.txt
- */
-
-class wp_bootstrap_navwalker extends Walker_Nav_Menu {
-
-	/**
-	 * @see Walker::start_lvl()
-	 * @since 3.0.0
-	 *
-	 * @param string $output Passed by reference. Used to append additional content.
-	 * @param int $depth Depth of page. Used for padding.
-	 */
-	public function start_lvl( &$output, $depth = 0, $args = array() ) {
-		$indent = str_repeat( "\t", $depth );
-		$output .= "\n$indent<ul role=\"menu\" class=\" dropdown-menu\">\n";
-	}
-
-	/**
-	 * @see Walker::start_el()
-	 * @since 3.0.0
-	 *
-	 * @param string $output Passed by reference. Used to append additional content.
-	 * @param object $item Menu item data object.
-	 * @param int $depth Depth of menu item. Used for padding.
-	 * @param int $current_page Menu item ID.
-	 * @param object $args
-	 */
-	public function start_el( &$output, $item, $depth = 0, $args = array(), $id = 0 ) {
-		$indent = ( $depth ) ? str_repeat( "\t", $depth ) : '';
-
-		/**
-		 * Dividers, Headers or Disabled
-		 * =============================
-		 * Determine whether the item is a Divider, Header, Disabled or regular
-		 * menu item. To prevent errors we use the strcasecmp() function to so a
-		 * comparison that is not case sensitive. The strcasecmp() function returns
-		 * a 0 if the strings are equal.
-		 */
-		if ( strcasecmp( $item->attr_title, 'divider' ) == 0 && $depth === 1 ) {
-			$output .= $indent . '<li role="presentation" class="divider">';
-		} else if ( strcasecmp( $item->title, 'divider') == 0 && $depth === 1 ) {
-			$output .= $indent . '<li role="presentation" class="divider">';
-		} else if ( strcasecmp( $item->attr_title, 'dropdown-header') == 0 && $depth === 1 ) {
-			$output .= $indent . '<li role="presentation" class="dropdown-header">' . esc_attr( $item->title );
-		} else if ( strcasecmp($item->attr_title, 'disabled' ) == 0 ) {
-			$output .= $indent . '<li role="presentation" class="disabled"><a href="#">' . esc_attr( $item->title ) . '</a>';
-		} else {
-
-			$class_names = $value = '';
-
-			$classes = empty( $item->classes ) ? array() : (array) $item->classes;
-			$classes[] = 'menu-item-' . $item->ID;
-
-			$class_names = join( ' ', apply_filters( 'nav_menu_css_class', array_filter( $classes ), $item, $args ) );
-
-			if ( $args->has_children )
-				$class_names .= ' dropdown';
-
-			if ( in_array( 'current-menu-item', $classes ) )
-				$class_names .= ' active';
-
-			$class_names = $class_names ? ' class="' . esc_attr( $class_names ) . '"' : '';
-
-			$id = apply_filters( 'nav_menu_item_id', 'menu-item-'. $item->ID, $item, $args );
-			$id = $id ? ' id="' . esc_attr( $id ) . '"' : '';
-
-			$output .= $indent . '<li' . $id . $value . $class_names .'>';
-
-			$atts = array();
-			$atts['title']  = ! empty( $item->title )	? $item->title	: '';
-			$atts['target'] = ! empty( $item->target )	? $item->target	: '';
-			$atts['rel']    = ! empty( $item->xfn )		? $item->xfn	: '';
-
-			// If item has_children add atts to a.
-			if ( $args->has_children && $depth === 0 ) {
-				$atts['href']   		= '#';
-                                $atts['href'] = ! empty( $item->url ) ? $item->url : '';
-        
-        //$atts['data-toggle']	= 'dropdown';
-				$atts['class']			= 'dropdown-toggle';
-				$atts['aria-haspopup']	= 'true';
-			} else {
-				$atts['href'] = ! empty( $item->url ) ? $item->url : '';
-			}
-
-			$atts = apply_filters( 'nav_menu_link_attributes', $atts, $item, $args );
-
-			$attributes = '';
-			foreach ( $atts as $attr => $value ) {
-				if ( ! empty( $value ) ) {
-					$value = ( 'href' === $attr ) ? esc_url( $value ) : esc_attr( $value );
-					$attributes .= ' ' . $attr . '="' . $value . '"';
-				}
-			}
-
-			$item_output = $args->before;
-
-			/*
-			 * Glyphicons
-			 * ===========
-			 * Since the the menu item is NOT a Divider or Header we check the see
-			 * if there is a value in the attr_title property. If the attr_title
-			 * property is NOT null we apply it as the class name for the glyphicon.
-			 */
-
-			 $item_output .= '<a' . $attributes . '>';
-			$item_output .= $args->link_before . apply_filters( 'the_title', $item->title, $item->ID ) . $args->link_after;
-			if ( ! empty( $item->attr_title ) ){
-				$item_output .= '&nbsp;<span class="' . esc_attr( $item->attr_title ) . '"></span>';
-			}
-
-			$item_output .= ( $args->has_children && 0 === $depth ) ? ' </a>' : '</a>';
-			$item_output .= $args->after;
-
-			$output .= apply_filters( 'walker_nav_menu_start_el', $item_output, $item, $depth, $args );
-		}
-	}
-
-	/**
-	 * Traverse elements to create list from elements.
-	 *
-	 * Display one element if the element doesn't have any children otherwise,
-	 * display the element and its children. Will only traverse up to the max
-	 * depth and no ignore elements under that depth.
-	 *
-	 * This method shouldn't be called directly, use the walk() method instead.
-	 *
-	 * @see Walker::start_el()
-	 * @since 2.5.0
-	 *
-	 * @param object $element Data object
-	 * @param array $children_elements List of elements to continue traversing.
-	 * @param int $max_depth Max depth to traverse.
-	 * @param int $depth Depth of current element.
-	 * @param array $args
-	 * @param string $output Passed by reference. Used to append additional content.
-	 * @return null Null on failure with no changes to parameters.
-	 */
-	public function display_element( $element, &$children_elements, $max_depth, $depth, $args, &$output ) {
-        if ( ! $element )
-            return;
-
-        $id_field = $this->db_fields['id'];
-
-        // Display this element.
-        if ( is_object( $args[0] ) )
-           $args[0]->has_children = ! empty( $children_elements[ $element->$id_field ] );
-
-        parent::display_element( $element, $children_elements, $max_depth, $depth, $args, $output );
-    }
-
-	/**
-	 * Menu Fallback
-	 * =============
-	 * If this function is assigned to the wp_nav_menu's fallback_cb variable
-	 * and a manu has not been assigned to the theme location in the WordPress
-	 * menu manager the function with display nothing to a non-logged in user,
-	 * and will add a link to the WordPress menu manager if logged in as an admin.
-	 *
-	 * @param array $args passed from the wp_nav_menu function.
-	 *
-	 */
-	public static function fallback( $args ) {
-		if ( current_user_can( 'manage_options' ) ) {
-
-			extract( $args );
-
-			$fb_output = null;
-
-			if ( $container ) {
-				$fb_output = '<' . $container;
-
-				if ( $container_id )
-					$fb_output .= ' id="' . $container_id . '"';
-
-				if ( $container_class )
-					$fb_output .= ' class="' . $container_class . '"';
-
-				$fb_output .= '>';
-			}
-
-			$fb_output .= '<ul';
-
-			if ( $menu_id )
-				$fb_output .= ' id="' . $menu_id . '"';
-
-			if ( $menu_class )
-				$fb_output .= ' class="' . $menu_class . '"';
-
-			$fb_output .= '>';
-			$fb_output .= '<li><a href="' . admin_url( 'nav-menus.php' ) . '">Add a menu</a></li>';
-			$fb_output .= '</ul>';
-
-			if ( $container )
-				$fb_output .= '</' . $container . '>';
-
-			echo $fb_output;
-		}
-	}
-}
+require_once USAIDRALF_TEMPLATE_DIR . '/includes/class-wp_bootstrap_navwalker.php';
 
 function usaidralf_header_fallback_menu(){ ?>
       
@@ -286,181 +81,30 @@ function usaidralf_header_fallback_menu(){ ?>
 
 <?php }
 
+require_once USAIDRALF_TEMPLATE_DIR . '/includes/template_pagination.php';
+require_once USAIDRALF_TEMPLATE_DIR . '/includes/template_cpts.php';
 add_action('init', 'usaidralf_create_post_type');
-function usaidralf_create_post_type(){
-  $activity_labels = array(
-    'name' => _x('Activities', 'post type general name', 'usaidralf'),
-    'singular_name' => _x('Activity', 'post type singular name', 'usaidralf'),
-    'menu_name' => _x('Activities', 'admin menu', 'usaidralf'),
-    'name_admin_bar' => _x('Activity', 'add new on admin bar', 'usaidralf'),
-    'add_new' => _x('Add New', 'activity', 'usaidralf'),
-    'add_new_item' => __('Add New Activity', 'usaidralf'),
-    'new_item' => __('New Activity', 'usaidralf'),
-    'edit_item' => __('Edit Activity', 'usaidralf'),
-    'view_item' => __('View Activity', 'usaidralf'),
-    'view_items' => __('View Activities', 'usaidralf'),
-    'all_items' => __('All Activities', 'usaidralf'),
-    'search_items' => __('Search Activities', 'usaidralf'),
-    'not_found' => __('No Activities Found', 'usaidralf'),
-    'not_found_in_trash' => __('No Activities Found in Trash', 'usaidralf')
-  );
-  $activity_args = array(
-    'labels' => $activity_labels,
-    'description' => __('RALF Activities', 'usaidralf'),
-    'public' => true,
-    'menu_position' => 5,
-    'menu_icon' => 'dashicons-store',
-    'supports' => array('title', 'author', 'revisions', 'editor')
-  );
-  register_post_type('activities', $activity_args);
 
-  $impacts_labels = array(
-    'name' => _x('Impacts', 'post type general name', 'usaidralf'),
-    'singular_name' => _x('Impact', 'post type singular name', 'usaidralf'),
-    'menu_name' => _x('Impacts', 'admin menu', 'usaidralf'),
-    'name_admin_bar' => _x('Impact', 'add new on admin bar', 'usaidralf'),
-    'add_new' => _x('Add New', 'impact', 'usaidralf'),
-    'add_new_item' => __('Add New Impact', 'usaidralf'),
-    'new_item' => __('New Impact', 'usaidralf'),
-    'edit_item' => __('Edit Impact', 'usaidralf'),
-    'view_item' => __('View Impact', 'usaidralf'),
-    'view_items' => __('View Impacts', 'usaidralf'),
-    'all_items' => __('All Impacts', 'usaidralf'),
-    'search_items' => __('Search Impacts', 'usaidralf'),
-    'not_found' => __('No Impacts Found', 'usaidralf'),
-    'not_found_in_trash' => __('No Impacts Found in Trash', 'usaidralf')
-  );
-  $impacts_args = array(
-    'labels' => $impacts_labels,
-    'description' => __('RALF Impacts', 'usaidralf'),
-    'public' => true,
-    'menu_position' => 6,
-    'menu_icon' => 'dashicons-lightbulb',
-    'supports' => array('title', 'author', 'revisions', 'editor')
-  );
-  register_post_type('impacts', $impacts_args);
+require_once USAIDRALF_TEMPLATE_DIR . '/includes/class-usaidralf_sector_selector_widget.php';
+require_once USAIDRALF_TEMPLATE_DIR . '/includes/class-usaidralf_search_history_widget.php';
+add_action('widgets_init', 'usaidralf_widgets_init');
+function usaidralf_widgets_init(){
+  register_sidebar(array(
+    'name' => __('RALF Sidebar', 'usaidralf'),
+    'id' => 'ralf-sidebar',
+    'description' => __('Sidebar for the RALF results pages.', 'usaidralf'),
+    'before_widget' => '<div class="sidebar-section">',
+    'after_widget' => '</div>',
+    'before_title' => '<h4>',
+    'after_title' => '</h4>'
+  ));
+}
 
-  $resources_labels = array(
-    'name' => _x('Resources','post type general name', 'usaidralf'),
-    'singular_name' => _x('Resource', 'post type singular name', 'usaidralf'),
-    'menu_name' => _x('Resources', 'admin menu', 'usaidralf'),
-    'name_admin_bar' => _x('Resource', 'add new on admin bar', 'usaidralf'),
-    'add_new' => _x('Add New', 'resource', 'usaidralf'),
-    'add_new_item' => __('Add New Resource', 'usaidralf'),
-    'new_item' => __('New Resource', 'usaidralf'),
-    'edit_item' => __('Edit Resource', 'usaidralf'),
-    'view_item' => __('View Resource', 'usaidralf'),
-    'view_items' => __('View Resources', 'usaidralf'),
-    'all_items' => __('All Resources', 'usaidralf'),
-    'search_items' => __('Search Resources', 'usaidralf'),
-    'not_found' => __('No Resources Found', 'usaidralf'),
-    'not_found_in_trash' => __('No Resources Found in Trash', 'usaidralf')
-  );
-  $resources_args = array(
-    'labels' => $resources_labels,
-    'description' => __('RALF Resources', 'usaidralf'),
-    'public' => true,
-    'menu_position' => 7,
-    'menu_icon' => 'dashicons-book-alt',
-    'supports' => array('title', 'author', 'revisions', 'editor')
-  );
-  register_post_type('resources', $resources_args);
-
-  register_taxonomy('sectors',
-    //array('impacts', 'activities', 'conditions'),
-    'impacts',
-    array(
-      'hierarchical' => true,
-      'show_admin_column' => true,
-      'public' => true,
-      'labels' => array(
-        'name' => _x('Sectors', 'taxonomy general name', 'usaidralf'),
-        'singular_name' => _x('Sector', 'taxonomy singular name', 'usaidralf'),
-        'search_items' => __('Search Sectors', 'usaidralf'),
-        'all_items' => __('All Sectors', 'usaidralf'),
-        'parent_item' => __('Parent Sector', 'usaidralf'),
-        'parent_item_colon' => __('Parent Sector:', 'usaidralf'),
-        'edit_item' => __('Edit Sector', 'usaidralf'),
-        'update_item' => __('Update Sector', 'usaidralf'),
-        'add_new_item' => __('Add New Sector', 'usaidralf'),
-        'new_item_name' => __('New Sector Name', 'usaidralf'),
-        'menu_name' => __('Sectors', 'usaidralf')
-      )
-    )
-  );
-  register_taxonomy('impact_tags',
-    'impacts',
-    array(
-      'hierarchical' => false,
-      'show_admin_column' => true,
-      'public' => true,
-      'labels' => array(
-        'name' => _x('Impact Tags', 'taxonomy general name', 'usaidralf'),
-        'singular_name' => _x('Impact Tag', 'taxonomy singular name', 'usaidralf'),
-        'search_items' => __('Search Impact Tags', 'usaidralf'),
-        'popular_items' => __('Popular Impact Tags', 'usaidralf'),
-        'all_items' => __('All Impact Tags', 'usaidralf'),
-        'parent_item' => null,
-        'parent_item_colon' => null,
-        'edit_item' => __('Edit Impact Tag', 'usaidralf'),
-        'update_item' => __('Update Impact Tag', 'usaidralf'),
-        'add_new_item' => __('Add New Impact Tag', 'usaidralf'),
-        'new_item_name' => __('New Impact Tag Name', 'usaidralf'),
-        'separate_items_with_commas' => __('Separate Impact Tags with commas', 'usaidralf'),
-        'add_or_remove_items' => __('Add or Remove Impact Tags', 'usaidralf'),
-        'choose_from_most_used' => __('Choose from the most used Impact Tags', 'usaidralf'),
-        'not_found' => __('No Impact Tags Found', 'usaidralf'),
-        'menu_name' => __('Impact Tags', 'usaidralf')
-      )
-    )
-  );
-  register_taxonomy('resource_types',
-    'resources',
-    array(
-      'hierarchical' => true,
-      'show_admin_column' => true,
-      'public' => true,
-      'labels' => array(
-        'name' => _x('Resource Types', 'taxonomy general name', 'usaidralf'),
-        'singular_name' => _x('Resource Type', 'taxonomy singular name', 'usaidralf'),
-        'search_items' => __('Search Resource Types', 'usaidralf'),
-        'all_items' => __('All Resource Types', 'usaidralf'),
-        'parent_item' => __('Parent Resource Type', 'usaidralf'),
-        'parent_item_colon' => __('Parent Resource Type:', 'usaidralf'),
-        'edit_item' => __('Edit Resource Type', 'usaidralf'),
-        'update_item' => __('Update Resource Type', 'usaidralf'),
-        'add_new_item' => __('Add New Resource Type', 'usaidralf'),
-        'new_item_name' => __('New Resource Type Name', 'usaidralf'),
-        'menu_name' => __('Resource Types', 'usaidralf')
-      )
-    )
-  );
-  register_taxonomy('priority_keywords',
-    array('impacts', 'activities', 'resources'),
-    array(
-      'hierarchical' => false,
-      'show_admin_column' => false,
-      'public' => true,
-      'labels' => array(
-        'name' => _x('Priority Keywords', 'taxonomy general name', 'usaidralf'),
-        'singular_name' => _x('Priority Keyword', 'taxonomy singular name', 'usaidralf'),
-        'search_items' => __('Search Priority Keywords', 'usaidralf'),
-        'popular_items' => __('Popular Priority Keywords', 'usaidralf'),
-        'all_items' => __('All Priority Keywords', 'usaidralf'),
-        'parent_item' => null,
-        'parent_item_colon' => null,
-        'edit_item' => __('Edit Priority Keyword', 'usaidralf'),
-        'update_item' => __('Update Priority Keyword', 'usaidralf'),
-        'add_new_item' => __('Add New Priority Keyword', 'usaidralf'),
-        'new_item_name' => __('New Priority Keyword Name', 'usaidralf'),
-        'separate_items_with_commas' => __('Separate Priority Keywords with Commas', 'usaidralf'),
-        'add_or_remove_items' => __('Add or Remove Priority Keywords', 'usaidralf'),
-        'choose_from_most_used' => __('Choose from the most used Priority Keywords', 'usaidralf'),
-        'not_found' => __('No Priority Keywords Found', 'usaidralfd'),
-        'menu_name' => __('Priority Keywords', 'usaidralf')
-      )
-    )
-  );
+add_action('widgets_init', 'usaidralf_load_widget');
+function usaidralf_load_widget(){
+  register_widget('usaidralf_sector_selector_widget');
+  register_widget('usaidralf_search_history_widget');
+  //register_widget('usaidralf_view_report_widget');
 }
 
 add_filter('acf/fields/relationship/result/key=field_5a980a2e5519d', 'usaidralf_related_impacts_relationship_display', 10, 4);
@@ -486,7 +130,7 @@ add_filter('pre_get_posts','usaidralf_searchfilter');
 function usaidralf_searchfilter($query){
 
   if ($query->is_search && !is_admin() ) {
-    $query->set('post_type',array('activities', 'impacts'));
+    $query->set('post_type',array('activities', 'impacts', 'resources'));
   }
  
   return $query;
@@ -504,125 +148,6 @@ function get_field_excerpt($field_name){
     $text = wp_trim_words($text, $excerpt_length, $excerpt_more);
   }
   return apply_filters('the_excerpt', $text);
-}
-
-add_action('widgets_init', 'usaidralf_widgets_init');
-function usaidralf_widgets_init(){
-  register_sidebar(array(
-    'name' => __('RALF Sidebar', 'usaidralf'),
-    'id' => 'ralf-sidebar',
-    'description' => __('Sidebar for the RALF results pages.', 'usaidralf'),
-    'before_widget' => '<div class="sidebar-section">',
-    'after_widget' => '</div>',
-    'before_title' => '<h4>',
-    'after_title' => '</h4>'
-  ));
-}
-
-add_action('widgets_init', 'usaidralf_load_widget');
-function usaidralf_load_widget(){
-  register_widget('usaidralf_sector_selector_widget');
-  register_widget('usaidralf_view_report_widget');
-}
-
-class usaidralf_sector_selector_widget extends WP_Widget{
-	function __construct(){
-		parent::__construct(
-			'usaidralf_sector_selector_widget',
-			__('Sector Selector Widget', 'usaidralf'),
-			array('description' => __('Show a select field for displaying RALF by Sector', 'usaidralf'))
-		);
-	}
-
-	public function widget($args, $instance){
-		$title = apply_filters('widget_title', $instance['title']);
-
-		echo $args['before_widget'];
-		if(!empty($title)){
-			echo $args['before_title'] . $title . $args['after_title'];
-		}
-
-    $sectors = get_terms(array('taxonomy' => 'sectors', 'orderby' => 'term_group', 'parent' => 0));
-    if($sectors){
-      echo '<ul>';
-      foreach($sectors as $sector){
-        echo '<li><a href="' . esc_url(get_term_link($sector)) . '">' . $sector->name . '</a></li>';
-        $sub_sectors = get_terms(array('taxonomy' => 'sectors', 'orderby' => 'name', 'parent' => $sector->term_id));
-        if(!empty($sub_sectors) && !is_wp_error($sub_sectors)){
-          foreach($sub_sectors as $sub_sector){
-            echo '<li><a href="' . esc_url(get_term_link($sub_sector)) . '"> - ' . $sub_sector->name . '</a></li>';
-          }
-        }
-      }
-    }
-    echo '</ul>';
-		echo $args['after_widget'];
-	}
-
-	public function form($instance){
-		if(isset($instance['title'])){
-			$title = $instance['title'];
-		}
-		else{
-			$title = __('New title', 'usaidralf');
-		}
-	?>
-		<p>
-			<label for="<?php echo $this->get_field_id('title'); ?>"><?php _e('Title:'); ?></label>
-			<input class="widefat" id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title'); ?>" type="text" value="<?php echo esc_attr($title); ?>" />
-		</p>
-	<?php
-	}
-
-	public function update($new_instance, $old_instance){
-		$instance = array();
-		$instance['title'] = (!empty($new_instance['title'])) ? strip_tags($new_instance['title']) : '';
-		return $instance;
-	}
-}
-
-class usaidralf_view_report_widget extends WP_Widget{
-	function __construct(){
-		parent::__construct(
-			'wuaidralf_view_report_widget',
-			__('View Report Widget', 'usaidralf'),
-			array('description' => __('Show the View Report button', 'usaidralf'))
-		);
-	}
-
-	public function widget($args, $instance){
-		$title = apply_filters('widget_title', $instance['title']);
-
-		echo $args['before_widget'];
-		if(!empty($title)){
-			echo $args['before_title'] . $title . $args['after_title'];
-		}
-
-    echo '<a href="' . home_url('view-report') . '">' . __('View Report', 'usaidralf') . '</a>';
-
-		echo $args['after_widget'];
-	}
-
-	public function form($instance){
-		if(isset($instance['title'])){
-			$title = $instance['title'];
-		}
-		else{
-			$title = __('New title', 'usaidralf');
-		}
-	?>
-		<p>
-			<label for="<?php echo $this->get_field_id('title'); ?>"><?php _e('Title:'); ?></label>
-			<input class="widefat" id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title'); ?>" type="text" value="<?php echo esc_attr($title); ?>" />
-		</p>
-	<?php
-	}
-
-	public function update($new_instance, $old_instance){
-		$instance = array();
-		$instance['title'] = (!empty($new_instance['title'])) ? strip_tags($new_instance['title']) : '';
-		return $instance;
-	}
 }
 
 function usaidralf_get_impacts_by_sector($impact_ids){
@@ -649,21 +174,138 @@ function usaidralf_get_impacts_by_sector($impact_ids){
   return $impacts_by_sector;
 }
 
-function usaidralf_get_related_activities($impact_id){
+//$article_type can be impacts (default) or resources
+function usaidralf_get_related_activities($article_id, $article_type = 'impacts'){
+  $meta_key = 'related_' . $article_type;
   $activities = new WP_Query(array(
     'post_type' => 'activities',
     'posts_per_page' => -1,
     'post_status' => 'publish',
     'meta_query' => array(
       array(
-        'key' => 'related_impacts',
-        'value' => '"' . $impact_id . '"',
+        'key' => $meta_key,
+        'value' => '"' . $article_id . '"',
         'compare' => 'LIKE'
       )
     )
   ));
 
   return $activities;
+}
+
+//only for resources cpt
+function usaidralf_get_related_impacts($resource_id){
+  $impacts = new WP_Query(array(
+    'post_type' => 'impacts',
+    'posts_per_page' => -1,
+    'post_status' => 'publish',
+    'meta_query' => array(
+      array(
+        'key' => 'related_resources',
+        'value' => '"' . $resource_id . '"',
+        'compare' => 'LIKE'
+      )
+    )
+  ));
+
+  return $impacts;
+}
+
+function usaidralf_show_article_meta($article_type, $article_id){
+  switch($article_type){
+    case 'impacts':
+      $bg_color = get_field('impacts_color', 'option');
+      $btn_text = __('Impact', 'usaidralf');
+      $article_class = 'article-type';
+    break;
+
+    case 'activities':
+      $bg_color = get_field('activities_color', 'option');
+      $btn_text = __('Activity', 'usaidralf');
+      $article_class = 'article-type';
+    break;
+
+    case 'resources':
+      $bg_color = get_field('resources_color', 'option');
+      $btn_text = __('Resource', 'usaidralf');
+      $article_class = 'article-type resource-article-type';
+    break;
+
+    default:
+      $bg_color = '';
+      $btn_text = '';
+      $article_class = 'article-type';
+  }
+  echo '<span class="' . $article_class . '" style="background-color:' . $bg_color . ';">' . $btn_text . '</span>';
+
+  //list sector buttons
+  $sectors = get_the_terms($article_id, 'sectors');
+  if($sectors){
+    $parent_selected = false;
+    foreach($sectors as $sector){
+      $sector_name = $sector->name;
+      $sector_color = get_field('sector_color', 'sectors_' . $sector->term_id);
+      $sector_url = esc_url(get_term_link($sector->term_id), 'sectors');
+
+      if($sector->parent == 0){ $parent_selected = true; }
+
+      if($sector->parent > 0){
+        if($parent_selected == false){
+          $sector_parent = get_term($sector->parent, 'sectors');
+          $sector_parent_color = get_field('sector_color', 'sectors_' . $sector_parent->term_id);
+          $sector_parent_url = esc_url(get_term_link($sector_parent->term_id), 'sectors');
+
+          echo '<a href="' . $sector_parent_url . '" class="meta-btn btn-sector hidden-print" style="background-color:' . $sector_parent_color . ';">' . $sector_parent->name . '</a>';
+        }
+        echo '<a href="' . $sector_url . '" class="meta-btn btn-sector hidden-print" style="background-color:' . $sector_color . '">' . $sector_name . '</a>';
+      }
+      else{
+        echo '<a href="' . $sector_url . '" class="meta-btn btn-sector hidden-print" style="background-color:' . $sector_color . ';">' . $sector_name . '</a>';
+      }
+    }
+  }
+
+  if($article_type == 'impacts' || $article_type == 'resources'){
+    //activities button, w/ count
+    $related_activities = usaidralf_get_related_activities($article_id, $article_type);
+    $num_activities = $related_activities->post_count;
+
+    echo '<a href="' . get_permalink($article_id) . '" class="meta-btn btn-activities hidden-print" style="background-color:' . get_field('activities_color', 'option') . ';">' . sprintf(__('Activities (%d)', 'usaidralf'), $num_activities) . '</a>';
+  }
+
+  if($article_type == 'resources'){
+    $related_impacts = usaidralf_get_related_impacts($article_id);
+    $num_impacts = $related_impacts->post_count;
+
+    echo '<a href="' . get_permalink($article_id) . '" class="meta-btn btn-impacts" style="background-color:' . get_field('impacts_color', 'option') . ';">' . sprintf(__('Impacts (%d)', 'usaidralf'), $num_impacts) . '</a>';
+
+    $resource_types = get_the_terms($article_id, 'resource_types');
+    $parent_selected = false;
+    foreach($resource_types as $resource_type){
+      $resource_type_name = $resource_type->name;
+      $resource_type_color = get_field('resource_type_color', 'resource_types_' . $resource_type->term_id);
+      $resource_type_url = esc_url(get_term_link($resource_type->term_id), 'resource_types');
+
+      if($resource_type->parent == 0){ $parent_selected = true; }
+
+      if($resource_type->parent > 0){
+        if($parent_selected == false){
+          $resource_type_parent = get_term($resource_type->parent, 'resource_types');
+          $resource_type_parent_color = get_field('resource_type_color', 'resource_types_' . $resource_type_parent->term_id);
+          $resource_type_parent_url = esc_url(get_term_link($resource_type_parent->term_id), 'resource_types');
+
+          echo '<a href="' . $resource_type_parent_url . '" class="meta-btn btn-sector hidden-print" style="background-color:' . $resource_type_parent_color . ';">' . $resource_type_parent->name . '</a>';
+        }
+
+        echo '<a href="' . $resource_type_url . '" class="meta-btn btn-sector hidden-print" style="background-color:' . $resource_type_color . ';">' . $resource_type_name . '</a>';
+      }
+      else{
+        echo '<a href="' . $resource_type_url . '" class="meta-btn btn-sector hidden-print" style="background-color:' . $resource_type_color . ';">' . $resource_type_name . '</a>';
+      }
+    }
+
+    echo '<a href="' . get_field('original_resource_url', $article_id) . '" class="meta-btn btn-sector resource-article-type" target="_blank">' . __('Source', 'usaidralf') . '</a>';
+  }
 }
 
 // add the filter for your relationship field
@@ -809,17 +451,33 @@ function usaidralf_get_related_activities($impact_id){
 		
 		return $value;
 		
-  } // end function acf_reciprocal_relationship
+} // end function acf_reciprocal_relationship
 
-  if(function_exists('acf_add_options_page')){
-    acf_add_options_page(array(
-      'page_title' => 'General Settings',
-      'menu_title' => 'General Settings',
-      'menu_slug' => 'general-settings',
-      'capability' => 'edit_posts',
-      'redirect' => false
-    ));
-  }
+if(function_exists('acf_add_options_page')){
+  acf_add_options_page(array(
+    'page_title' => __('General Settings', 'usaidralf'),
+    'menu_title' => __('General Settings', 'usaidralf'),
+    'menu_slug' => 'general-settings',
+    'capability' => 'edit_posts',
+    'redirect' => false
+  ));
+
+  acf_add_options_sub_page(array(
+    'page_title' => __('Activities Settings', 'usaidralf'),
+    'menu_title' => __('Activities Settings', 'usaidralf'),
+    'parent_slug' => 'edit.php?post_type=activities'
+  ));
+  acf_add_options_sub_page(array(
+    'page_title' => __('Impacts Settings', 'usaidralf'),
+    'menu_title' => __('Impacts Settings', 'usaidralf'),
+    'parent_slug' => 'edit.php?post_type=impacts'
+  ));
+  acf_add_options_sub_page(array(
+    'page_title' => __('Resources Settings', 'usaidralf'),
+    'menu_title' => __('Resources Settings', 'usaidralf'),
+    'parent_slug' => 'edit.php?post_type=resources'
+  ));
+}
   
 
 /*********************
@@ -871,6 +529,26 @@ function usaidralf_get_search_history(){
   }
   else{ //no cookie, must be first search or they've been cleared with js function
     return $search_term;
+  }
+}
+
+add_filter('searchwp_query_join', 'usaidralf_join_term_relationships', 10, 3);
+function usaidralf_join_term_relationships($sql, $post_type, $engine){
+  global $wpdb;
+
+  return "LEFT JOIN {$wpdb->prefix}term_relationships as swp_tax_rel ON swp_tax_rel.object_id = {$wpdb->prefix}posts.ID";
+}
+
+add_filter('searchwp_weight_mods', 'usaidralf_weight_priority_keywords');
+function usaidralf_weight_priority_keywords($sql){
+  $searched_keyword = get_search_query();
+  $searched_keyword_term = get_term_by('slug', $searched_keyword, 'priority_keywords');
+
+  if($searched_keyword_term != false){
+    $priority_keyword_id = $searched_keyword_term->term_id;
+    $additional_weight = 1000;
+
+    return $sql . " + (IF ((swp_tax_rel.term_taxonomy_id = {$priority_keyword_id}), {$additional_weight}, 0))";
   }
 }
 
