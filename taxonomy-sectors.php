@@ -19,8 +19,8 @@
           </h1>
 
           <ul class="nav nav-pills nav-justified" role="tablist">
-            <li role="presentation" class="active"><a href="#impacts" aria-controls="impacts" role="tab" data-toggle="tab">Impacts / Activities</a></li>
-            <li role="presentation"><a href="#resources" aria-controls="resources" role="tab" data-toggle="tab">Resources</a></li>
+            <li role="presentation" class="active"><a href="#impacts" aria-controls="impacts" role="tab" data-toggle="tab"><?php _e('Impacts / Activities', 'usaidralf'); ?></a></li>
+            <li role="presentation"><a href="#resources" aria-controls="resources" role="tab" data-toggle="tab"><?php _e('Resources', 'usaidralf'); ?></a></li>
           </ul>
 
           <div class="tab-content">
