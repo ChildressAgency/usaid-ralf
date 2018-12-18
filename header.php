@@ -10,7 +10,7 @@
   <meta http-equiv="cache-control" content="public">
   <meta http-equiv="cache-control" content="private">
 
-  <title>USAID RALF - <?php echo get_the_title(); ?></title>
+  <title>USAID RALF - <?php esc_html_e(get_the_title()); ?></title>
 
   <?php wp_head(); ?>
 
@@ -25,7 +25,7 @@
   <nav id="header-nav">
     <div class="container">
       <div class="navbar-header">
-        <a href="<?php echo home_url(); ?>" class="header-logo"><img src="<?php echo get_stylesheet_directory_uri(); ?>/images/logo.png" class="img-responsive" alt="" /></a>
+        <a href="<?php echo esc_url(home_url()); ?>" class="header-logo"><img src="<?php echo get_stylesheet_directory_uri(); ?>/images/logo.png" class="img-responsive" alt="" /></a>
         <h1><?php _e('Environmental Compliance RALF', 'usaidralf'); ?></h1>
         <button type="button" class="navbar-toggle hidden-print collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
           <span class="sr-only">Toggle Navigation</span>
