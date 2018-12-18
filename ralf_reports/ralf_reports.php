@@ -8,26 +8,30 @@
   Text Domain: ralfreports
 */
 // Exit if accessed directly
-if ( ! defined( 'ABSPATH' ) ) exit;
+if (!defined('ABSPATH')){ exit; }
+
+define('RALFREPORTS_PLUGIN_DIR', dirname(__FILE__));
+define('RALFREPORTS_PLUGIN_URL', plugin_dir_url(__FILE__));
 
 class ralf_report{
   public function __construct(){
     add_action('init', array($this, 'ralf_report_load_textdomain'));
+    add_action('plugins_loaded', array($this, 'process_admin_tasks'));
+
     add_shortcode('ralf_report', array($this, 'ralf_report'));
     add_shortcode('email_form', array($this, 'email_rtf_form'));
     add_shortcode('report_button', array($this, 'report_button_container'));
 
     add_action('wp_enqueue_scripts', array($this, 'scripts'));
-    add_action('acf/init', array($this, 'add_acf_field_groups'));
-
-    add_action('plugins_loaded', array($this, 'delete_old_reports'));
+    add_action('acf/init', array($this, 'create_acf_field_groups'));
+    add_action('widgets_init', array($this, 'register_widgets'));
 
     add_action('wp_ajax_nopriv_send_rtf_report', array($this, 'send_rtf_report'));
     add_action('wp_ajax_send_rtf_report', array($this, 'send_rtf_report'));
     add_action('wp_ajax_nopriv_record_report_save', array($this, 'record_report_save'));
     add_action('wp_ajax_record_report_save', array($this, 'record_report_save'));
 
-    //add_action('admin_menu', array($this, 'register_email_report_submenu'));
+    //add_filter('searchwp_query_results', array($this, 'log_search_results'), 10, 2);
   }
 
   function ralf_report_load_textdomain(){
@@ -35,7 +39,7 @@ class ralf_report{
   }
 
   function ralf_report(){
-    include('view-report.php');
+    require_once RALFREPORTS_PLUGIN_DIR . '/view-report.php';
   }
 
   function scripts(){
@@ -54,12 +58,17 @@ class ralf_report{
     ));
   }
 
+  public function register_widgets(){
+    require_once RALFREPORTS_PLUGIN_DIR . '/widgets/view-report-widget.php';
+    register_widget('view_report_widget');
+  }
+
   public function email_rtf_form($atts){
     //convert activities_ids to string
     $report_ids = implode(',', $atts['activity_ids']);
 
     $nonce = wp_create_nonce('email_rtf_report_' . $report_ids);
-    $form_content = '<div class="email-report">
+    $form_content = '<div class="email-report hidden-print">
                       <h3>' . __('Email this report', 'ralfreports') . '</h3>
                       <div class="form-group">
                         <input type="text" required id="email-addresses" name="email-addresses" class="form-control" placeholder="' . __('Enter a comma-separated list of email addresses.', 'ralfreports') . '" />
@@ -93,7 +102,7 @@ class ralf_report{
     $html_report = $this->get_report($report_ids_array);
 
     //using vsword to convert the html into a docx
-    require_once 'vsWord/VsWord.php';
+    require_once RALFREPORTS_PLUGIN_DIR . '/vsWord/VsWord.php';
     VsWord::autoLoad();
 
     $doc = new VsWord();
@@ -141,7 +150,7 @@ class ralf_report{
     $rtf_report = '<h1>' . __('Report of Activities and Associated Impacts', 'ralfreports') . '</h1>';
 
     $activities_report = new WP_Query(array(
-      'post_type' => array('activities', 'impacts'),
+      'post_type' => array('activities', 'impacts', 'resources'),
       'posts_per_page' => -1,
       'post__in' => $report_ids,
       'orderby' => 'post_type',
@@ -214,16 +223,22 @@ class ralf_report{
     return $wpdb->insert_id;
   }
 
-  function delete_old_reports(){
-    include('delete_old_reports.php');
+  function process_admin_tasks(){
+    require_once RALFREPORTS_PLUGIN_DIR . '/delete_old_reports.php';
+
+    if(isset($_GET['email_admin_reports'])){
+      require_once RALFREPORTS_PLUGIN_DIR . '/reports/email_admin_reports.php';
+    }
   }
 
   function report_button_container(){
-    $article_id = get_the_ID();
-    $nonce = wp_create_nonce('report_button_' . $article_id);
+    if(is_singular('activities') || is_singular('impacts') || is_singular('resources') || is_page('view-report')){
+      $article_id = get_the_ID();
+      $nonce = wp_create_nonce('report_button_' . $article_id);
 
-    $btn_container = '<div class="report-button hidden-print" data-article_id="' . $article_id . '" data-nonce="' . $nonce . '"></div>';
-    echo $btn_container;
+      $btn_container = '<div class="report-button hidden-print" data-article_id="' . $article_id . '" data-nonce="' . $nonce . '"></div>';
+      echo $btn_container;
+    }
   }
 
   function record_report_save(){
@@ -246,56 +261,25 @@ class ralf_report{
     }
   }
 
-  function add_acf_field_groups(){
-    acf_add_local_field_group(array(
-      'key' => 'group_5bcde52f3147b',
-      'title' => 'Report History Settings',
-      'fields' => array(
-        array(
-          'key' => 'field_5bcde537c6286',
-          'label' => 'How long to store reports?',
-          'name' => 'how_long_to_store_reports',
-          'type' => 'number',
-          'instructions' => 'Enter the number of days to keep reports before they are deleted.',
-          'required' => 0,
-          'conditional_logic' => 0,
-          'wrapper' => array(
-            'width' => '25',
-            'class' => '',
-            'id' => ''
-          ),
-          'default_value' => '',
-          'placeholder' => '',
-          'prepend' => '',
-          'append' => 'days',
-          'min' => '',
-          'max' => '',
-          'step' => 1
-        )
-      ),
-      'location' => array(
-        array(
-          array(
-            'param' => 'options_page',
-            'operator' => '==',
-            'value' => 'general-settings'
-          )
-        )
-      ),
-      'menu_order' => 0,
-      'position' => 'normal',
-      'style' => 'default',
-      'label_placement' => 'top',
-      'instruction_placement' => 'label',
-      'hide_on_screen' => '',
-      'active' => 1,
-      'description' => ''
-    ));
+  function log_search_results($post_ids, $args){
+    $count_field_acf_key = 'field_5bf56db6a2d37';
+
+    foreach($post_ids as $post_id){
+      $count = get_field($count_field_acf_key, $post_id);
+      $count++;
+      update_field($count_field_acf_key, $count, $post_id);
+    }
+
+    return $post_ids;
+  }
+
+  function create_acf_field_groups(){
+    require_once RALFREPORTS_PLUGIN_DIR . '/acf_fields.php';
   }
 }
 
 new ralf_report;
 
 if(is_admin()){
-  require_once 'ralf-dashboard.php';
+  require_once RALFREPORTS_PLUGIN_DIR . '/ralf-dashboard.php';
 }

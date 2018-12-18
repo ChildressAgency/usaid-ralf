@@ -2,25 +2,18 @@
   <div class="page-content">
     <div class="container">
       <div class="row">
-      <div class="col-sm-4 col-md-3">
-          <?php get_sidebar(); ?>
-        </div>
         <div class="col-sm-8 col-md-9">
           <main class="result">
             <div class="go-back">
               <a href="javascript:history.back(-1);"><?php _e('BACK', 'usaidralf'); ?></a>
             </div>
-            <?php if(have_posts()): while(have_posts()): the_post(); 
-              $activity_id = get_the_ID(); ?>
-
+            <?php if(have_posts()): while(have_posts()): the_post(); ?>
               <article class="ralf-article">
                 <header class="result-header">
+                  <span class="result-type-icon activity" data-toggle="tooltip" data-placement="top" title="Activity"></span>
+                  <div class="sector-icon sector-icon-small"></div>
                   <h1><?php the_title(); ?></h1>
-                  <div class="results-meta">
-                    <?php usaidralf_show_article_meta('activities', $activity_id); ?>
-                  </div>
                 </header>
-
                 <section class="result-content">
                   <div class="activity-description">
                     <p><?php the_content(); ?></p>
@@ -50,18 +43,15 @@
                               <div class="panel panel-default">
                                 <div class="panel-heading" role="tab" id="impact-title<?php echo $i; ?>">
                                   <h3 class="panel-title">
-                                    <a href="<?php echo get_permalink($impact->impact_id); ?>" class="sector-popout hidden-print" target="_blank">
-                                      <?php echo $impact->impact_title; ?>
-                                      <span class="dashicons dashicons-external" data-toggle="tooltip" data-position="top" title="<?php echo $sector['sector_name']; ?>"></span>
+                                    <a href="#impact<?php echo $i; ?>" role="button" data-toggle="collapse" data-parent="#impacts-accordion"  aria-expanded="false" aria-controls="impact<?php echo $i; ?>">
+                                      
+                                        <img src="<?php the_field('sector_icon', $acf_sector_id); ?>" class="img-circle" alt="<?php echo $sector['sector_name']; ?>" style="background-color:<?php the_field('sector_color', $acf_sector_id); ?>;" data-toggle="tooltip" data-placement="top" title="<?php echo $sector['sector_name']; ?>" />
+                                        <span> <?php echo $impact->impact_title; ?></span>
                                     </a>
                                   </h3>
-                                  <div class="impact-by-sector-meta">
-                                    <a href="#impact<?php echo $i;; ?>" class="meta-btn report-expand hidden-print collapsed" role="button" data-toggle="collapse" aria-expanded="false" aria-controls="impact<?php echo $i; ?>"></a>
-                                    <?php
-                                      //get all sectors for this impact to use for meta btns
-                                      usaidralf_show_article_meta('impacts', $impact->impact_id); 
-                                    ?>
-                                  </div>
+                                  <a href="<?php echo esc_url(get_term_link((int)$sector['sector_id'], 'sectors')); ?>" class="sector-popout" target="_blank">
+                                    <span class="dashicons dashicons-external" data-toggle="tooltip" data-position="top" title="<?php echo $sector['sector_name']; ?>"></span>
+                                  </a>
                                 </div>
                                 <div class="clearfix"></div>
                                 <div id="impact<?php echo $i; ?>" class="panel-collapse collapse" role="tabpanel" aria-labelledby="impact-title<?php echo $i; ?>">
@@ -77,25 +67,13 @@
                     </section>
                   <?php endif; ?>
                   <?php echo do_shortcode('[report_button]'); ?>
-
-                  <section class="related">
-                    <h3><?php _e('Related Resources', 'usaidralf'); ?></h3>
-                    <?php 
-                      $related_resources = get_field('related_resources', $activity_id);
-                      if($related_resources): ?>
-                        <ul>
-                          <?php foreach($related_resources as $resource): ?>
-                            <li><a href="<?php echo get_permalink($resource); ?>"><?php echo get_the_title($resource); ?></a></li>
-                          <?php endforeach; ?>
-                        </ul>
-                    <?php else: ?>
-                      <p><?php _e('No related Resources', 'usaidralf'); ?></p>
-                    <?php endif; ?>
-                  </section>
               </article>
             <?php endwhile; endif; ?>
 
           </main>
+        </div>
+        <div class="col-sm-4 col-md-3">
+          <?php get_sidebar(); ?>
         </div>
       </div>
     </div>

@@ -1,4 +1,7 @@
 <?php
+// Exit if accessed directly
+if (!defined('ABSPATH')){ exit; }
+
 //https://www.sitepoint.com/using-wp_list_table-to-create-wordpress-admin-tables/
 if(!class_exists('WP_List_Table')){
   require_once(ABSPATH . 'wp-admin/includes/class-wp-list-table.php');

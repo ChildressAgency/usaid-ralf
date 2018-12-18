@@ -1,4 +1,7 @@
 <?php 
+// Exit if accessed directly
+if (!defined('ABSPATH')){ exit; }
+
 global $wpdb;
 
 $saved_stats_table = '<table cellpadding="0" cellspacing="0" class="saved-stats-table">';
