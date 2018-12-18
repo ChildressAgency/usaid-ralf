@@ -10,7 +10,7 @@
   <meta http-equiv="cache-control" content="public">
   <meta http-equiv="cache-control" content="private">
 
-  <title>USAID RALF - <?php echo get_the_title(); ?></title>
+  <title>USAID RALF - <?php esc_html_e(get_the_title()); ?></title>
 
   <?php wp_head(); ?>
 

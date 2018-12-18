@@ -72,10 +72,10 @@ function usaidralf_header_fallback_menu(){ ?>
       
   <div id="navbar" class="collapse navbar-collapse">
     <ul class="nav navbar-nav navbar-right">
-      <li<?php if(is_front_page()){ echo ' class="active"'; } ?>><a href="<?php echo home_url(); ?>">Home</a></li>
-      <li<?php if(is_page('about')){ echo ' class="active"'; } ?>><a href="<?php echo home_url('about'); ?>">About</a></li>
-      <li<?php if(is_page('contact')){ echo ' class="active"'; } ?>><a href="<?php echo home_url('contact'); ?>">Contact</a></li>
-      <li<?php if(is_page('view-report')){ echo ' class="active"'; } ?>><a href="<?php echo home_url('view-report'); ?>">View Report</a></li>
+      <li<?php if(is_front_page()){ echo ' class="active"'; } ?>><a href="<?php echo esc_url(home_url()); ?>">Home</a></li>
+      <li<?php if(is_page('about')){ echo ' class="active"'; } ?>><a href="<?php echo esc_url(home_url('about')); ?>">About</a></li>
+      <li<?php if(is_page('contact')){ echo ' class="active"'; } ?>><a href="<?php echo esc_url(home_url('contact')); ?>">Contact</a></li>
+      <li<?php if(is_page('view-report')){ echo ' class="active"'; } ?>><a href="<?php echo esc_url(home_url('view-report')); ?>">View Report</a></li>
     </ul>
   </div>
 
@@ -236,7 +236,7 @@ function usaidralf_show_article_meta($article_type, $article_id){
       $btn_text = '';
       $article_class = 'article-type';
   }
-  echo '<span class="' . $article_class . '" style="background-color:' . $bg_color . ';">' . $btn_text . '</span>';
+  echo '<span class="' . esc_attr($article_class) . '" style="background-color:' . esc_html($bg_color) . ';">' . esc_html($btn_text) . '</span>';
 
   //list sector buttons
   $sectors = get_the_terms($article_id, 'sectors');
@@ -255,12 +255,12 @@ function usaidralf_show_article_meta($article_type, $article_id){
           $sector_parent_color = get_field('sector_color', 'sectors_' . $sector_parent->term_id);
           $sector_parent_url = esc_url(get_term_link($sector_parent->term_id), 'sectors');
 
-          echo '<a href="' . $sector_parent_url . '" class="meta-btn btn-sector hidden-print" style="background-color:' . $sector_parent_color . ';">' . $sector_parent->name . '</a>';
+          echo '<a href="' . esc_url($sector_parent_url) . '" class="meta-btn btn-sector hidden-print" style="background-color:' . esc_html($sector_parent_color) . ';">' . esc_html($sector_parent->name) . '</a>';
         }
-        echo '<a href="' . $sector_url . '" class="meta-btn btn-sector hidden-print" style="background-color:' . $sector_color . '">' . $sector_name . '</a>';
+        echo '<a href="' . esc_url($sector_url) . '" class="meta-btn btn-sector hidden-print" style="background-color:' . esc_html($sector_color) . '">' . esc_html($sector_name) . '</a>';
       }
       else{
-        echo '<a href="' . $sector_url . '" class="meta-btn btn-sector hidden-print" style="background-color:' . $sector_color . ';">' . $sector_name . '</a>';
+        echo '<a href="' . esc_url($sector_url) . '" class="meta-btn btn-sector hidden-print" style="background-color:' . esc_html($sector_color) . ';">' . esc_html($sector_name) . '</a>';
       }
     }
   }
