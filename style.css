@@ -827,6 +827,7 @@ main.result{
   font-family:"AvenirNext", sans-serif;
   font-size:16px;
   border-top:1px solid #000;
+  margin-top:25px;
 }
 .impact-by-sector>h2{
   font-size:22px;
@@ -859,9 +860,6 @@ main.result{
 .impact-by-sector-meta{
   margin-left:15px;
 }
-.go-back{
-  margin-bottom:40px;
-}
 .go-back>a{
   color:#808080;
   font-family:"AvenirNext", sans-serif;
@@ -875,6 +873,7 @@ main.result{
 
 .results-sidebar .report-button>span{
   margin-left:0;
+  display:none;
 }
 .wp-pagenavi{
   margin-top:40px;
