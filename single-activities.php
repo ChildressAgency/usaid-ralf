@@ -32,6 +32,7 @@
                     </div>
                   <?php endif; ?>
                 </section>
+                  <?php echo do_shortcode('[report_button]'); ?>
                
                 <?php 
                   $impact_ids = get_field('related_impacts', false, false);
@@ -52,7 +53,7 @@
                                   <h3 class="panel-title">
                                     <a href="<?php echo get_permalink($impact->impact_id); ?>" class="sector-popout hidden-print" target="_blank">
                                       <?php echo $impact->impact_title; ?>
-                                      <span class="dashicons dashicons-external" data-toggle="tooltip" data-position="top" title="<?php echo $sector['sector_name']; ?>"></span>
+                                      <span class="dashicons dashicons-external" data-toggle="tooltip" data-position="top" title="<?php printf(__('Open %s in a new tab'), '"' . $impact->impact_title . '"'); ?>"></span>
                                     </a>
                                   </h3>
                                   <div class="impact-by-sector-meta">
@@ -76,7 +77,6 @@
                       </div>
                     </section>
                   <?php endif; ?>
-                  <?php echo do_shortcode('[report_button]'); ?>
 
                   <section class="related">
                     <h3><?php _e('Related Resources', 'usaidralf'); ?></h3>
