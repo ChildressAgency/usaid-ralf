@@ -7,6 +7,9 @@
       </div>
       <div class="col-sm-8 col-md-9">
         <main class="result">
+          <div class="go-back">
+            <a href="javascript:history.back(-1);"><?php _e('BACK', 'usaidralf'); ?></a>
+          </div>
           <?php 
             if(have_posts()): while(have_posts()): 
               the_post(); 
@@ -23,6 +26,7 @@
                 <section class="result-content">
                   <?php the_content(); ?>
                 </section>
+                <?php echo do_shortcode('[report_button]'); ?>
 
                 <section class="related">
                   <h3><?php _e('Related Activities.', 'usaidralf'); ?></h3>
