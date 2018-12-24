@@ -270,7 +270,9 @@ function usaidralf_show_article_meta($article_type, $article_id){
     $related_activities = usaidralf_get_related_activities($article_id, $article_type);
     $num_activities = $related_activities->post_count;
 
-    echo '<a href="' . get_permalink($article_id) . '" class="meta-btn btn-activities hidden-print" style="background-color:' . get_field('activities_color', 'option') . ';">' . sprintf(__('Activities (%d)', 'usaidralf'), $num_activities) . '</a>';
+    if(($article_type == 'impacts') || ($article_type == 'resources' && $num_activities > 0)){
+      echo '<a href="' . get_permalink($article_id) . '" class="meta-btn btn-activities hidden-print" style="background-color:' . get_field('activities_color', 'option') . ';">' . sprintf(__('Activities (%d)', 'usaidralf'), $num_activities) . '</a>';
+    }
   }
 
   if($article_type == 'resources'){
