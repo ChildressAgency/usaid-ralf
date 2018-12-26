@@ -31,7 +31,7 @@
                 <section class="related">
                   <h3><?php _e('Related Activities.', 'usaidralf'); ?></h3>
                   <?php 
-                    $related_activities = usaidralf_get_related_activities($resource_id);
+                    $related_activities = usaidralf_get_related_activities($resource_id, 'resources');
                     if($related_activities->have_posts()): ?>
                       <ul>
                         <?php while($related_activities->have_posts()): $related_activities->the_post(); ?>
