@@ -284,11 +284,25 @@ function usaidralf_show_article_meta($article_type, $article_id){
     }
 
     $resource_types = get_the_terms($article_id, 'resource_types');
+    /*
+     * get_the_terms returns the terms in alpha order,
+     * we need them sorted so that the parent is processed 1st.
+     * 
+     * Need to test but this may be an issue if more than one 
+     * parent/child is selected (probably not likely) - this would 
+     * display parent, parent, child, child instead of the desired
+     * parent, child, parent, child.
+    */
+    foreach($resource_types as $key => $row){
+      $resource_types_parent[$key] = $row->parent;
+    }
+    array_multisort($resource_types_parent, SORT_ASC, $resource_types);
+
     $parent_selected = false;
     foreach($resource_types as $resource_type){
       $resource_type_name = $resource_type->name;
       $resource_type_color = get_field('resource_type_color', 'resource_types_' . $resource_type->term_id);
-      $resource_type_url = esc_url(get_term_link($resource_type->term_id), 'resource_types');
+      $resource_type_url = get_term_link($resource_type->term_id, 'resource_types');
 
       if($resource_type->parent == 0){ $parent_selected = true; }
 
@@ -296,15 +310,15 @@ function usaidralf_show_article_meta($article_type, $article_id){
         if($parent_selected == false){
           $resource_type_parent = get_term($resource_type->parent, 'resource_types');
           $resource_type_parent_color = get_field('resource_type_color', 'resource_types_' . $resource_type_parent->term_id);
-          $resource_type_parent_url = esc_url(get_term_link($resource_type_parent->term_id), 'resource_types');
+          $resource_type_parent_url = get_term_link($resource_type_parent->term_id, 'resource_types');
 
-          echo '<a href="' . $resource_type_parent_url . '" class="meta-btn btn-sector hidden-print" style="background-color:' . $resource_type_parent_color . ';">' . $resource_type_parent->name . '</a>';
+          echo '<a href="' . esc_url($resource_type_parent_url) . '" class="meta-btn btn-sector hidden-print" style="background-color:' . $resource_type_parent_color . ';">' . $resource_type_parent->name . '</a>';
         }
 
-        echo '<a href="' . $resource_type_url . '" class="meta-btn btn-sector hidden-print" style="background-color:' . $resource_type_color . ';">' . $resource_type_name . '</a>';
+        echo '<a href="' . esc_url($resource_type_url) . '" class="meta-btn btn-sector hidden-print" style="background-color:' . $resource_type_color . ';">' . $resource_type_name . '</a>';
       }
       else{
-        echo '<a href="' . $resource_type_url . '" class="meta-btn btn-sector hidden-print" style="background-color:' . $resource_type_color . ';">' . $resource_type_name . '</a>';
+        echo '<a href="' . esc_url($resource_type_url) . '" class="meta-btn btn-sector hidden-print" style="background-color:' . $resource_type_color . ';">' . $resource_type_name . '</a>';
       }
     }
 
