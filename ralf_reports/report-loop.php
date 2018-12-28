@@ -51,7 +51,7 @@ if (!defined('ABSPATH')){ exit; }
                         </a>
                       </h3>
                       <div class="impact-by-sector-meta">
-                        <a href="#impact<?php echo $i;; ?>" class="meta-btn report-expand hidden-print collapsed" role="button" data-toggle="collapse" aria-expanded="false" aria-controls="impact<?php echo $i; ?>"></a>
+                        <a href="#impact<?php echo $report_article_id . '-' . $i; ?>" class="meta-btn report-expand hidden-print collapsed" role="button" data-toggle="collapse" aria-expanded="false" aria-controls="impact<?php echo $i; ?>"></a>
                         <?php
                           //get all sectors for this impact to use for meta btns
                           usaidralf_show_article_meta('impacts', $impact->impact_id); 
@@ -59,7 +59,7 @@ if (!defined('ABSPATH')){ exit; }
                       </div>
                     </div>
                     <div class="clearfix"></div>
-                    <div id="impact<?php echo $i; ?>" class="panel-collapse collapse print-visible" role="tabpanel" aria-labelledby="impact-title<?php echo $i; ?>">
+                    <div id="impact<?php echo $report_article_id . '-' . $i; ?>" class="panel-collapse collapse print-visible" role="tabpanel" aria-labelledby="impact-title<?php echo $i; ?>">
                       <div class="panel-body">
                         <?php echo $impact->impact_description; ?>
                       </div>
