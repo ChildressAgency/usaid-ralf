@@ -57,7 +57,7 @@
                                     </a>
                                   </h3>
                                   <div class="impact-by-sector-meta">
-                                    <a href="#impact<?php echo $i;; ?>" class="meta-btn report-expand hidden-print collapsed" role="button" data-toggle="collapse" aria-expanded="false" aria-controls="impact<?php echo $i; ?>"></a>
+                                    <a href="#impact<?php echo $i; ?>" class="meta-btn report-expand hidden-print collapsed" role="button" data-toggle="collapse" aria-expanded="false" aria-controls="impact<?php echo $i; ?>"></a>
                                     <?php
                                       //get all sectors for this impact to use for meta btns
                                       usaidralf_show_article_meta('impacts', $impact->impact_id); 
