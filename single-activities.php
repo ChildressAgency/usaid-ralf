@@ -53,7 +53,7 @@
                                   <h3 class="panel-title">
                                     <a href="<?php echo get_permalink($impact->impact_id); ?>" class="sector-popout hidden-print" target="_blank">
                                       <?php echo $impact->impact_title; ?>
-                                      <span class="dashicons dashicons-external" data-toggle="tooltip" data-position="top" title="<?php printf(__('Open %s in a new tab'), '"' . $impact->impact_title . '"'); ?>"></span>
+                                      <span class="dashicons dashicons-external" data-toggle="tooltip" data-position="top" title="<?php printf(__("Open '%s' in a new tab", 'udaisralf'), esc_html($impact->impact_title)); ?>"></span>
                                     </a>
                                   </h3>
                                   <div class="impact-by-sector-meta">
